@@ -25,6 +25,7 @@ tokens = (
     'LKEY',
     'RKEY',
     'EQUAL',
+    'COMMA',
     'GREATER_THAN',
     'LESS_THAN',
     'COLON',
@@ -45,6 +46,7 @@ t_EQUAL = r'\='
 t_GREATER_THAN = r'>'
 t_LESS_THAN = r'<'
 t_COLON = r':'
+t_COMMA = r','
 t_RBRACKET = '\['
 t_LBRACKET = '\]'
 t_RKEY = '\['
