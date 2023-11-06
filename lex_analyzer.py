@@ -36,7 +36,14 @@ reserved = {
     'pass':'PASS',
     'break':'BREAK',
     'except':'EXCEPT',
-    'raise':'RAISE'
+    'raise':'RAISE',
+    'var': 'VAR',
+    'const': 'CONST',
+    'int' : 'INTEGER_DATA_TYPE',
+    'float32' : 'FLOAT32_DATA_TYPE',
+    'float64' : 'FLOAT64_DATA_TYPE',
+    'string' : 'STRING_DATA_TYPE',
+    'bool' : 'BOOLEAN_DATA_TYPE'
 
 }
 
@@ -47,10 +54,8 @@ tokens = (
     'IDENTIFIER',
     'BOOLEAN',
     'INTEGER',
-   
     'FLOAT32',
     'FLOAT64',
-    
     'SCIENTIFIC_NOTATION',
     'COMMENT',
     'COMMENT_MULTI',
@@ -83,25 +88,28 @@ tokens = (
     'GREATER_EQUAL',
     'LOGICAL_AND',
     'LOGICAL_OR',
-     'PLUS',
-     'MINUS',
-     'TIMES',
-     'MODULE',
+    'PLUS',
+    'MINUS',
+    'TIMES',
+    'MODULE',
     'ENTERE_DIVIDE',
-     'DIVIDE',
+    'DIVIDE',
     'LPAREN',
     'RPAREN',
     'LBRACKET',
     'RBRACKET',
     'LKEY',
     'RKEY',
-     'EQUAL',
+    'EQUAL',
     'COMMA',
     'GREATER_THAN',
     'LESS_THAN',
     'COLON',
-     'DOT',
+    'DOT',
 ) + tuple(reserved.values())
+
+
+#####              Juan Demera              #####
 
 # Expresiones Regulares simples para símbolos
 
@@ -110,10 +118,6 @@ t_ELLIPSIS = r'\.\.\.'
 t_SHORT_VAR_DECL = r':='
 t_FAT_ARROW = r'=>'
 t_ARROW_FUNCTION_TYPE = r'->'
-t_LOGICAL_NOT = r'!'
-t_AMPERSAND = '\&'
-t_PIPE = '\|'
-t_BITWISE_XOR = r'\^'
 t_BITWISE_XOR_ASSIGN = r'\^='
 t_PLUS_EQ = r'\+='
 t_MINUS_EQ = r'-='
@@ -133,6 +137,10 @@ t_LESS_EQUAL = r'<='
 t_GREATER_EQUAL = r'>='
 t_LOGICAL_AND = r'&&'
 t_LOGICAL_OR = r'\|\|'
+t_LOGICAL_NOT = r'!'
+t_AMPERSAND = '\&'
+t_PIPE = '\|'
+t_BITWISE_XOR = r'\^'
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -151,6 +159,33 @@ t_LBRACKET = '\]'
 t_RKEY = '\['
 t_LKEY = '\]'
 t_DOT = '\.'
+
+
+#####              Paula Peralta              #####
+
+#Expresión regular para números en notación científica
+def t_SCIENTIFIC_NOTATION(t):
+   r'\d+(\.\d+)?[eE][+-]?\d+'
+   t.value = float(t.value)
+   return t
+
+#Expresión regular para números en Hexadecimal
+def t_HEX_NUMBER(t):
+    r'0x[0-9a-fA-F]+'
+    t.value = int(t.value, 16)  # Convierte el número hexadecimal a decimal
+    return t
+
+# #Expresión regular para comentarios de una sola linea con #
+def t_COMMENT(t):
+    r'\\.*'
+    pass  # Los comentarios serán ignorados y no generan tokens
+
+# #Expresión regular para comentarios multilinea
+def t_COMMENT_MULTI(t):
+    r'(\'\'\'[^\'\'\']*\'\'\'|\"\"\"[^\"\"\"]*\")'
+    pass  # Los comentarios multilínea serán ignorados y no generan tokens
+
+#####              Jorge Herrera              #####
 
 # Expresión regular para bool
 
@@ -189,31 +224,6 @@ def t_INTEGER(t):
   t.value = int(t.value)
   return t
 
-#####Paula Peralta#####
-
-#Expresión regular para números en notación científica
-def t_SCIENTIFIC_NOTATION(t):
-   r'\d+(\.\d+)?[eE][+-]?\d+'
-   t.value = float(t.value)
-   return t
-
-#Expresión regular para números en Hexadecimal
-def t_HEX_NUMBER(t):
-    r'0x[0-9a-fA-F]+'
-    t.value = int(t.value, 16)  # Convierte el número hexadecimal a decimal
-    return t
-
-# #Expresión regular para comentarios de una sola linea con #
-def t_COMMENT(t):
-    r'\#.*'
-    pass  # Los comentarios serán ignorados y no generan tokens
-
-# #Expresión regular para comentarios multilinea
-def t_COMMENT_MULTI(t):
-    r'(\'\'\'[^\'\'\']*\'\'\'|\"\"\"[^\"\"\"]*\")'
-    pass  # Los comentarios multilínea serán ignorados y no generan tokens
-
-
 # Expresión regular para reconocer saltos de línea
 def t_newline(t):
   r'\n+'
@@ -232,16 +242,42 @@ def t_error(t):
   t.lexer.skip(1)
 
 
-# Construye el lexer
+# # Construye el lexer
+# lexer = lex.lex()
+
+# # Código para analizar
+# code = input('Ingrese su código:')
+
+# while code != 'end':
+#   # Enviando el código
+#   lexer.input(code)
+#   # Tokenizar
+#   for token in lexer:
+#     print(token)
+#   code = input('Ingrese su código:')
+
+# Enviando el código
+
+
 lexer = lex.lex()
+codePaula = '''
 
-# Código para analizar
-code = input('Ingrese su código:')
+'''
+codeJorge = '''
+var myString string = "05ee4SS"
+var myInt int = 5562
+const myBool bool = true
+const myFloat32 float32 = 5.65f32
+const myFloat64 float64 = 5.65f64
+'''
+codeJuan = '''
 
-while code != 'end':
-  # Enviando el código
-  lexer.input(code)
-  # Tokenizar
-  for token in lexer:
-    print(token)
-  code = input('Ingrese su código:')
+'''
+
+code = codePaula+codeJorge+codeJuan
+
+lexer.input(code)
+# Tokenizar
+# print(list(lexer))
+for token in list(lexer):
+  print(token)
