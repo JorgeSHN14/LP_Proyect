@@ -104,7 +104,7 @@ tokens = (
 ) + tuple(reserved.values())
 
 # Expresiones Regulares simples para símbolos
-
+###Juan Demera##
 t_ARROW_SEND_RECEIVE = r'<-'
 t_ELLIPSIS = r'\.\.\.'
 t_SHORT_VAR_DECL = r':='
