@@ -47,30 +47,14 @@ tokens = (
     'IDENTIFIER',
     'BOOLEAN',
     'INTEGER',
-    'PLUS',
+   
     'FLOAT32',
     'FLOAT64',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
-    'LPAREN',
-    'RPAREN',
-    'LBRACKET',
-    'RBRACKET',
-    'LKEY',
-    'RKEY',
-    'EQUAL',
-    'COMMA',
-    'GREATER_THAN',
-    'LESS_THAN',
-    'COLON',
-    'MODULE',
-    'ENTERE_DIVIDE',
+    
     'SCIENTIFIC_NOTATION',
     'COMMENT',
     'COMMENT_MULTI',
     'HEX_NUMBER',
-    'DOT',
     'ARROW_SEND_RECEIVE',
     'ELLIPSIS',
     'SHORT_VAR_DECL',
@@ -99,27 +83,28 @@ tokens = (
     'GREATER_EQUAL',
     'LOGICAL_AND',
     'LOGICAL_OR',
+     'PLUS',
+     'MINUS',
+     'TIMES',
+     'MODULE',
+    'ENTERE_DIVIDE',
+     'DIVIDE',
+    'LPAREN',
+    'RPAREN',
+    'LBRACKET',
+    'RBRACKET',
+    'LKEY',
+    'RKEY',
+     'EQUAL',
+    'COMMA',
+    'GREATER_THAN',
+    'LESS_THAN',
+    'COLON',
+     'DOT',
 ) + tuple(reserved.values())
 
 # Expresiones Regulares simples para símbolos
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_MODULE = r'%'
-t_ENTERE_DIVIDE = r'//'
-t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_EQUAL = r'\='
-t_GREATER_THAN = r'>'
-t_LESS_THAN = r'<'
-t_COLON = r':'
-t_COMMA = r','
-t_RBRACKET = '\['
-t_LBRACKET = '\]'
-t_RKEY = '\['
-t_LKEY = '\]'
-t_DOT = '\.'
+
 t_ARROW_SEND_RECEIVE = r'<-'
 t_ELLIPSIS = r'\.\.\.'
 t_SHORT_VAR_DECL = r':='
@@ -148,8 +133,24 @@ t_LESS_EQUAL = r'<='
 t_GREATER_EQUAL = r'>='
 t_LOGICAL_AND = r'&&'
 t_LOGICAL_OR = r'\|\|'
-
-
+t_PLUS = r'\+'
+t_MINUS = r'-'
+t_TIMES = r'\*'
+t_MODULE = r'%'
+t_ENTERE_DIVIDE = r'//'
+t_DIVIDE = r'/'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_EQUAL = r'\='
+t_GREATER_THAN = r'>'
+t_LESS_THAN = r'<'
+t_COLON = r':'
+t_COMMA = r','
+t_RBRACKET = '\['
+t_LBRACKET = '\]'
+t_RKEY = '\['
+t_LKEY = '\]'
+t_DOT = '\.'
 
 # Expresión regular para bool
 
