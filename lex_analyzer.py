@@ -69,7 +69,11 @@ tokens = (
     'SCIENTIFIC_NOTATION',
     'COMMENT',
     'COMMENT_MULTI',
-    'HEX_NUMBER'
+    'HEX_NUMBER',
+    'DOT',
+    'BANG',
+    'AMPERSAND',
+    'PIPE',
 ) + tuple(reserved.values())
 
 # Expresiones Regulares simples para símbolos
@@ -90,6 +94,12 @@ t_RBRACKET = '\['
 t_LBRACKET = '\]'
 t_RKEY = '\['
 t_LKEY = '\]'
+t_DOT = '\.'
+t_AMPERSAND = '&'
+t_BANG = '!'
+t_PIPE = '|'
+
+
 
 
 # Expresión regular para bool
