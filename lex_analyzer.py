@@ -1,11 +1,46 @@
 import ply.lex as lex
 
+#####Paula Peralta#####
 reserved = {
     'if': 'IF',
     'else': 'ELSE',
     'def': 'DEF',
+    'while':'WHILE',
+    'for':'FOR',
+    'in':'IN',
+    'return':'RETURN', 
+    'and':'AND', 
+    'or':'OR', 
+    'not':'NOT', 
+    'true':'TRUE', 
+    'false':'FALSE', 
+    'null':'NULL', 
+    'print':'PRINT',  
+    'class':'CLASS',
+    'finally':'FINALLY',
+    'is':'IS',
+    'none':'NONE',
+    'continue':'CONTINUE',
+    'lambda':'LAMBDA',
+    'try':'TRY',
+    'from':'FROM',
+    'nonlocal':'NONLOCAL',
+    'del':'DEL',
+    'global':'GLOBAL',
+    'with':'WITH',
+    'as':'AS',
+    'elif':'ELIF',
+    'yield':'YIELD',
+    'assert':'ASSERT',
+    'import':'IMPORT',
+    'pass':'PASS',
+    'break':'BREAK',
+    'except':'EXCEPT',
+    'raise':'RAISE'
+
 }
 
+#####Jorge Herrera#####
 # Secuencia de tokens
 tokens = (
     'STRING',
@@ -31,6 +66,10 @@ tokens = (
     'COLON',
     'MODULE',
     'ENTERE_DIVIDE',
+    'SCIENTIFIC_NOTATION',
+    'COMMENT',
+    'COMMENT_MULTI',
+    'HEX_NUMBER'
 ) + tuple(reserved.values())
 
 # Expresiones Regulares simples para símbolos
@@ -74,6 +113,7 @@ def t_IDENTIFIER(t):
   t.type = reserved.get(t.value, 'IDENTIFIER')
   return t
 
+####Jorge Herrera#####
 
 # Expresión regular para números flotantes
 def t_FLOAT32(t):
@@ -91,6 +131,30 @@ def t_INTEGER(t):
   r'\d+'
   t.value = int(t.value)
   return t
+
+#####Paula Peralta#####
+
+#Expresión regular para números en notación científica
+def t_SCIENTIFIC_NOTATION(t):
+   r'\d+(\.\d+)?[eE][+-]?\d+'
+   t.value = float(t.value)
+   return t
+
+#Expresión regular para números en Hexadecimal
+def t_HEX_NUMBER(t):
+    r'0x[0-9a-fA-F]+'
+    t.value = int(t.value, 16)  # Convierte el número hexadecimal a decimal
+    return t
+
+#Expresión regular para comentarios de una sola linea con #
+def t_COMMENT(t):
+    r'\#.*'
+    pass  # Los comentarios serán ignorados y no generan tokens
+
+#Expresión regular para comentarios multilinea
+def t_COMMENT_MULTI(t):
+    r'(\'\'\'[^\'\'\']*\'\'\'|\"\"\"[^\"\"\"]*\")'
+    pass  # Los comentarios multilínea serán ignorados y no generan tokens
 
 
 # Expresión regular para reconocer saltos de línea
