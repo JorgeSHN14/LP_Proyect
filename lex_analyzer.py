@@ -71,9 +71,34 @@ tokens = (
     'COMMENT_MULTI',
     'HEX_NUMBER',
     'DOT',
-    'BANG',
+    'ARROW_SEND_RECEIVE',
+    'ELLIPSIS',
+    'SHORT_VAR_DECL',
+    'FAT_ARROW',
+    'ARROW_FUNCTION_TYPE',
+    'LOGICAL_NOT',
     'AMPERSAND',
     'PIPE',
+    'BITWISE_XOR',
+    'BITWISE_XOR_ASSIGN',
+    'PLUS_EQ',
+    'MINUS_EQ',
+    'TIMES_EQ',
+    'DIVIDE_EQ',
+    'MODULO_EQ',
+    'BITWISE_AND_EQ',
+    'BITWISE_OR_EQ',
+    'BITWISE_XOR_EQ',
+    'LEFT_SHIFT_EQ',
+    'RIGHT_SHIFT_EQ',
+    'EQUALEQUAL',
+    'NOT_EQUAL',
+    'LESS',
+    'GREATER',
+    'LESS_EQUAL',
+    'GREATER_EQUAL',
+    'LOGICAL_AND',
+    'LOGICAL_OR',
 ) + tuple(reserved.values())
 
 # Expresiones Regulares simples para símbolos
@@ -95,10 +120,34 @@ t_LBRACKET = '\]'
 t_RKEY = '\['
 t_LKEY = '\]'
 t_DOT = '\.'
-t_AMPERSAND = '\&'
-t_BANG = '\!'
-t_PIPE = '\|'
-
+t_ARROW_SEND_RECEIVE = r'<-'
+t_ELLIPSIS = r'\.\.\.'
+t_SHORT_VAR_DECL = r':='
+t_FAT_ARROW = r'=>'
+t_ARROW_FUNCTION_TYPE = r'->'
+t_LOGICAL_NOT = r'!'
+t_AMPERSAND = '&'
+t_PIPE = '|'
+t_BITWISE_XOR = r'\^'
+t_BITWISE_XOR_ASSIGN = r'\^='
+t_PLUS_EQ = r'\+='
+t_MINUS_EQ = r'-='
+t_TIMES_EQ = r'\*='
+t_DIVIDE_EQ = r'/='
+t_MODULO_EQ = r'%='
+t_BITWISE_AND_EQ = r'&='
+t_BITWISE_OR_EQ = r'\|='
+t_BITWISE_XOR_EQ = r'\^='
+t_LEFT_SHIFT_EQ = r'<<='
+t_RIGHT_SHIFT_EQ = r'>>='
+t_EQUALEQUAL = r'=='
+t_NOT_EQUAL = r'!='
+t_LESS = r'<'
+t_GREATER = r'>'
+t_LESS_EQUAL = r'<='
+t_GREATER_EQUAL = r'>='
+t_LOGICAL_AND = r'&&'
+t_LOGICAL_OR = r'\|\|'
 
 
 ####Jorge Herrera#####
