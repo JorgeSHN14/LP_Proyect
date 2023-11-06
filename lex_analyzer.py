@@ -95,12 +95,13 @@ t_LBRACKET = '\]'
 t_RKEY = '\['
 t_LKEY = '\]'
 t_DOT = '\.'
-t_AMPERSAND = '&'
-t_BANG = '!'
-t_PIPE = '|'
+t_AMPERSAND = '\&'
+t_BANG = '\!'
+t_PIPE = '\|'
 
 
 
+####Jorge Herrera#####
 
 # Expresión regular para bool
 
@@ -115,15 +116,12 @@ def t_STRING(t):
   print(t)
   return t
 
-
 # Expresión regular para identificadores
 
 def t_IDENTIFIER(t):
   r'[a-zA-Z_]+[a-zA-Z0-9_]*'
   t.type = reserved.get(t.value, 'IDENTIFIER')
   return t
-
-####Jorge Herrera#####
 
 # Expresión regular para números flotantes
 def t_FLOAT32(t):
@@ -156,12 +154,12 @@ def t_HEX_NUMBER(t):
     t.value = int(t.value, 16)  # Convierte el número hexadecimal a decimal
     return t
 
-#Expresión regular para comentarios de una sola linea con #
+# #Expresión regular para comentarios de una sola linea con #
 def t_COMMENT(t):
     r'\#.*'
     pass  # Los comentarios serán ignorados y no generan tokens
 
-#Expresión regular para comentarios multilinea
+# #Expresión regular para comentarios multilinea
 def t_COMMENT_MULTI(t):
     r'(\'\'\'[^\'\'\']*\'\'\'|\"\"\"[^\"\"\"]*\")'
     pass  # Los comentarios multilínea serán ignorados y no generan tokens
