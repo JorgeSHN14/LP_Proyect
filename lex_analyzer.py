@@ -8,15 +8,22 @@ reserved = {
 
 # Secuencia de tokens
 tokens = (
+    'STRING',
     'IDENTIFIER',
+    'BOOLEAN',
     'INTEGER',
     'PLUS',
-    'FLOAT',
+    'FLOAT32',
+    'FLOAT64',
     'MINUS',
     'TIMES',
     'DIVIDE',
     'LPAREN',
     'RPAREN',
+    'LBRACKET',
+    'RBRACKET',
+    'LKEY',
+    'RKEY',
     'EQUAL',
     'GREATER_THAN',
     'LESS_THAN',
@@ -38,9 +45,28 @@ t_EQUAL = r'\='
 t_GREATER_THAN = r'>'
 t_LESS_THAN = r'<'
 t_COLON = r':'
+t_RBRACKET = '\['
+t_LBRACKET = '\]'
+t_RKEY = '\['
+t_LKEY = '\]'
 
 
-# Expresión regular para números flotantes
+# Expresión regular para bool
+
+def t_BOOLEAN(t):
+  r'(true|false)'
+  return t
+
+# Expresión regular para identificadores
+
+def t_STRING(t):
+  r'(\"[^\"]*\"|\`[^\`]*\`)'
+  print(t)
+  return t
+
+
+# Expresión regular para identificadores
+
 def t_IDENTIFIER(t):
   r'[a-zA-Z_]+[a-zA-Z0-9_]*'
   t.type = reserved.get(t.value, 'IDENTIFIER')
@@ -48,10 +74,15 @@ def t_IDENTIFIER(t):
 
 
 # Expresión regular para números flotantes
-def t_FLOAT(t):
-  r'\d+\.\d+'
-  return t
+def t_FLOAT32(t):
+    r'\d+\.\d+f32'
+    t.value = float(t.value[:-3])  # Elimina el sufijo "f32" y convierte a float
+    return t
 
+def t_FLOAT64(t):
+    r'\d+\.\d+f64'
+    t.value = float(t.value[:-3])  # Elimina el sufijo "f64" y convierte a float
+    return t
 
 # Expresión regular para números enteros, incluye cast
 def t_INTEGER(t):
