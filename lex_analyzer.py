@@ -274,9 +274,26 @@ const myBool bool = true
 const myFloat32 float32 = 5.65f32
 const myFloat64 float64 = 5.65f64
 '''
-codeJuan = '''
-
-'''
+codeJuan = """
+  data = x += 10
+  y -= 20
+  z *= 3
+  a /= 2
+  b %= 5
+  c &= 7
+  d |= 1
+  e ^= 6
+  f <<= 2
+  g >>= 1
+  h == 42
+  i != 7
+  j < 100
+  k > 50
+  l <= 30
+  m >= 60
+  n && true
+  o || false
+  """
 
 code = codePaula+codeJorge+codeJuan
 
