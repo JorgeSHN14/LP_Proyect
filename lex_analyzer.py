@@ -177,13 +177,14 @@ def t_HEX_NUMBER(t):
 
 # #Expresión regular para comentarios de una sola linea con #
 def t_COMMENT(t):
-    r'\\.*'
-    pass  # Los comentarios serán ignorados y no generan tokens
+    r'\/\/.*'
+    return t 
 
 # #Expresión regular para comentarios multilinea
 def t_COMMENT_MULTI(t):
-    r'\/\*[\s\S]*?\*\/'
-    pass  # Los comentarios multilínea serán ignorados y no generan tokens
+    r'\/\*((\n)?[^(\*\/)]*(\n)?)*\*\/'
+    #r'\/\*[^(\*\/)]*\*\/'
+    return t
 
 
 #####              Jorge Herrera              #####
@@ -265,7 +266,11 @@ lexer = lex.lex()
 codePaula = '''
 numero_cientifico = 1.2345e10
 hexadecimal = 0x1F
-
+comentario_una_linea = // Este es un comentario de una sola línea
+comentario_multilinea = 
+/* Comentario Multilínea
+hola mundo cruel
+no existo */
 '''
 codeJorge = '''
 var myString string = "05ee4SS"
