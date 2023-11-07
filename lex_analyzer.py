@@ -182,8 +182,9 @@ def t_COMMENT(t):
 
 # #Expresión regular para comentarios multilinea
 def t_COMMENT_MULTI(t):
-    r'(\'\'\'[^\'\'\']*\'\'\'|\"\"\"[^\"\"\"]*\")'
+    r'\/\*[\s\S]*?\*\/'
     pass  # Los comentarios multilínea serán ignorados y no generan tokens
+
 
 #####              Jorge Herrera              #####
 
@@ -260,7 +261,10 @@ def t_error(t):
 
 
 lexer = lex.lex()
+
 codePaula = '''
+numero_cientifico = 1.2345e10
+hexadecimal = 0x1F
 
 '''
 codeJorge = '''
