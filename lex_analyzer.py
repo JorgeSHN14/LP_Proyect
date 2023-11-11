@@ -5,46 +5,47 @@ reserved = {
     'if': 'IF',
     'else': 'ELSE',
     'def': 'DEF',
-    'while':'WHILE',
-    'for':'FOR',
-    'in':'IN',
-    'return':'RETURN', 
-    'and':'AND', 
-    'or':'OR', 
-    'not':'NOT', 
-    'true':'TRUE', 
-    'false':'FALSE', 
-    'null':'NULL', 
-    'print':'PRINT',  
-    'class':'CLASS',
-    'finally':'FINALLY',
-    'is':'IS',
-    'none':'NONE',
-    'continue':'CONTINUE',
-    'lambda':'LAMBDA',
-    'try':'TRY',
-    'from':'FROM',
-    'nonlocal':'NONLOCAL',
-    'del':'DEL',
-    'global':'GLOBAL',
-    'with':'WITH',
-    'as':'AS',
-    'elif':'ELIF',
-    'yield':'YIELD',
-    'assert':'ASSERT',
-    'import':'IMPORT',
-    'pass':'PASS',
-    'break':'BREAK',
-    'except':'EXCEPT',
-    'raise':'RAISE',
+    'while': 'WHILE',
+    'for': 'FOR',
+    'in': 'IN',
+    'return': 'RETURN',
+    'and': 'AND',
+    'or': 'OR',
+    'not': 'NOT',
+    'true': 'TRUE',
+    'false': 'FALSE',
+    'null': 'NULL',
+    'Println': 'PRINTLN',
+    'Printf': 'PRINTF',
+    'FMT': 'FMT_LIBRARY',
+    'class': 'CLASS',
+    'finally': 'FINALLY',
+    'is': 'IS',
+    'none': 'NONE',
+    'continue': 'CONTINUE',
+    'lambda': 'LAMBDA',
+    'try': 'TRY',
+    'from': 'FROM',
+    'nonlocal': 'NONLOCAL',
+    'del': 'DEL',
+    'global': 'GLOBAL',
+    'with': 'WITH',
+    'as': 'AS',
+    'elif': 'ELIF',
+    'yield': 'YIELD',
+    'assert': 'ASSERT',
+    'import': 'IMPORT',
+    'pass': 'PASS',
+    'break': 'BREAK',
+    'except': 'EXCEPT',
+    'raise': 'RAISE',
     'var': 'VAR',
     'const': 'CONST',
-    'int' : 'INTEGER_DATA_TYPE',
-    'float32' : 'FLOAT32_DATA_TYPE',
-    'float64' : 'FLOAT64_DATA_TYPE',
-    'string' : 'STRING_DATA_TYPE',
-    'bool' : 'BOOLEAN_DATA_TYPE'
-
+    'int': 'INTEGER_DATA_TYPE',
+    'float32': 'FLOAT32_DATA_TYPE',
+    'float64': 'FLOAT64_DATA_TYPE',
+    'string': 'STRING_DATA_TYPE',
+    'bool': 'BOOLEAN_DATA_TYPE'
 }
 
 #####Jorge Herrera#####
@@ -108,7 +109,6 @@ tokens = (
     'DOT',
 ) + tuple(reserved.values())
 
-
 #####              Juan Demera              #####
 
 # Expresiones Regulares simples para símbolos
@@ -160,71 +160,83 @@ t_RKEY = '\['
 t_LKEY = '\]'
 t_DOT = '\.'
 
-
 #####              Paula Peralta              #####
+
 
 #Expresión regular para números en notación científica
 def t_SCIENTIFIC_NOTATION(t):
-   r'\d+(\.\d+)?[eE][+-]?\d+'
-   t.value = float(t.value)
-   return t
+  r'\d+(\.\d+)?[eE][+-]?\d+'
+  t.value = float(t.value)
+  return t
+
 
 #Expresión regular para números en Hexadecimal
 def t_HEX_NUMBER(t):
-    r'0x[0-9a-fA-F]+'
-    t.value = int(t.value, 16)  # Convierte el número hexadecimal a decimal
-    return t
+  r'0x[0-9a-fA-F]+'
+  t.value = int(t.value, 16)  # Convierte el número hexadecimal a decimal
+  return t
+
 
 # #Expresión regular para comentarios de una sola linea con #
 def t_COMMENT(t):
-    r'\/\/.*'
-    return t 
+  r'\/\/.*'
+  return t
+
 
 # #Expresión regular para comentarios multilinea
 def t_COMMENT_MULTI(t):
-    r'\/\*((\n)?[^(\*\/)]*(\n)?)*\*\/'
-    #r'\/\*[^(\*\/)]*\*\/'
-    return t
+  r'\/\*((\n)?[^(\*\/)]*(\n)?)*\*\/'
+  #r'\/\*[^(\*\/)]*\*\/'
+  return t
 
 
 #####              Jorge Herrera              #####
 
 # Expresión regular para bool
 
+
 def t_BOOLEAN(t):
   r'(true|false)'
   return t
 
+
 # Expresión regular para identificadores
+
 
 def t_STRING(t):
   r'(\"[^\"]*\"|\`[^\`]*\`)'
   print(t)
   return t
 
+
 # Expresión regular para identificadores
+
 
 def t_IDENTIFIER(t):
   r'[a-zA-Z_]+[a-zA-Z0-9_]*'
   t.type = reserved.get(t.value, 'IDENTIFIER')
   return t
 
+
 # Expresión regular para números flotantes
 def t_FLOAT32(t):
-    r'\d+\.\d+f32'
-    t.value = float(t.value[:-3])  # Elimina el sufijo "f32" y convierte a float
-    return t
+  r'\d+\.\d+f32'
+  t.value = float(t.value[:-3])  # Elimina el sufijo "f32" y convierte a float
+  return t
+
 
 def t_FLOAT64(t):
-    r'\d+\.\d+f64'
-    t.value = float(t.value[:-3])  # Elimina el sufijo "f64" y convierte a float
-    return t
+  r'\d+\.\d+f64'
+  t.value = float(t.value[:-3])  # Elimina el sufijo "f64" y convierte a float
+  return t
+
 
 # Expresión regular para números enteros, incluye cast
 def t_INTEGER(t):
   r'\d+'
   t.value = int(t.value)
   return t
+
 
 # Expresión regular para reconocer saltos de línea
 def t_newline(t):
@@ -259,7 +271,6 @@ def t_error(t):
 #   code = input('Ingrese su código:')
 
 # Enviando el código
-
 
 lexer = lex.lex()
 
@@ -300,7 +311,7 @@ codeJuan = """
   o || false
   """
 
-code = codePaula+codeJorge+codeJuan
+code = codePaula + codeJorge + codeJuan
 
 lexer.input(code)
 # Tokenizar
