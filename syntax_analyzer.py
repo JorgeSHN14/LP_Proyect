@@ -1,33 +1,28 @@
 import ply.yacc as sint
 from lex_analyzer import tokens
 
+
+def p_program(p):
+  ''' program : sentencia
+              | program NEWLINE
+              | program NEWLINE sentencia
+  '''
+
 def p_sentencia(p):
   '''sentencia : print
-              | print_withoutvalue
-              | assignment
-              | short_assignment
-              | arithmetic_operation
-              | while
-              | def_function
-              | call_function'''
-  
-              
+               | print_withoutvalue
+               | for
+               | def_function
+               | call_function
+               | input
+               | assignment
+               | short_assignment'''
 
-  
-def p_print_withoutvalue(p):
-  '''print_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
-            | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
+##########            PAULA PERALTA            ############
+def p_for(p):
+  '''for : FOR rule_comparation LKEY program RKEY'''
 
-def p_print(p):
-  '''print : FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
-           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
-           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN'''
-
-
-def p_identifiers(p):
-  '''identifiers : IDENTIFIER
-                 | identifiers COMMA identifiers'''
-  
+##########            JORGE HERRERA            ############
 def p_assignment(p):
   '''assignment : VAR IDENTIFIER data_type EQUAL value
                 | CONST IDENTIFIER data_type EQUAL value
@@ -37,10 +32,61 @@ def p_assignment(p):
 def p_short_assignment(p):
   '''short_assignment : IDENTIFIER SHORT_VAR_DECL value
                 | IDENTIFIER SHORT_VAR_DECL IDENTIFIER'''
-  
 
-def p_while(p):
-  "while : WHILE un valor singular  TRUE P_DER COLON sentence"
+##########            PAULA PERALTA            ############
+def p_arithmetic_operation(p):
+    '''
+    arithmetic_operation : IDENTIFIER PLUS_EQ value
+                        | IDENTIFIER MINUS_EQ value
+                        | IDENTIFIER TIMES_EQ value
+                        | IDENTIFIER DIVIDE_EQ value
+                        | IDENTIFIER MODULO_EQ value
+                        | IDENTIFIER BITWISE_AND_EQ value
+                        | IDENTIFIER BITWISE_OR_EQ value
+                        | IDENTIFIER BITWISE_XOR_EQ value
+                        | IDENTIFIER LEFT_SHIFT_EQ value
+                        | IDENTIFIER RIGHT_SHIFT_EQ value
+    '''
+
+##########            JORGE HERRERA            ############
+def p_rule_comparation(p):
+  '''rule_comparation : IDENTIFIER EQUALEQUAL value
+                      | IDENTIFIER NOT_EQUAL value
+                      | IDENTIFIER LESS_EQUAL value
+                      | IDENTIFIER GREATER_EQUAL value
+                      | IDENTIFIER LESS value
+                      | IDENTIFIER GREATER value
+                      | IDENTIFIER LOGICAL_AND value
+                      | IDENTIFIER LOGICAL_OR value'''
+  
+def p_comparation_operation(p):
+  '''
+    comparation_operation : value EQUALEQUAL value
+                        | value NOT_EQUAL value
+                        | value LESS_EQUAL value
+                        | value GREATER_EQUAL value
+                        | value LESS value
+                        | value GREATER value
+                        | value LOGICAL_AND value
+                        | value LOGICAL_OR value
+    '''
+  
+def p_print(p):
+  '''print : FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN'''
+  
+def p_print_withoutvalue(p):
+  '''print_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+            | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
+
+
+
+def p_identifiers(p):
+  '''identifiers : IDENTIFIER
+                 | identifiers COMMA identifiers'''
+
+##########            JUAN DEMERA            ############
 
 def p_def_function(p):
   '''def_function : DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia'''
@@ -59,26 +105,13 @@ def p_values(p):
   '''values : value
             | values COMMA value'''
 
+##########            JORGE HERRERA            ############
 def p_value(p):
   '''value : STRING
           | INTEGER
           | FLOAT32
           | FLOAT64
           | BOOLEAN'''
-
-def p_arithmetic_operation(p):
-    '''
-    arithmetic_operation : IDENTIFIER PLUS_EQ value
-                        | IDENTIFIER MINUS_EQ value
-                        | IDENTIFIER TIMES_EQ value
-                        | IDENTIFIER DIVIDE_EQ value
-                        | IDENTIFIER MODULO_EQ value
-                        | IDENTIFIER BITWISE_AND_EQ value
-                        | IDENTIFIER BITWISE_OR_EQ value
-                        | IDENTIFIER BITWISE_XOR_EQ value
-                        | IDENTIFIER LEFT_SHIFT_EQ value
-                        | IDENTIFIER RIGHT_SHIFT_EQ value
-    '''
 
 def p_data_type(p):
   '''data_type : INTEGER_DATA_TYPE
@@ -87,6 +120,7 @@ def p_data_type(p):
                | BOOLEAN_DATA_TYPE
                | STRING_DATA_TYPE'''
 
+##########            PAULA PERALTA            ############
 def p_input(p):
     '''input : INPUT LPAREN RPAREN
              | INPUT LPAREN value RPAREN
@@ -95,22 +129,21 @@ def p_input(p):
 
 
 def p_error(p):
-    print("Error sintáctico en '%s'" % p.value)
+    print("Error sintáctico en '%s'" % p)
 
 parser = sint.yacc()
 
-prueba = """
-input()
-var x int = 10
-const pi float64 = 3.14159
-"""
+codePaula = '''
 
-while True:
-  try:
-    s = input('Ingrese su código: ')
-  except EOFError:
-    break
-  if not s: continue
-  result = parser.parse(s)
-  print(result)
+'''
+codeJorge = '''
 
+'''
+codeJuan = """
+
+  """
+
+code = codePaula + codeJorge + codeJuan
+
+result = parser.parse(code)
+print(result)

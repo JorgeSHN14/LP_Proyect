@@ -21,16 +21,12 @@ Unused terminals:
     ELLIPSIS
     ELSE
     ENTERE_DIVIDE
-    EQUALEQUAL
     EXCEPT
     FALSE
     FAT_ARROW
     FINALLY
-    FOR
     FROM
     GLOBAL
-    GREATER
-    GREATER_EQUAL
     GREATER_THAN
     HEX_NUMBER
     IF
@@ -39,19 +35,13 @@ Unused terminals:
     IS
     LAMBDA
     LBRACKET
-    LESS
-    LESS_EQUAL
     LESS_THAN
-    LKEY
-    LOGICAL_AND
     LOGICAL_NOT
-    LOGICAL_OR
     MINUS
     MODULE
     NONE
     NONLOCAL
     NOT
-    NOT_EQUAL
     NULL
     OR
     PASS
@@ -60,68 +50,87 @@ Unused terminals:
     RAISE
     RBRACKET
     RETURN
-    RKEY
     SCIENTIFIC_NOTATION
     TIMES
+    TRUE
     TRY
     WITH
     YIELD
 
 Grammar
 
-Rule 0     S' -> sentencia
-Rule 1     sentencia -> print
-Rule 2     sentencia -> print_withoutvalue
-Rule 3     sentencia -> assignment
-Rule 4     sentencia -> short_assignment
-Rule 5     sentencia -> arithmetic_operation
-Rule 6     sentencia -> while
+Rule 0     S' -> program
+Rule 1     program -> sentencia
+Rule 2     program -> program NEWLINE
+Rule 3     program -> program NEWLINE sentencia
+Rule 4     sentencia -> print
+Rule 5     sentencia -> print_withoutvalue
+Rule 6     sentencia -> for
 Rule 7     sentencia -> def_function
 Rule 8     sentencia -> call_function
-Rule 9     print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
-Rule 10    print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN
-Rule 11    print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
-Rule 12    print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
-Rule 13    print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
-Rule 14    identifiers -> IDENTIFIER
-Rule 15    identifiers -> identifiers COMMA identifiers
-Rule 16    assignment -> VAR IDENTIFIER data_type EQUAL value
-Rule 17    assignment -> CONST IDENTIFIER data_type EQUAL value
-Rule 18    assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER
-Rule 19    assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER
-Rule 20    short_assignment -> IDENTIFIER SHORT_VAR_DECL value
-Rule 21    short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER
-Rule 22    while -> WHILE un valor singular TRUE P_DER COLON sentence
-Rule 23    def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
-Rule 24    call_function -> IDENTIFIER LPAREN values RPAREN
-Rule 25    parameters -> parameter
-Rule 26    parameters -> parameters COMMA parameter
-Rule 27    parameter -> IDENTIFIER value
-Rule 28    values -> value
-Rule 29    values -> values COMMA value
-Rule 30    value -> STRING
-Rule 31    value -> INTEGER
-Rule 32    value -> FLOAT32
-Rule 33    value -> FLOAT64
-Rule 34    value -> BOOLEAN
-Rule 35    arithmetic_operation -> IDENTIFIER PLUS_EQ value
-Rule 36    arithmetic_operation -> IDENTIFIER MINUS_EQ value
-Rule 37    arithmetic_operation -> IDENTIFIER TIMES_EQ value
-Rule 38    arithmetic_operation -> IDENTIFIER DIVIDE_EQ value
-Rule 39    arithmetic_operation -> IDENTIFIER MODULO_EQ value
-Rule 40    arithmetic_operation -> IDENTIFIER BITWISE_AND_EQ value
-Rule 41    arithmetic_operation -> IDENTIFIER BITWISE_OR_EQ value
-Rule 42    arithmetic_operation -> IDENTIFIER BITWISE_XOR_EQ value
-Rule 43    arithmetic_operation -> IDENTIFIER LEFT_SHIFT_EQ value
-Rule 44    arithmetic_operation -> IDENTIFIER RIGHT_SHIFT_EQ value
-Rule 45    data_type -> INTEGER_DATA_TYPE
-Rule 46    data_type -> FLOAT32_DATA_TYPE
-Rule 47    data_type -> FLOAT64_DATA_TYPE
-Rule 48    data_type -> BOOLEAN_DATA_TYPE
-Rule 49    data_type -> STRING_DATA_TYPE
-Rule 50    input -> INPUT LPAREN RPAREN
-Rule 51    input -> INPUT LPAREN value RPAREN
-Rule 52    input -> INPUT LPAREN identifiers RPAREN
+Rule 9     sentencia -> input
+Rule 10    sentencia -> assignment
+Rule 11    sentencia -> short_assignment
+Rule 12    for -> FOR rule_comparation LKEY program RKEY
+Rule 13    assignment -> VAR IDENTIFIER data_type EQUAL value
+Rule 14    assignment -> CONST IDENTIFIER data_type EQUAL value
+Rule 15    assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER
+Rule 16    assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER
+Rule 17    short_assignment -> IDENTIFIER SHORT_VAR_DECL value
+Rule 18    short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER
+Rule 19    arithmetic_operation -> IDENTIFIER PLUS_EQ value
+Rule 20    arithmetic_operation -> IDENTIFIER MINUS_EQ value
+Rule 21    arithmetic_operation -> IDENTIFIER TIMES_EQ value
+Rule 22    arithmetic_operation -> IDENTIFIER DIVIDE_EQ value
+Rule 23    arithmetic_operation -> IDENTIFIER MODULO_EQ value
+Rule 24    arithmetic_operation -> IDENTIFIER BITWISE_AND_EQ value
+Rule 25    arithmetic_operation -> IDENTIFIER BITWISE_OR_EQ value
+Rule 26    arithmetic_operation -> IDENTIFIER BITWISE_XOR_EQ value
+Rule 27    arithmetic_operation -> IDENTIFIER LEFT_SHIFT_EQ value
+Rule 28    arithmetic_operation -> IDENTIFIER RIGHT_SHIFT_EQ value
+Rule 29    rule_comparation -> IDENTIFIER EQUALEQUAL value
+Rule 30    rule_comparation -> IDENTIFIER NOT_EQUAL value
+Rule 31    rule_comparation -> IDENTIFIER LESS_EQUAL value
+Rule 32    rule_comparation -> IDENTIFIER GREATER_EQUAL value
+Rule 33    rule_comparation -> IDENTIFIER LESS value
+Rule 34    rule_comparation -> IDENTIFIER GREATER value
+Rule 35    rule_comparation -> IDENTIFIER LOGICAL_AND value
+Rule 36    rule_comparation -> IDENTIFIER LOGICAL_OR value
+Rule 37    comparation_operation -> value EQUALEQUAL value
+Rule 38    comparation_operation -> value NOT_EQUAL value
+Rule 39    comparation_operation -> value LESS_EQUAL value
+Rule 40    comparation_operation -> value GREATER_EQUAL value
+Rule 41    comparation_operation -> value LESS value
+Rule 42    comparation_operation -> value GREATER value
+Rule 43    comparation_operation -> value LOGICAL_AND value
+Rule 44    comparation_operation -> value LOGICAL_OR value
+Rule 45    print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+Rule 46    print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+Rule 47    print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+Rule 48    print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+Rule 49    print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+Rule 50    identifiers -> IDENTIFIER
+Rule 51    identifiers -> identifiers COMMA identifiers
+Rule 52    def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+Rule 53    call_function -> IDENTIFIER LPAREN values RPAREN
+Rule 54    parameters -> parameter
+Rule 55    parameters -> parameters COMMA parameter
+Rule 56    parameter -> IDENTIFIER value
+Rule 57    values -> value
+Rule 58    values -> values COMMA value
+Rule 59    value -> STRING
+Rule 60    value -> INTEGER
+Rule 61    value -> FLOAT32
+Rule 62    value -> FLOAT64
+Rule 63    value -> BOOLEAN
+Rule 64    data_type -> INTEGER_DATA_TYPE
+Rule 65    data_type -> FLOAT32_DATA_TYPE
+Rule 66    data_type -> FLOAT64_DATA_TYPE
+Rule 67    data_type -> BOOLEAN_DATA_TYPE
+Rule 68    data_type -> STRING_DATA_TYPE
+Rule 69    input -> INPUT LPAREN RPAREN
+Rule 70    input -> INPUT LPAREN value RPAREN
+Rule 71    input -> INPUT LPAREN identifiers RPAREN
 
 Terminals, with rules where they appear
 
@@ -131,124 +140,1403 @@ ARROW_FUNCTION_TYPE  :
 ARROW_SEND_RECEIVE   : 
 AS                   : 
 ASSERT               : 
-BITWISE_AND_EQ       : 40
-BITWISE_OR_EQ        : 41
+BITWISE_AND_EQ       : 24
+BITWISE_OR_EQ        : 25
 BITWISE_XOR          : 
 BITWISE_XOR_ASSIGN   : 
-BITWISE_XOR_EQ       : 42
-BOOLEAN              : 34
-BOOLEAN_DATA_TYPE    : 48
+BITWISE_XOR_EQ       : 26
+BOOLEAN              : 63
+BOOLEAN_DATA_TYPE    : 67
 BREAK                : 
 CLASS                : 
-COLON                : 22 23
-COMMA                : 12 13 15 26 29
+COLON                : 52
+COMMA                : 46 47 51 55 58
 COMMENT              : 
 COMMENT_MULTI        : 
-CONST                : 17 19
+CONST                : 14 16
 CONTINUE             : 
-DEF                  : 23
+DEF                  : 52
 DEL                  : 
 DIVIDE               : 
-DIVIDE_EQ            : 38
-DOT                  : 9 10 11 12 13
+DIVIDE_EQ            : 22
+DOT                  : 45 46 47 48 49
 ELIF                 : 
 ELLIPSIS             : 
 ELSE                 : 
 ENTERE_DIVIDE        : 
-EQUAL                : 16 17 18 19
-EQUALEQUAL           : 
+EQUAL                : 13 14 15 16
+EQUALEQUAL           : 29 37
 EXCEPT               : 
 FALSE                : 
 FAT_ARROW            : 
 FINALLY              : 
-FLOAT32              : 32
-FLOAT32_DATA_TYPE    : 46
-FLOAT64              : 33
-FLOAT64_DATA_TYPE    : 47
-FMT_LIBRARY          : 9 10 11 12 13
-FOR                  : 
+FLOAT32              : 61
+FLOAT32_DATA_TYPE    : 65
+FLOAT64              : 62
+FLOAT64_DATA_TYPE    : 66
+FMT_LIBRARY          : 45 46 47 48 49
+FOR                  : 12
 FROM                 : 
 GLOBAL               : 
-GREATER              : 
-GREATER_EQUAL        : 
+GREATER              : 34 42
+GREATER_EQUAL        : 32 40
 GREATER_THAN         : 
 HEX_NUMBER           : 
-IDENTIFIER           : 14 16 17 18 18 19 19 20 21 21 23 24 27 35 36 37 38 39 40 41 42 43 44
+IDENTIFIER           : 13 14 15 15 16 16 17 18 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 50 52 53 56
 IF                   : 
 IMPORT               : 
 IN                   : 
-INPUT                : 50 51 52
-INTEGER              : 31
-INTEGER_DATA_TYPE    : 45
+INPUT                : 69 70 71
+INTEGER              : 60
+INTEGER_DATA_TYPE    : 64
 IS                   : 
 LAMBDA               : 
 LBRACKET             : 
-LEFT_SHIFT_EQ        : 43
-LESS                 : 
-LESS_EQUAL           : 
+LEFT_SHIFT_EQ        : 27
+LESS                 : 33 41
+LESS_EQUAL           : 31 39
 LESS_THAN            : 
-LKEY                 : 
-LOGICAL_AND          : 
+LKEY                 : 12
+LOGICAL_AND          : 35 43
 LOGICAL_NOT          : 
-LOGICAL_OR           : 
-LPAREN               : 9 10 11 12 13 23 24 50 51 52
+LOGICAL_OR           : 36 44
+LPAREN               : 45 46 47 48 49 52 53 69 70 71
 MINUS                : 
-MINUS_EQ             : 36
+MINUS_EQ             : 20
 MODULE               : 
-MODULO_EQ            : 39
+MODULO_EQ            : 23
+NEWLINE              : 2 3
 NONE                 : 
 NONLOCAL             : 
 NOT                  : 
-NOT_EQUAL            : 
+NOT_EQUAL            : 30 38
 NULL                 : 
 OR                   : 
 PASS                 : 
 PIPE                 : 
 PLUS                 : 
-PLUS_EQ              : 35
-PRINTF               : 10 12 13
-PRINTLN              : 9 11
+PLUS_EQ              : 19
+PRINTF               : 46 47 49
+PRINTLN              : 45 48
 RAISE                : 
 RBRACKET             : 
 RETURN               : 
-RIGHT_SHIFT_EQ       : 44
-RKEY                 : 
-RPAREN               : 9 10 11 12 13 23 24 50 51 52
+RIGHT_SHIFT_EQ       : 28
+RKEY                 : 12
+RPAREN               : 45 46 47 48 49 52 53 69 70 71
 SCIENTIFIC_NOTATION  : 
-SHORT_VAR_DECL       : 20 21
-STRING               : 30
-STRING_DATA_TYPE     : 49
+SHORT_VAR_DECL       : 17 18
+STRING               : 59
+STRING_DATA_TYPE     : 68
 TIMES                : 
-TIMES_EQ             : 37
-TRUE                 : 22
+TIMES_EQ             : 21
+TRUE                 : 
 TRY                  : 
-VAR                  : 16 18
-WHILE                : 22
+VAR                  : 13 15
 WITH                 : 
 YIELD                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-P_DER                : 22
-arithmetic_operation : 5
-assignment           : 3
+arithmetic_operation : 
+assignment           : 10
 call_function        : 8
-data_type            : 16 17 18 19
+comparation_operation : 
+data_type            : 13 14 15 16
 def_function         : 7
-identifiers          : 13 15 15 52
-input                : 
-parameter            : 25 26
-parameters           : 23 26
-print                : 1
-print_withoutvalue   : 2
-sentence             : 22
-sentencia            : 23 0
-short_assignment     : 4
-singular             : 22
-un                   : 22
-valor                : 22
-value                : 11 12 13 16 17 20 27 28 29 35 36 37 38 39 40 41 42 43 44 51
-values               : 24 29
-while                : 6
+for                  : 6
+identifiers          : 47 51 51 71
+input                : 9
+parameter            : 54 55
+parameters           : 52 55
+print                : 4
+print_withoutvalue   : 5
+program              : 2 3 12 0
+rule_comparation     : 12
+sentencia            : 1 3 52
+short_assignment     : 11
+value                : 13 14 17 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 44 45 46 47 56 57 58 70
+values               : 53 58
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . sentencia
+    (2) program -> . program NEWLINE
+    (3) program -> . program NEWLINE sentencia
+    (4) sentencia -> . print
+    (5) sentencia -> . print_withoutvalue
+    (6) sentencia -> . for
+    (7) sentencia -> . def_function
+    (8) sentencia -> . call_function
+    (9) sentencia -> . input
+    (10) sentencia -> . assignment
+    (11) sentencia -> . short_assignment
+    (45) print -> . FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+    (46) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+    (47) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (48) print_withoutvalue -> . FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+    (49) print_withoutvalue -> . FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+    (12) for -> . FOR rule_comparation LKEY program RKEY
+    (52) def_function -> . DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+    (53) call_function -> . IDENTIFIER LPAREN values RPAREN
+    (69) input -> . INPUT LPAREN RPAREN
+    (70) input -> . INPUT LPAREN value RPAREN
+    (71) input -> . INPUT LPAREN identifiers RPAREN
+    (13) assignment -> . VAR IDENTIFIER data_type EQUAL value
+    (14) assignment -> . CONST IDENTIFIER data_type EQUAL value
+    (15) assignment -> . VAR IDENTIFIER data_type EQUAL IDENTIFIER
+    (16) assignment -> . CONST IDENTIFIER data_type EQUAL IDENTIFIER
+    (17) short_assignment -> . IDENTIFIER SHORT_VAR_DECL value
+    (18) short_assignment -> . IDENTIFIER SHORT_VAR_DECL IDENTIFIER
+
+    FMT_LIBRARY     shift and go to state 11
+    FOR             shift and go to state 12
+    DEF             shift and go to state 13
+    IDENTIFIER      shift and go to state 14
+    INPUT           shift and go to state 15
+    VAR             shift and go to state 16
+    CONST           shift and go to state 17
+
+    program                        shift and go to state 1
+    sentencia                      shift and go to state 2
+    print                          shift and go to state 3
+    print_withoutvalue             shift and go to state 4
+    for                            shift and go to state 5
+    def_function                   shift and go to state 6
+    call_function                  shift and go to state 7
+    input                          shift and go to state 8
+    assignment                     shift and go to state 9
+    short_assignment               shift and go to state 10
+
+state 1
+
+    (0) S' -> program .
+    (2) program -> program . NEWLINE
+    (3) program -> program . NEWLINE sentencia
+
+    NEWLINE         shift and go to state 18
+
+
+state 2
+
+    (1) program -> sentencia .
+
+    NEWLINE         reduce using rule 1 (program -> sentencia .)
+    $end            reduce using rule 1 (program -> sentencia .)
+    RKEY            reduce using rule 1 (program -> sentencia .)
+
+
+state 3
+
+    (4) sentencia -> print .
+
+    NEWLINE         reduce using rule 4 (sentencia -> print .)
+    $end            reduce using rule 4 (sentencia -> print .)
+    RKEY            reduce using rule 4 (sentencia -> print .)
+
+
+state 4
+
+    (5) sentencia -> print_withoutvalue .
+
+    NEWLINE         reduce using rule 5 (sentencia -> print_withoutvalue .)
+    $end            reduce using rule 5 (sentencia -> print_withoutvalue .)
+    RKEY            reduce using rule 5 (sentencia -> print_withoutvalue .)
+
+
+state 5
+
+    (6) sentencia -> for .
+
+    NEWLINE         reduce using rule 6 (sentencia -> for .)
+    $end            reduce using rule 6 (sentencia -> for .)
+    RKEY            reduce using rule 6 (sentencia -> for .)
+
+
+state 6
+
+    (7) sentencia -> def_function .
+
+    NEWLINE         reduce using rule 7 (sentencia -> def_function .)
+    $end            reduce using rule 7 (sentencia -> def_function .)
+    RKEY            reduce using rule 7 (sentencia -> def_function .)
+
+
+state 7
+
+    (8) sentencia -> call_function .
+
+    NEWLINE         reduce using rule 8 (sentencia -> call_function .)
+    $end            reduce using rule 8 (sentencia -> call_function .)
+    RKEY            reduce using rule 8 (sentencia -> call_function .)
+
+
+state 8
+
+    (9) sentencia -> input .
+
+    NEWLINE         reduce using rule 9 (sentencia -> input .)
+    $end            reduce using rule 9 (sentencia -> input .)
+    RKEY            reduce using rule 9 (sentencia -> input .)
+
+
+state 9
+
+    (10) sentencia -> assignment .
+
+    NEWLINE         reduce using rule 10 (sentencia -> assignment .)
+    $end            reduce using rule 10 (sentencia -> assignment .)
+    RKEY            reduce using rule 10 (sentencia -> assignment .)
+
+
+state 10
+
+    (11) sentencia -> short_assignment .
+
+    NEWLINE         reduce using rule 11 (sentencia -> short_assignment .)
+    $end            reduce using rule 11 (sentencia -> short_assignment .)
+    RKEY            reduce using rule 11 (sentencia -> short_assignment .)
+
+
+state 11
+
+    (45) print -> FMT_LIBRARY . DOT PRINTLN LPAREN value RPAREN
+    (46) print -> FMT_LIBRARY . DOT PRINTF LPAREN value COMMA RPAREN
+    (47) print -> FMT_LIBRARY . DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (48) print_withoutvalue -> FMT_LIBRARY . DOT PRINTLN LPAREN RPAREN
+    (49) print_withoutvalue -> FMT_LIBRARY . DOT PRINTF LPAREN RPAREN
+
+    DOT             shift and go to state 19
+
+
+state 12
+
+    (12) for -> FOR . rule_comparation LKEY program RKEY
+    (29) rule_comparation -> . IDENTIFIER EQUALEQUAL value
+    (30) rule_comparation -> . IDENTIFIER NOT_EQUAL value
+    (31) rule_comparation -> . IDENTIFIER LESS_EQUAL value
+    (32) rule_comparation -> . IDENTIFIER GREATER_EQUAL value
+    (33) rule_comparation -> . IDENTIFIER LESS value
+    (34) rule_comparation -> . IDENTIFIER GREATER value
+    (35) rule_comparation -> . IDENTIFIER LOGICAL_AND value
+    (36) rule_comparation -> . IDENTIFIER LOGICAL_OR value
+
+    IDENTIFIER      shift and go to state 21
+
+    rule_comparation               shift and go to state 20
+
+state 13
+
+    (52) def_function -> DEF . IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+
+    IDENTIFIER      shift and go to state 22
+
+
+state 14
+
+    (53) call_function -> IDENTIFIER . LPAREN values RPAREN
+    (17) short_assignment -> IDENTIFIER . SHORT_VAR_DECL value
+    (18) short_assignment -> IDENTIFIER . SHORT_VAR_DECL IDENTIFIER
+
+    LPAREN          shift and go to state 23
+    SHORT_VAR_DECL  shift and go to state 24
+
+
+state 15
+
+    (69) input -> INPUT . LPAREN RPAREN
+    (70) input -> INPUT . LPAREN value RPAREN
+    (71) input -> INPUT . LPAREN identifiers RPAREN
+
+    LPAREN          shift and go to state 25
+
+
+state 16
+
+    (13) assignment -> VAR . IDENTIFIER data_type EQUAL value
+    (15) assignment -> VAR . IDENTIFIER data_type EQUAL IDENTIFIER
+
+    IDENTIFIER      shift and go to state 26
+
+
+state 17
+
+    (14) assignment -> CONST . IDENTIFIER data_type EQUAL value
+    (16) assignment -> CONST . IDENTIFIER data_type EQUAL IDENTIFIER
+
+    IDENTIFIER      shift and go to state 27
+
+
+state 18
+
+    (2) program -> program NEWLINE .
+    (3) program -> program NEWLINE . sentencia
+    (4) sentencia -> . print
+    (5) sentencia -> . print_withoutvalue
+    (6) sentencia -> . for
+    (7) sentencia -> . def_function
+    (8) sentencia -> . call_function
+    (9) sentencia -> . input
+    (10) sentencia -> . assignment
+    (11) sentencia -> . short_assignment
+    (45) print -> . FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+    (46) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+    (47) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (48) print_withoutvalue -> . FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+    (49) print_withoutvalue -> . FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+    (12) for -> . FOR rule_comparation LKEY program RKEY
+    (52) def_function -> . DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+    (53) call_function -> . IDENTIFIER LPAREN values RPAREN
+    (69) input -> . INPUT LPAREN RPAREN
+    (70) input -> . INPUT LPAREN value RPAREN
+    (71) input -> . INPUT LPAREN identifiers RPAREN
+    (13) assignment -> . VAR IDENTIFIER data_type EQUAL value
+    (14) assignment -> . CONST IDENTIFIER data_type EQUAL value
+    (15) assignment -> . VAR IDENTIFIER data_type EQUAL IDENTIFIER
+    (16) assignment -> . CONST IDENTIFIER data_type EQUAL IDENTIFIER
+    (17) short_assignment -> . IDENTIFIER SHORT_VAR_DECL value
+    (18) short_assignment -> . IDENTIFIER SHORT_VAR_DECL IDENTIFIER
+
+    NEWLINE         reduce using rule 2 (program -> program NEWLINE .)
+    $end            reduce using rule 2 (program -> program NEWLINE .)
+    RKEY            reduce using rule 2 (program -> program NEWLINE .)
+    FMT_LIBRARY     shift and go to state 11
+    FOR             shift and go to state 12
+    DEF             shift and go to state 13
+    IDENTIFIER      shift and go to state 14
+    INPUT           shift and go to state 15
+    VAR             shift and go to state 16
+    CONST           shift and go to state 17
+
+    sentencia                      shift and go to state 28
+    print                          shift and go to state 3
+    print_withoutvalue             shift and go to state 4
+    for                            shift and go to state 5
+    def_function                   shift and go to state 6
+    call_function                  shift and go to state 7
+    input                          shift and go to state 8
+    assignment                     shift and go to state 9
+    short_assignment               shift and go to state 10
+
+state 19
+
+    (45) print -> FMT_LIBRARY DOT . PRINTLN LPAREN value RPAREN
+    (46) print -> FMT_LIBRARY DOT . PRINTF LPAREN value COMMA RPAREN
+    (47) print -> FMT_LIBRARY DOT . PRINTF LPAREN value COMMA identifiers RPAREN
+    (48) print_withoutvalue -> FMT_LIBRARY DOT . PRINTLN LPAREN RPAREN
+    (49) print_withoutvalue -> FMT_LIBRARY DOT . PRINTF LPAREN RPAREN
+
+    PRINTLN         shift and go to state 29
+    PRINTF          shift and go to state 30
+
+
+state 20
+
+    (12) for -> FOR rule_comparation . LKEY program RKEY
+
+    LKEY            shift and go to state 31
+
+
+state 21
+
+    (29) rule_comparation -> IDENTIFIER . EQUALEQUAL value
+    (30) rule_comparation -> IDENTIFIER . NOT_EQUAL value
+    (31) rule_comparation -> IDENTIFIER . LESS_EQUAL value
+    (32) rule_comparation -> IDENTIFIER . GREATER_EQUAL value
+    (33) rule_comparation -> IDENTIFIER . LESS value
+    (34) rule_comparation -> IDENTIFIER . GREATER value
+    (35) rule_comparation -> IDENTIFIER . LOGICAL_AND value
+    (36) rule_comparation -> IDENTIFIER . LOGICAL_OR value
+
+    EQUALEQUAL      shift and go to state 32
+    NOT_EQUAL       shift and go to state 33
+    LESS_EQUAL      shift and go to state 34
+    GREATER_EQUAL   shift and go to state 35
+    LESS            shift and go to state 36
+    GREATER         shift and go to state 37
+    LOGICAL_AND     shift and go to state 38
+    LOGICAL_OR      shift and go to state 39
+
+
+state 22
+
+    (52) def_function -> DEF IDENTIFIER . LPAREN parameters RPAREN COLON sentencia
+
+    LPAREN          shift and go to state 40
+
+
+state 23
+
+    (53) call_function -> IDENTIFIER LPAREN . values RPAREN
+    (57) values -> . value
+    (58) values -> . values COMMA value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    values                         shift and go to state 41
+    value                          shift and go to state 42
+
+state 24
+
+    (17) short_assignment -> IDENTIFIER SHORT_VAR_DECL . value
+    (18) short_assignment -> IDENTIFIER SHORT_VAR_DECL . IDENTIFIER
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    IDENTIFIER      shift and go to state 48
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 49
+
+state 25
+
+    (69) input -> INPUT LPAREN . RPAREN
+    (70) input -> INPUT LPAREN . value RPAREN
+    (71) input -> INPUT LPAREN . identifiers RPAREN
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+    (50) identifiers -> . IDENTIFIER
+    (51) identifiers -> . identifiers COMMA identifiers
+
+    RPAREN          shift and go to state 50
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+    IDENTIFIER      shift and go to state 53
+
+    value                          shift and go to state 51
+    identifiers                    shift and go to state 52
+
+state 26
+
+    (13) assignment -> VAR IDENTIFIER . data_type EQUAL value
+    (15) assignment -> VAR IDENTIFIER . data_type EQUAL IDENTIFIER
+    (64) data_type -> . INTEGER_DATA_TYPE
+    (65) data_type -> . FLOAT32_DATA_TYPE
+    (66) data_type -> . FLOAT64_DATA_TYPE
+    (67) data_type -> . BOOLEAN_DATA_TYPE
+    (68) data_type -> . STRING_DATA_TYPE
+
+    INTEGER_DATA_TYPE shift and go to state 55
+    FLOAT32_DATA_TYPE shift and go to state 56
+    FLOAT64_DATA_TYPE shift and go to state 57
+    BOOLEAN_DATA_TYPE shift and go to state 58
+    STRING_DATA_TYPE shift and go to state 59
+
+    data_type                      shift and go to state 54
+
+state 27
+
+    (14) assignment -> CONST IDENTIFIER . data_type EQUAL value
+    (16) assignment -> CONST IDENTIFIER . data_type EQUAL IDENTIFIER
+    (64) data_type -> . INTEGER_DATA_TYPE
+    (65) data_type -> . FLOAT32_DATA_TYPE
+    (66) data_type -> . FLOAT64_DATA_TYPE
+    (67) data_type -> . BOOLEAN_DATA_TYPE
+    (68) data_type -> . STRING_DATA_TYPE
+
+    INTEGER_DATA_TYPE shift and go to state 55
+    FLOAT32_DATA_TYPE shift and go to state 56
+    FLOAT64_DATA_TYPE shift and go to state 57
+    BOOLEAN_DATA_TYPE shift and go to state 58
+    STRING_DATA_TYPE shift and go to state 59
+
+    data_type                      shift and go to state 60
+
+state 28
+
+    (3) program -> program NEWLINE sentencia .
+
+    NEWLINE         reduce using rule 3 (program -> program NEWLINE sentencia .)
+    $end            reduce using rule 3 (program -> program NEWLINE sentencia .)
+    RKEY            reduce using rule 3 (program -> program NEWLINE sentencia .)
+
+
+state 29
+
+    (45) print -> FMT_LIBRARY DOT PRINTLN . LPAREN value RPAREN
+    (48) print_withoutvalue -> FMT_LIBRARY DOT PRINTLN . LPAREN RPAREN
+
+    LPAREN          shift and go to state 61
+
+
+state 30
+
+    (46) print -> FMT_LIBRARY DOT PRINTF . LPAREN value COMMA RPAREN
+    (47) print -> FMT_LIBRARY DOT PRINTF . LPAREN value COMMA identifiers RPAREN
+    (49) print_withoutvalue -> FMT_LIBRARY DOT PRINTF . LPAREN RPAREN
+
+    LPAREN          shift and go to state 62
+
+
+state 31
+
+    (12) for -> FOR rule_comparation LKEY . program RKEY
+    (1) program -> . sentencia
+    (2) program -> . program NEWLINE
+    (3) program -> . program NEWLINE sentencia
+    (4) sentencia -> . print
+    (5) sentencia -> . print_withoutvalue
+    (6) sentencia -> . for
+    (7) sentencia -> . def_function
+    (8) sentencia -> . call_function
+    (9) sentencia -> . input
+    (10) sentencia -> . assignment
+    (11) sentencia -> . short_assignment
+    (45) print -> . FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+    (46) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+    (47) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (48) print_withoutvalue -> . FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+    (49) print_withoutvalue -> . FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+    (12) for -> . FOR rule_comparation LKEY program RKEY
+    (52) def_function -> . DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+    (53) call_function -> . IDENTIFIER LPAREN values RPAREN
+    (69) input -> . INPUT LPAREN RPAREN
+    (70) input -> . INPUT LPAREN value RPAREN
+    (71) input -> . INPUT LPAREN identifiers RPAREN
+    (13) assignment -> . VAR IDENTIFIER data_type EQUAL value
+    (14) assignment -> . CONST IDENTIFIER data_type EQUAL value
+    (15) assignment -> . VAR IDENTIFIER data_type EQUAL IDENTIFIER
+    (16) assignment -> . CONST IDENTIFIER data_type EQUAL IDENTIFIER
+    (17) short_assignment -> . IDENTIFIER SHORT_VAR_DECL value
+    (18) short_assignment -> . IDENTIFIER SHORT_VAR_DECL IDENTIFIER
+
+    FMT_LIBRARY     shift and go to state 11
+    FOR             shift and go to state 12
+    DEF             shift and go to state 13
+    IDENTIFIER      shift and go to state 14
+    INPUT           shift and go to state 15
+    VAR             shift and go to state 16
+    CONST           shift and go to state 17
+
+    program                        shift and go to state 63
+    sentencia                      shift and go to state 2
+    print                          shift and go to state 3
+    print_withoutvalue             shift and go to state 4
+    for                            shift and go to state 5
+    def_function                   shift and go to state 6
+    call_function                  shift and go to state 7
+    input                          shift and go to state 8
+    assignment                     shift and go to state 9
+    short_assignment               shift and go to state 10
+
+state 32
+
+    (29) rule_comparation -> IDENTIFIER EQUALEQUAL . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 64
+
+state 33
+
+    (30) rule_comparation -> IDENTIFIER NOT_EQUAL . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 65
+
+state 34
+
+    (31) rule_comparation -> IDENTIFIER LESS_EQUAL . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 66
+
+state 35
+
+    (32) rule_comparation -> IDENTIFIER GREATER_EQUAL . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 67
+
+state 36
+
+    (33) rule_comparation -> IDENTIFIER LESS . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 68
+
+state 37
+
+    (34) rule_comparation -> IDENTIFIER GREATER . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 69
+
+state 38
+
+    (35) rule_comparation -> IDENTIFIER LOGICAL_AND . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 70
+
+state 39
+
+    (36) rule_comparation -> IDENTIFIER LOGICAL_OR . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 71
+
+state 40
+
+    (52) def_function -> DEF IDENTIFIER LPAREN . parameters RPAREN COLON sentencia
+    (54) parameters -> . parameter
+    (55) parameters -> . parameters COMMA parameter
+    (56) parameter -> . IDENTIFIER value
+
+    IDENTIFIER      shift and go to state 72
+
+    parameters                     shift and go to state 73
+    parameter                      shift and go to state 74
+
+state 41
+
+    (53) call_function -> IDENTIFIER LPAREN values . RPAREN
+    (58) values -> values . COMMA value
+
+    RPAREN          shift and go to state 75
+    COMMA           shift and go to state 76
+
+
+state 42
+
+    (57) values -> value .
+
+    RPAREN          reduce using rule 57 (values -> value .)
+    COMMA           reduce using rule 57 (values -> value .)
+
+
+state 43
+
+    (59) value -> STRING .
+
+    RPAREN          reduce using rule 59 (value -> STRING .)
+    COMMA           reduce using rule 59 (value -> STRING .)
+    NEWLINE         reduce using rule 59 (value -> STRING .)
+    $end            reduce using rule 59 (value -> STRING .)
+    RKEY            reduce using rule 59 (value -> STRING .)
+    LKEY            reduce using rule 59 (value -> STRING .)
+
+
+state 44
+
+    (60) value -> INTEGER .
+
+    RPAREN          reduce using rule 60 (value -> INTEGER .)
+    COMMA           reduce using rule 60 (value -> INTEGER .)
+    NEWLINE         reduce using rule 60 (value -> INTEGER .)
+    $end            reduce using rule 60 (value -> INTEGER .)
+    RKEY            reduce using rule 60 (value -> INTEGER .)
+    LKEY            reduce using rule 60 (value -> INTEGER .)
+
+
+state 45
+
+    (61) value -> FLOAT32 .
+
+    RPAREN          reduce using rule 61 (value -> FLOAT32 .)
+    COMMA           reduce using rule 61 (value -> FLOAT32 .)
+    NEWLINE         reduce using rule 61 (value -> FLOAT32 .)
+    $end            reduce using rule 61 (value -> FLOAT32 .)
+    RKEY            reduce using rule 61 (value -> FLOAT32 .)
+    LKEY            reduce using rule 61 (value -> FLOAT32 .)
+
+
+state 46
+
+    (62) value -> FLOAT64 .
+
+    RPAREN          reduce using rule 62 (value -> FLOAT64 .)
+    COMMA           reduce using rule 62 (value -> FLOAT64 .)
+    NEWLINE         reduce using rule 62 (value -> FLOAT64 .)
+    $end            reduce using rule 62 (value -> FLOAT64 .)
+    RKEY            reduce using rule 62 (value -> FLOAT64 .)
+    LKEY            reduce using rule 62 (value -> FLOAT64 .)
+
+
+state 47
+
+    (63) value -> BOOLEAN .
+
+    RPAREN          reduce using rule 63 (value -> BOOLEAN .)
+    COMMA           reduce using rule 63 (value -> BOOLEAN .)
+    NEWLINE         reduce using rule 63 (value -> BOOLEAN .)
+    $end            reduce using rule 63 (value -> BOOLEAN .)
+    RKEY            reduce using rule 63 (value -> BOOLEAN .)
+    LKEY            reduce using rule 63 (value -> BOOLEAN .)
+
+
+state 48
+
+    (18) short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER .
+
+    NEWLINE         reduce using rule 18 (short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER .)
+    $end            reduce using rule 18 (short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER .)
+    RKEY            reduce using rule 18 (short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER .)
+
+
+state 49
+
+    (17) short_assignment -> IDENTIFIER SHORT_VAR_DECL value .
+
+    NEWLINE         reduce using rule 17 (short_assignment -> IDENTIFIER SHORT_VAR_DECL value .)
+    $end            reduce using rule 17 (short_assignment -> IDENTIFIER SHORT_VAR_DECL value .)
+    RKEY            reduce using rule 17 (short_assignment -> IDENTIFIER SHORT_VAR_DECL value .)
+
+
+state 50
+
+    (69) input -> INPUT LPAREN RPAREN .
+
+    NEWLINE         reduce using rule 69 (input -> INPUT LPAREN RPAREN .)
+    $end            reduce using rule 69 (input -> INPUT LPAREN RPAREN .)
+    RKEY            reduce using rule 69 (input -> INPUT LPAREN RPAREN .)
+
+
+state 51
+
+    (70) input -> INPUT LPAREN value . RPAREN
+
+    RPAREN          shift and go to state 77
+
+
+state 52
+
+    (71) input -> INPUT LPAREN identifiers . RPAREN
+    (51) identifiers -> identifiers . COMMA identifiers
+
+    RPAREN          shift and go to state 78
+    COMMA           shift and go to state 79
+
+
+state 53
+
+    (50) identifiers -> IDENTIFIER .
+
+    RPAREN          reduce using rule 50 (identifiers -> IDENTIFIER .)
+    COMMA           reduce using rule 50 (identifiers -> IDENTIFIER .)
+
+
+state 54
+
+    (13) assignment -> VAR IDENTIFIER data_type . EQUAL value
+    (15) assignment -> VAR IDENTIFIER data_type . EQUAL IDENTIFIER
+
+    EQUAL           shift and go to state 80
+
+
+state 55
+
+    (64) data_type -> INTEGER_DATA_TYPE .
+
+    EQUAL           reduce using rule 64 (data_type -> INTEGER_DATA_TYPE .)
+
+
+state 56
+
+    (65) data_type -> FLOAT32_DATA_TYPE .
+
+    EQUAL           reduce using rule 65 (data_type -> FLOAT32_DATA_TYPE .)
+
+
+state 57
+
+    (66) data_type -> FLOAT64_DATA_TYPE .
+
+    EQUAL           reduce using rule 66 (data_type -> FLOAT64_DATA_TYPE .)
+
+
+state 58
+
+    (67) data_type -> BOOLEAN_DATA_TYPE .
+
+    EQUAL           reduce using rule 67 (data_type -> BOOLEAN_DATA_TYPE .)
+
+
+state 59
+
+    (68) data_type -> STRING_DATA_TYPE .
+
+    EQUAL           reduce using rule 68 (data_type -> STRING_DATA_TYPE .)
+
+
+state 60
+
+    (14) assignment -> CONST IDENTIFIER data_type . EQUAL value
+    (16) assignment -> CONST IDENTIFIER data_type . EQUAL IDENTIFIER
+
+    EQUAL           shift and go to state 81
+
+
+state 61
+
+    (45) print -> FMT_LIBRARY DOT PRINTLN LPAREN . value RPAREN
+    (48) print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN . RPAREN
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    RPAREN          shift and go to state 83
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 82
+
+state 62
+
+    (46) print -> FMT_LIBRARY DOT PRINTF LPAREN . value COMMA RPAREN
+    (47) print -> FMT_LIBRARY DOT PRINTF LPAREN . value COMMA identifiers RPAREN
+    (49) print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN . RPAREN
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    RPAREN          shift and go to state 85
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 84
+
+state 63
+
+    (12) for -> FOR rule_comparation LKEY program . RKEY
+    (2) program -> program . NEWLINE
+    (3) program -> program . NEWLINE sentencia
+
+    RKEY            shift and go to state 86
+    NEWLINE         shift and go to state 18
+
+
+state 64
+
+    (29) rule_comparation -> IDENTIFIER EQUALEQUAL value .
+
+    LKEY            reduce using rule 29 (rule_comparation -> IDENTIFIER EQUALEQUAL value .)
+
+
+state 65
+
+    (30) rule_comparation -> IDENTIFIER NOT_EQUAL value .
+
+    LKEY            reduce using rule 30 (rule_comparation -> IDENTIFIER NOT_EQUAL value .)
+
+
+state 66
+
+    (31) rule_comparation -> IDENTIFIER LESS_EQUAL value .
+
+    LKEY            reduce using rule 31 (rule_comparation -> IDENTIFIER LESS_EQUAL value .)
+
+
+state 67
+
+    (32) rule_comparation -> IDENTIFIER GREATER_EQUAL value .
+
+    LKEY            reduce using rule 32 (rule_comparation -> IDENTIFIER GREATER_EQUAL value .)
+
+
+state 68
+
+    (33) rule_comparation -> IDENTIFIER LESS value .
+
+    LKEY            reduce using rule 33 (rule_comparation -> IDENTIFIER LESS value .)
+
+
+state 69
+
+    (34) rule_comparation -> IDENTIFIER GREATER value .
+
+    LKEY            reduce using rule 34 (rule_comparation -> IDENTIFIER GREATER value .)
+
+
+state 70
+
+    (35) rule_comparation -> IDENTIFIER LOGICAL_AND value .
+
+    LKEY            reduce using rule 35 (rule_comparation -> IDENTIFIER LOGICAL_AND value .)
+
+
+state 71
+
+    (36) rule_comparation -> IDENTIFIER LOGICAL_OR value .
+
+    LKEY            reduce using rule 36 (rule_comparation -> IDENTIFIER LOGICAL_OR value .)
+
+
+state 72
+
+    (56) parameter -> IDENTIFIER . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 87
+
+state 73
+
+    (52) def_function -> DEF IDENTIFIER LPAREN parameters . RPAREN COLON sentencia
+    (55) parameters -> parameters . COMMA parameter
+
+    RPAREN          shift and go to state 88
+    COMMA           shift and go to state 89
+
+
+state 74
+
+    (54) parameters -> parameter .
+
+    RPAREN          reduce using rule 54 (parameters -> parameter .)
+    COMMA           reduce using rule 54 (parameters -> parameter .)
+
+
+state 75
+
+    (53) call_function -> IDENTIFIER LPAREN values RPAREN .
+
+    NEWLINE         reduce using rule 53 (call_function -> IDENTIFIER LPAREN values RPAREN .)
+    $end            reduce using rule 53 (call_function -> IDENTIFIER LPAREN values RPAREN .)
+    RKEY            reduce using rule 53 (call_function -> IDENTIFIER LPAREN values RPAREN .)
+
+
+state 76
+
+    (58) values -> values COMMA . value
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 90
+
+state 77
+
+    (70) input -> INPUT LPAREN value RPAREN .
+
+    NEWLINE         reduce using rule 70 (input -> INPUT LPAREN value RPAREN .)
+    $end            reduce using rule 70 (input -> INPUT LPAREN value RPAREN .)
+    RKEY            reduce using rule 70 (input -> INPUT LPAREN value RPAREN .)
+
+
+state 78
+
+    (71) input -> INPUT LPAREN identifiers RPAREN .
+
+    NEWLINE         reduce using rule 71 (input -> INPUT LPAREN identifiers RPAREN .)
+    $end            reduce using rule 71 (input -> INPUT LPAREN identifiers RPAREN .)
+    RKEY            reduce using rule 71 (input -> INPUT LPAREN identifiers RPAREN .)
+
+
+state 79
+
+    (51) identifiers -> identifiers COMMA . identifiers
+    (50) identifiers -> . IDENTIFIER
+    (51) identifiers -> . identifiers COMMA identifiers
+
+    IDENTIFIER      shift and go to state 53
+
+    identifiers                    shift and go to state 91
+
+state 80
+
+    (13) assignment -> VAR IDENTIFIER data_type EQUAL . value
+    (15) assignment -> VAR IDENTIFIER data_type EQUAL . IDENTIFIER
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    IDENTIFIER      shift and go to state 92
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 93
+
+state 81
+
+    (14) assignment -> CONST IDENTIFIER data_type EQUAL . value
+    (16) assignment -> CONST IDENTIFIER data_type EQUAL . IDENTIFIER
+    (59) value -> . STRING
+    (60) value -> . INTEGER
+    (61) value -> . FLOAT32
+    (62) value -> . FLOAT64
+    (63) value -> . BOOLEAN
+
+    IDENTIFIER      shift and go to state 94
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 95
+
+state 82
+
+    (45) print -> FMT_LIBRARY DOT PRINTLN LPAREN value . RPAREN
+
+    RPAREN          shift and go to state 96
+
+
+state 83
+
+    (48) print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN .
+
+    NEWLINE         reduce using rule 48 (print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN .)
+    $end            reduce using rule 48 (print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN .)
+    RKEY            reduce using rule 48 (print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN .)
+
+
+state 84
+
+    (46) print -> FMT_LIBRARY DOT PRINTF LPAREN value . COMMA RPAREN
+    (47) print -> FMT_LIBRARY DOT PRINTF LPAREN value . COMMA identifiers RPAREN
+
+    COMMA           shift and go to state 97
+
+
+state 85
+
+    (49) print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN .
+
+    NEWLINE         reduce using rule 49 (print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN .)
+    $end            reduce using rule 49 (print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN .)
+    RKEY            reduce using rule 49 (print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN .)
+
+
+state 86
+
+    (12) for -> FOR rule_comparation LKEY program RKEY .
+
+    NEWLINE         reduce using rule 12 (for -> FOR rule_comparation LKEY program RKEY .)
+    $end            reduce using rule 12 (for -> FOR rule_comparation LKEY program RKEY .)
+    RKEY            reduce using rule 12 (for -> FOR rule_comparation LKEY program RKEY .)
+
+
+state 87
+
+    (56) parameter -> IDENTIFIER value .
+
+    RPAREN          reduce using rule 56 (parameter -> IDENTIFIER value .)
+    COMMA           reduce using rule 56 (parameter -> IDENTIFIER value .)
+
+
+state 88
+
+    (52) def_function -> DEF IDENTIFIER LPAREN parameters RPAREN . COLON sentencia
+
+    COLON           shift and go to state 98
+
+
+state 89
+
+    (55) parameters -> parameters COMMA . parameter
+    (56) parameter -> . IDENTIFIER value
+
+    IDENTIFIER      shift and go to state 72
+
+    parameter                      shift and go to state 99
+
+state 90
+
+    (58) values -> values COMMA value .
+
+    RPAREN          reduce using rule 58 (values -> values COMMA value .)
+    COMMA           reduce using rule 58 (values -> values COMMA value .)
+
+
+state 91
+
+    (51) identifiers -> identifiers COMMA identifiers .
+    (51) identifiers -> identifiers . COMMA identifiers
+
+  ! shift/reduce conflict for COMMA resolved as shift
+    RPAREN          reduce using rule 51 (identifiers -> identifiers COMMA identifiers .)
+    COMMA           shift and go to state 79
+
+  ! COMMA           [ reduce using rule 51 (identifiers -> identifiers COMMA identifiers .) ]
+
+
+state 92
+
+    (15) assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER .
+
+    NEWLINE         reduce using rule 15 (assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER .)
+    $end            reduce using rule 15 (assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER .)
+    RKEY            reduce using rule 15 (assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER .)
+
+
+state 93
+
+    (13) assignment -> VAR IDENTIFIER data_type EQUAL value .
+
+    NEWLINE         reduce using rule 13 (assignment -> VAR IDENTIFIER data_type EQUAL value .)
+    $end            reduce using rule 13 (assignment -> VAR IDENTIFIER data_type EQUAL value .)
+    RKEY            reduce using rule 13 (assignment -> VAR IDENTIFIER data_type EQUAL value .)
+
+
+state 94
+
+    (16) assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER .
+
+    NEWLINE         reduce using rule 16 (assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER .)
+    $end            reduce using rule 16 (assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER .)
+    RKEY            reduce using rule 16 (assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER .)
+
+
+state 95
+
+    (14) assignment -> CONST IDENTIFIER data_type EQUAL value .
+
+    NEWLINE         reduce using rule 14 (assignment -> CONST IDENTIFIER data_type EQUAL value .)
+    $end            reduce using rule 14 (assignment -> CONST IDENTIFIER data_type EQUAL value .)
+    RKEY            reduce using rule 14 (assignment -> CONST IDENTIFIER data_type EQUAL value .)
+
+
+state 96
+
+    (45) print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN .
+
+    NEWLINE         reduce using rule 45 (print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN .)
+    $end            reduce using rule 45 (print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN .)
+    RKEY            reduce using rule 45 (print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN .)
+
+
+state 97
+
+    (46) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA . RPAREN
+    (47) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA . identifiers RPAREN
+    (50) identifiers -> . IDENTIFIER
+    (51) identifiers -> . identifiers COMMA identifiers
+
+    RPAREN          shift and go to state 100
+    IDENTIFIER      shift and go to state 53
+
+    identifiers                    shift and go to state 101
+
+state 98
+
+    (52) def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON . sentencia
+    (4) sentencia -> . print
+    (5) sentencia -> . print_withoutvalue
+    (6) sentencia -> . for
+    (7) sentencia -> . def_function
+    (8) sentencia -> . call_function
+    (9) sentencia -> . input
+    (10) sentencia -> . assignment
+    (11) sentencia -> . short_assignment
+    (45) print -> . FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+    (46) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+    (47) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (48) print_withoutvalue -> . FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+    (49) print_withoutvalue -> . FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+    (12) for -> . FOR rule_comparation LKEY program RKEY
+    (52) def_function -> . DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+    (53) call_function -> . IDENTIFIER LPAREN values RPAREN
+    (69) input -> . INPUT LPAREN RPAREN
+    (70) input -> . INPUT LPAREN value RPAREN
+    (71) input -> . INPUT LPAREN identifiers RPAREN
+    (13) assignment -> . VAR IDENTIFIER data_type EQUAL value
+    (14) assignment -> . CONST IDENTIFIER data_type EQUAL value
+    (15) assignment -> . VAR IDENTIFIER data_type EQUAL IDENTIFIER
+    (16) assignment -> . CONST IDENTIFIER data_type EQUAL IDENTIFIER
+    (17) short_assignment -> . IDENTIFIER SHORT_VAR_DECL value
+    (18) short_assignment -> . IDENTIFIER SHORT_VAR_DECL IDENTIFIER
+
+    FMT_LIBRARY     shift and go to state 11
+    FOR             shift and go to state 12
+    DEF             shift and go to state 13
+    IDENTIFIER      shift and go to state 14
+    INPUT           shift and go to state 15
+    VAR             shift and go to state 16
+    CONST           shift and go to state 17
+
+    sentencia                      shift and go to state 102
+    print                          shift and go to state 3
+    print_withoutvalue             shift and go to state 4
+    for                            shift and go to state 5
+    def_function                   shift and go to state 6
+    call_function                  shift and go to state 7
+    input                          shift and go to state 8
+    assignment                     shift and go to state 9
+    short_assignment               shift and go to state 10
+
+state 99
+
+    (55) parameters -> parameters COMMA parameter .
+
+    RPAREN          reduce using rule 55 (parameters -> parameters COMMA parameter .)
+    COMMA           reduce using rule 55 (parameters -> parameters COMMA parameter .)
+
+
+state 100
+
+    (46) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN .
+
+    NEWLINE         reduce using rule 46 (print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN .)
+    $end            reduce using rule 46 (print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN .)
+    RKEY            reduce using rule 46 (print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN .)
+
+
+state 101
+
+    (47) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers . RPAREN
+    (51) identifiers -> identifiers . COMMA identifiers
+
+    RPAREN          shift and go to state 103
+    COMMA           shift and go to state 79
+
+
+state 102
+
+    (52) def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia .
+
+    NEWLINE         reduce using rule 52 (def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia .)
+    $end            reduce using rule 52 (def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia .)
+    RKEY            reduce using rule 52 (def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia .)
+
+
+state 103
+
+    (47) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN .
+
+    NEWLINE         reduce using rule 47 (print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN .)
+    $end            reduce using rule 47 (print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN .)
+    RKEY            reduce using rule 47 (print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for COMMA in state 91 resolved as shift

@@ -5,7 +5,6 @@ reserved = {
     'if': 'IF',
     'else': 'ELSE',
     'def': 'DEF',
-    'while': 'WHILE',
     'for': 'FOR',
     'in': 'IN',
     'return': 'RETURN',
@@ -108,6 +107,7 @@ tokens = (
     'LESS_THAN',
     'COLON',
     'DOT',
+    'NEWLINE',
 ) + tuple(reserved.values())
 
 #####              Juan Demera              #####
@@ -132,10 +132,10 @@ t_LEFT_SHIFT_EQ = r'<<='
 t_RIGHT_SHIFT_EQ = r'>>='
 t_EQUALEQUAL = r'=='
 t_NOT_EQUAL = r'!='
-t_LESS = r'<'
-t_GREATER = r'>'
 t_LESS_EQUAL = r'<='
 t_GREATER_EQUAL = r'>='
+t_LESS = r'<'
+t_GREATER = r'>'
 t_LOGICAL_AND = r'&&'
 t_LOGICAL_OR = r'\|\|'
 t_LOGICAL_NOT = r'!'
@@ -157,8 +157,8 @@ t_COLON = r':'
 t_COMMA = r','
 t_RBRACKET = '\['
 t_LBRACKET = '\]'
-t_RKEY = '\['
-t_LKEY = '\]'
+t_LKEY = '{'
+t_RKEY = '}'
 t_DOT = '\.'
 
 #####              Paula Peralta              #####
@@ -240,7 +240,7 @@ def t_INTEGER(t):
 
 
 # Expresión regular para reconocer saltos de línea
-def t_newline(t):
+def t_NEWLINE(t):
   r'\n+'
   t.lexer.lineno += len(t.value)
 
@@ -310,6 +310,7 @@ codeJuan = """
   m >= 60
   n && true
   o || false
+  \{\}
   """
 
 code = codePaula + codeJorge + codeJuan
