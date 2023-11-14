@@ -17,7 +17,7 @@ reserved = {
     'null': 'NULL',
     'Println': 'PRINTLN',
     'Printf': 'PRINTF',
-    'FMT': 'FMT_LIBRARY',
+    'fmt': 'FMT_LIBRARY',
     'class': 'CLASS',
     'finally': 'FINALLY',
     'is': 'IS',
@@ -107,7 +107,6 @@ tokens = (
     'LESS_THAN',
     'COLON',
     'DOT',
-    'NEWLINE',
 ) + tuple(reserved.values())
 
 #####              Juan Demera              #####
@@ -310,7 +309,6 @@ codeJuan = """
   m >= 60
   n && true
   o || false
-  \{\}
   """
 
 code = codePaula + codeJorge + codeJuan

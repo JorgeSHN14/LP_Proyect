@@ -4,6 +4,7 @@ from lex_analyzer import tokens
 
 def p_program(p):
   ''' program : sentencia
+              | sentencia newline program
   '''
 
 def p_sentencia(p):
@@ -127,20 +128,25 @@ def p_input(p):
              | INPUT LPAREN identifiers RPAREN
     '''
 
+def p_newline(p):
+    '''
+    newline : \n
+    '''
 
 def p_error(p):
     print("Error sintáctico en '%s'" % p)
 
 parser = sint.yacc()
 
-codePaula = '''
-
+codePaula = '''input()
+var id int = 4
+input(y, z)
+input(3)
 '''
 codeJorge = '''var id int = 4
 a := 3
-tmf.Printf("Number: \%\d", id)
-tmf.Printf("Number: \%\d", 4)
-a'''
+fmt.Printf("Number: \%\d", id)
+fmt.Println("Este es un print simple")'''
 codeJuan = """
 
 """
