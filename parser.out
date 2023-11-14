@@ -92,8 +92,8 @@ Rule 19    assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER
 Rule 20    short_assignment -> IDENTIFIER SHORT_VAR_DECL value
 Rule 21    short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER
 Rule 22    while -> WHILE un valor singular TRUE P_DER COLON sentence
-Rule 23    def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentence
-Rule 24    call_function -> IDENTIFIER LPAREN valores RPAREN
+Rule 23    def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+Rule 24    call_function -> IDENTIFIER LPAREN values RPAREN
 Rule 25    parameters -> parameter
 Rule 26    parameters -> parameters COMMA parameter
 Rule 27    parameter -> IDENTIFIER value
@@ -120,6 +120,8 @@ Rule 47    data_type -> FLOAT64_DATA_TYPE
 Rule 48    data_type -> BOOLEAN_DATA_TYPE
 Rule 49    data_type -> STRING_DATA_TYPE
 Rule 50    input -> INPUT LPAREN RPAREN
+Rule 51    input -> INPUT LPAREN value RPAREN
+Rule 52    input -> INPUT LPAREN identifiers RPAREN
 
 Terminals, with rules where they appear
 
@@ -175,7 +177,7 @@ IDENTIFIER           : 14 16 17 18 18 19 19 20 21 21 23 24 27 35 36 37 38 39 40 
 IF                   : 
 IMPORT               : 
 IN                   : 
-INPUT                : 50
+INPUT                : 50 51 52
 INTEGER              : 31
 INTEGER_DATA_TYPE    : 45
 IS                   : 
@@ -189,7 +191,7 @@ LKEY                 :
 LOGICAL_AND          : 
 LOGICAL_NOT          : 
 LOGICAL_OR           : 
-LPAREN               : 9 10 11 12 13 23 24 50
+LPAREN               : 9 10 11 12 13 23 24 50 51 52
 MINUS                : 
 MINUS_EQ             : 36
 MODULE               : 
@@ -211,7 +213,7 @@ RBRACKET             :
 RETURN               : 
 RIGHT_SHIFT_EQ       : 44
 RKEY                 : 
-RPAREN               : 9 10 11 12 13 23 24 50
+RPAREN               : 9 10 11 12 13 23 24 50 51 52
 SCIENTIFIC_NOTATION  : 
 SHORT_VAR_DECL       : 20 21
 STRING               : 30
@@ -234,20 +236,19 @@ assignment           : 3
 call_function        : 8
 data_type            : 16 17 18 19
 def_function         : 7
-identifiers          : 13 15 15
+identifiers          : 13 15 15 52
 input                : 
 parameter            : 25 26
 parameters           : 23 26
 print                : 1
 print_withoutvalue   : 2
-sentence             : 22 23
-sentencia            : 0
+sentence             : 22
+sentencia            : 23 0
 short_assignment     : 4
 singular             : 22
 un                   : 22
 valor                : 22
-valores              : 24
-value                : 11 12 13 16 17 20 27 28 29 35 36 37 38 39 40 41 42 43 44
-values               : 29
+value                : 11 12 13 16 17 20 27 28 29 35 36 37 38 39 40 41 42 43 44 51
+values               : 24 29
 while                : 6
 
