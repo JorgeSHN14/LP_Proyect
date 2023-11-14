@@ -43,10 +43,10 @@ def p_while(p):
   "while : WHILE un valor singular  TRUE P_DER COLON sentence"
 
 def p_def_function(p):
-  '''def_function : DEF IDENTIFIER LPAREN parameters RPAREN COLON sentence'''
+  '''def_function : DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia'''
 
 def p_call_funcion(p):
-  '''call_function : IDENTIFIER LPAREN valores RPAREN'''
+  '''call_function : IDENTIFIER LPAREN values RPAREN'''
 
 def p_parameters(p):
   '''parameters : parameter
