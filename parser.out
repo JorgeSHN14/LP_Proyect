@@ -15,11 +15,9 @@ Unused terminals:
     BITWISE_XOR_EQ
     BREAK
     CLASS
-    COLON
     COMMENT
     COMMENT_MULTI
     CONTINUE
-    DEF
     DEL
     DIVIDE
     DIVIDE_EQ
@@ -76,9 +74,7 @@ Unused terminals:
     SHORT_VAR_DECL
     TIMES
     TIMES_EQ
-    TRUE
     TRY
-    WHILE
     WITH
     YIELD
 
@@ -87,26 +83,33 @@ Grammar
 Rule 0     S' -> print
 Rule 1     print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
 Rule 2     print -> FMT_LIBRARY DOT PRINTF LPAREN value RPAREN
-Rule 3     sentencia -> impresion
-Rule 4     sentencia -> asignacion
-Rule 5     sentencia -> mientras
-Rule 6     asignacion -> VAR IDENTIFIER data_type EQUAL value
-Rule 7     asignacion -> CONST IDENTIFIER data_type EQUAL value
-Rule 8     mientras -> MIENTRAS P_IZQ VERDADERO P_DER DOSP sentencia
-Rule 9     valores -> valor
-Rule 10    valores -> valores COMMA valor
-Rule 11    data_type -> STRING
-Rule 12    data_type -> INTEGER_DATA_TYPE
-Rule 13    data_type -> FLOAT32_DATA_TYPE
-Rule 14    data_type -> FLOAT64_DATA_TYPE
-Rule 15    data_type -> BOOLEAN_DATA_TYPE
-Rule 16    data_type -> STRING_DATA_TYPE
-Rule 17    value -> STRING
-Rule 18    value -> INTEGER
-Rule 19    value -> FLOAT32
-Rule 20    value -> FLOAT64
-Rule 21    value -> BOOLEAN
-Rule 22    input -> INPUT LPAREN RPAREN
+Rule 3     sentencia -> print
+Rule 4     sentencia -> assignment
+Rule 5     sentencia -> while
+Rule 6     sentencia -> def_function
+Rule 7     sentencia -> call_function
+Rule 8     assignment -> VAR IDENTIFIER data_type EQUAL value
+Rule 9     assignment -> CONST IDENTIFIER data_type EQUAL value
+Rule 10    while -> WHILE P_IZQ TRUE P_DER COLON sentence
+Rule 11    def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentence
+Rule 12    call_function -> IDENTIFIER LPAREN valores RPAREN
+Rule 13    parameters -> parameter
+Rule 14    parameters -> parameters COMMA parameter
+Rule 15    parameter -> IDENTIFIER data_type
+Rule 16    values -> value
+Rule 17    values -> values COMA value
+Rule 18    data_type -> STRING
+Rule 19    data_type -> INTEGER_DATA_TYPE
+Rule 20    data_type -> FLOAT32_DATA_TYPE
+Rule 21    data_type -> FLOAT64_DATA_TYPE
+Rule 22    data_type -> BOOLEAN_DATA_TYPE
+Rule 23    data_type -> STRING_DATA_TYPE
+Rule 24    value -> STRING
+Rule 25    value -> INTEGER
+Rule 26    value -> FLOAT32
+Rule 27    value -> FLOAT64
+Rule 28    value -> BOOLEAN
+Rule 29    input -> INPUT LPAREN RPAREN
 
 Terminals, with rules where they appear
 
@@ -121,17 +124,17 @@ BITWISE_OR_EQ        :
 BITWISE_XOR          : 
 BITWISE_XOR_ASSIGN   : 
 BITWISE_XOR_EQ       : 
-BOOLEAN              : 21
-BOOLEAN_DATA_TYPE    : 15
+BOOLEAN              : 28
+BOOLEAN_DATA_TYPE    : 22
 BREAK                : 
 CLASS                : 
-COLON                : 
-COMMA                : 10
+COLON                : 10 11
+COMMA                : 14
 COMMENT              : 
 COMMENT_MULTI        : 
-CONST                : 7
+CONST                : 9
 CONTINUE             : 
-DEF                  : 
+DEF                  : 11
 DEL                  : 
 DIVIDE               : 
 DIVIDE_EQ            : 
@@ -140,16 +143,16 @@ ELIF                 :
 ELLIPSIS             : 
 ELSE                 : 
 ENTERE_DIVIDE        : 
-EQUAL                : 6 7
+EQUAL                : 8 9
 EQUALEQUAL           : 
 EXCEPT               : 
 FALSE                : 
 FAT_ARROW            : 
 FINALLY              : 
-FLOAT32              : 19
-FLOAT32_DATA_TYPE    : 13
-FLOAT64              : 20
-FLOAT64_DATA_TYPE    : 14
+FLOAT32              : 26
+FLOAT32_DATA_TYPE    : 20
+FLOAT64              : 27
+FLOAT64_DATA_TYPE    : 21
 FMT_LIBRARY          : 1 2
 FOR                  : 
 FROM                 : 
@@ -158,12 +161,12 @@ GREATER              :
 GREATER_EQUAL        : 
 GREATER_THAN         : 
 HEX_NUMBER           : 
-IDENTIFIER           : 6 7
+IDENTIFIER           : 8 9 11 12 15
 IF                   : 
 IMPORT               : 
 IN                   : 
-INTEGER              : 18
-INTEGER_DATA_TYPE    : 12
+INTEGER              : 25
+INTEGER_DATA_TYPE    : 19
 IS                   : 
 LAMBDA               : 
 LBRACKET             : 
@@ -175,7 +178,7 @@ LKEY                 :
 LOGICAL_AND          : 
 LOGICAL_NOT          : 
 LOGICAL_OR           : 
-LPAREN               : 1 2 22
+LPAREN               : 1 2 11 12 29
 MINUS                : 
 MINUS_EQ             : 
 MODULE               : 
@@ -197,37 +200,39 @@ RBRACKET             :
 RETURN               : 
 RIGHT_SHIFT_EQ       : 
 RKEY                 : 
-RPAREN               : 1 2 22
+RPAREN               : 1 2 11 12 29
 SCIENTIFIC_NOTATION  : 
 SHORT_VAR_DECL       : 
-STRING               : 11 17
-STRING_DATA_TYPE     : 16
+STRING               : 18 24
+STRING_DATA_TYPE     : 23
 TIMES                : 
 TIMES_EQ             : 
-TRUE                 : 
+TRUE                 : 10
 TRY                  : 
-VAR                  : 6
-WHILE                : 
+VAR                  : 8
+WHILE                : 10
 WITH                 : 
 YIELD                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-DOSP                 : 8
-INPUT                : 22
-MIENTRAS             : 8
-P_DER                : 8
-P_IZQ                : 8
-VERDADERO            : 8
-asignacion           : 4
-data_type            : 6 7
-impresion            : 3
+COMA                 : 17
+INPUT                : 29
+P_DER                : 10
+P_IZQ                : 10
+assignment           : 4
+call_function        : 7
+data_type            : 8 9 15
+def_function         : 6
 input                : 
-mientras             : 5
-print                : 0
-sentencia            : 8
-valor                : 9 10
-valores              : 10
-value                : 1 2 6 7
+parameter            : 13 14
+parameters           : 11 14
+print                : 3 0
+sentence             : 10 11
+sentencia            : 
+valores              : 12
+value                : 1 2 8 9 16 17
+values               : 17
+while                : 5
 
