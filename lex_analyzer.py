@@ -240,7 +240,7 @@ def t_INTEGER(t):
 
 
 # Expresión regular para reconocer saltos de línea
-def t_NEWLINE(t):
+def t_newline(t):
   r'\n+'
   t.lexer.lineno += len(t.value)
 

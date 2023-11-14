@@ -4,8 +4,6 @@ from lex_analyzer import tokens
 
 def p_program(p):
   ''' program : sentencia
-              | program NEWLINE
-              | program NEWLINE sentencia
   '''
 
 def p_sentencia(p):
@@ -23,6 +21,17 @@ def p_for(p):
   '''for : FOR rule_comparation LKEY program RKEY'''
 
 ##########            JORGE HERRERA            ############
+
+  
+def p_print(p):
+  '''print : FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN'''
+  
+def p_print_withoutvalue(p):
+  '''print_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+            | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
+
 def p_assignment(p):
   '''assignment : VAR IDENTIFIER data_type EQUAL value
                 | CONST IDENTIFIER data_type EQUAL value
@@ -70,15 +79,6 @@ def p_comparation_operation(p):
                         | value LOGICAL_AND value
                         | value LOGICAL_OR value
     '''
-  
-def p_print(p):
-  '''print : FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
-           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
-           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN'''
-  
-def p_print_withoutvalue(p):
-  '''print_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
-            | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
 
 
 
@@ -136,14 +136,16 @@ parser = sint.yacc()
 codePaula = '''
 
 '''
-codeJorge = '''
-
-'''
+codeJorge = '''var id int = 4
+a := 3
+tmf.Printf("Number: \%\d", id)
+tmf.Printf("Number: \%\d", 4)
+a'''
 codeJuan = """
 
-  """
+"""
 
 code = codePaula + codeJorge + codeJuan
-
-result = parser.parse(code)
-print(result)
+for c in code.split("\n"):
+  result = parser.parse(c)
+  print(result)
