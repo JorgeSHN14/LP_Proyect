@@ -1,0 +1,233 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AMPERSAND
+    AND
+    ARROW_FUNCTION_TYPE
+    ARROW_SEND_RECEIVE
+    AS
+    ASSERT
+    BITWISE_AND_EQ
+    BITWISE_OR_EQ
+    BITWISE_XOR
+    BITWISE_XOR_ASSIGN
+    BITWISE_XOR_EQ
+    BREAK
+    CLASS
+    COLON
+    COMMENT
+    COMMENT_MULTI
+    CONTINUE
+    DEF
+    DEL
+    DIVIDE
+    DIVIDE_EQ
+    ELIF
+    ELLIPSIS
+    ELSE
+    ENTERE_DIVIDE
+    EQUALEQUAL
+    EXCEPT
+    FALSE
+    FAT_ARROW
+    FINALLY
+    FOR
+    FROM
+    GLOBAL
+    GREATER
+    GREATER_EQUAL
+    GREATER_THAN
+    HEX_NUMBER
+    IF
+    IMPORT
+    IN
+    IS
+    LAMBDA
+    LBRACKET
+    LEFT_SHIFT_EQ
+    LESS
+    LESS_EQUAL
+    LESS_THAN
+    LKEY
+    LOGICAL_AND
+    LOGICAL_NOT
+    LOGICAL_OR
+    MINUS
+    MINUS_EQ
+    MODULE
+    MODULO_EQ
+    NONE
+    NONLOCAL
+    NOT
+    NOT_EQUAL
+    NULL
+    OR
+    PASS
+    PIPE
+    PLUS
+    PLUS_EQ
+    RAISE
+    RBRACKET
+    RETURN
+    RIGHT_SHIFT_EQ
+    RKEY
+    SCIENTIFIC_NOTATION
+    SHORT_VAR_DECL
+    TIMES
+    TIMES_EQ
+    TRUE
+    TRY
+    WHILE
+    WITH
+    YIELD
+
+Grammar
+
+Rule 0     S' -> print
+Rule 1     print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+Rule 2     print -> FMT_LIBRARY DOT PRINTF LPAREN value RPAREN
+Rule 3     sentencia -> impresion
+Rule 4     sentencia -> asignacion
+Rule 5     sentencia -> mientras
+Rule 6     asignacion -> VAR IDENTIFIER data_type EQUAL value
+Rule 7     asignacion -> CONST IDENTIFIER data_type EQUAL value
+Rule 8     mientras -> MIENTRAS P_IZQ VERDADERO P_DER DOSP sentencia
+Rule 9     valores -> valor
+Rule 10    valores -> valores COMMA valor
+Rule 11    data_type -> STRING
+Rule 12    data_type -> INTEGER_DATA_TYPE
+Rule 13    data_type -> FLOAT32_DATA_TYPE
+Rule 14    data_type -> FLOAT64_DATA_TYPE
+Rule 15    data_type -> BOOLEAN_DATA_TYPE
+Rule 16    data_type -> STRING_DATA_TYPE
+Rule 17    value -> STRING
+Rule 18    value -> INTEGER
+Rule 19    value -> FLOAT32
+Rule 20    value -> FLOAT64
+Rule 21    value -> BOOLEAN
+Rule 22    input -> INPUT LPAREN RPAREN
+
+Terminals, with rules where they appear
+
+AMPERSAND            : 
+AND                  : 
+ARROW_FUNCTION_TYPE  : 
+ARROW_SEND_RECEIVE   : 
+AS                   : 
+ASSERT               : 
+BITWISE_AND_EQ       : 
+BITWISE_OR_EQ        : 
+BITWISE_XOR          : 
+BITWISE_XOR_ASSIGN   : 
+BITWISE_XOR_EQ       : 
+BOOLEAN              : 21
+BOOLEAN_DATA_TYPE    : 15
+BREAK                : 
+CLASS                : 
+COLON                : 
+COMMA                : 10
+COMMENT              : 
+COMMENT_MULTI        : 
+CONST                : 7
+CONTINUE             : 
+DEF                  : 
+DEL                  : 
+DIVIDE               : 
+DIVIDE_EQ            : 
+DOT                  : 1 2
+ELIF                 : 
+ELLIPSIS             : 
+ELSE                 : 
+ENTERE_DIVIDE        : 
+EQUAL                : 6 7
+EQUALEQUAL           : 
+EXCEPT               : 
+FALSE                : 
+FAT_ARROW            : 
+FINALLY              : 
+FLOAT32              : 19
+FLOAT32_DATA_TYPE    : 13
+FLOAT64              : 20
+FLOAT64_DATA_TYPE    : 14
+FMT_LIBRARY          : 1 2
+FOR                  : 
+FROM                 : 
+GLOBAL               : 
+GREATER              : 
+GREATER_EQUAL        : 
+GREATER_THAN         : 
+HEX_NUMBER           : 
+IDENTIFIER           : 6 7
+IF                   : 
+IMPORT               : 
+IN                   : 
+INTEGER              : 18
+INTEGER_DATA_TYPE    : 12
+IS                   : 
+LAMBDA               : 
+LBRACKET             : 
+LEFT_SHIFT_EQ        : 
+LESS                 : 
+LESS_EQUAL           : 
+LESS_THAN            : 
+LKEY                 : 
+LOGICAL_AND          : 
+LOGICAL_NOT          : 
+LOGICAL_OR           : 
+LPAREN               : 1 2 22
+MINUS                : 
+MINUS_EQ             : 
+MODULE               : 
+MODULO_EQ            : 
+NONE                 : 
+NONLOCAL             : 
+NOT                  : 
+NOT_EQUAL            : 
+NULL                 : 
+OR                   : 
+PASS                 : 
+PIPE                 : 
+PLUS                 : 
+PLUS_EQ              : 
+PRINTF               : 2
+PRINTLN              : 1
+RAISE                : 
+RBRACKET             : 
+RETURN               : 
+RIGHT_SHIFT_EQ       : 
+RKEY                 : 
+RPAREN               : 1 2 22
+SCIENTIFIC_NOTATION  : 
+SHORT_VAR_DECL       : 
+STRING               : 11 17
+STRING_DATA_TYPE     : 16
+TIMES                : 
+TIMES_EQ             : 
+TRUE                 : 
+TRY                  : 
+VAR                  : 6
+WHILE                : 
+WITH                 : 
+YIELD                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+DOSP                 : 8
+INPUT                : 22
+MIENTRAS             : 8
+P_DER                : 8
+P_IZQ                : 8
+VERDADERO            : 8
+asignacion           : 4
+data_type            : 6 7
+impresion            : 3
+input                : 
+mientras             : 5
+print                : 0
+sentencia            : 8
+valor                : 9 10
+valores              : 10
+value                : 1 2 6 7
+
