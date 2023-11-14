@@ -2,49 +2,59 @@ import ply.yacc as sint
 from lex_analyzer import tokens
 
 def p_sentencia(p):
-  '''sentencia : impresion
-              | asignacion
-              | mientras
-              | definicion_funcion
-              | llamada_funcion'''
+  '''sentencia : print
+              | print_withoutvalue
+              | assignment
+              | short_assignment
+              | while
+              | def_function
+              | call_function
+              | input'''
+
+  
+def p_print_withoutvalue(p):
+  '''print_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+            | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
 
 def p_print(p):
   '''print : FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
            | FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
            | FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN'''
-  
-def p_print_whitoutvalue(p):
-  '''print : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
-            | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
 
 
 def p_identifiers(p):
   '''identifiers : IDENTIFIER
-                 | identifiers COMMA identifier'''
+                 | identifiers COMMA identifiers'''
   
-def p_asignacion(p):
-  '''asignacion : VAR IDENTIFIER data_type EQUAL value
-                | CONST IDENTIFIER data_type EQUAL value'''
+def p_assignment(p):
+  '''assignment : VAR IDENTIFIER data_type EQUAL value
+                | CONST IDENTIFIER data_type EQUAL value
+                | VAR IDENTIFIER data_type EQUAL IDENTIFIER
+                | CONST IDENTIFIER data_type EQUAL IDENTIFIER'''
+  
+def p_short_assignment(p):
+  '''assignment : IDENTIFIER COLON EQUAL value
+                | IDENTIFIER COLON EQUAL IDENTIFIER'''
+  
 
-def p_mientras(p):
-  "mientras : MIENTRAS P_IZQ VERDADERO P_DER DOSP sentencia"
+def p_while(p):
+  "while : WHILE un valor singular  TRUE P_DER COLON sentence"
 
-def p_definicion_funcion(p):
-  '''definicion_funcion : DEF IDENTIFIER LPAREN parametros RPAREN DOSP sentencias'''
+def p_def_function(p):
+  '''def_function : DEF IDENTIFIER LPAREN parameters RPAREN COLON sentence'''
 
-def p_llamada_funcion(p):
-  '''llamada_funcion : IDENTIFIER LPAREN valores RPAREN'''
+def p_call_funcion(p):
+  '''call_function : IDENTIFIER LPAREN valores RPAREN'''
 
-def p_parametros(p):
-  '''parametros : parametro
-                | parametros COMA parametro'''
+def p_parameters(p):
+  '''parameters : parameter
+                | parameters COMMA parameter'''
 
-def p_parametro(p):
-  ''' parametro : IDENTIFIER data_type'''
-
-def p_valores(p):
-  '''valores : valor
-            | valores COMA valor'''
+def p_parameter(p):
+  ''' parameter : IDENTIFIER data_type'''
+def p_values(p):
+  '''values : data_type
+            | values COMMA data_type'''
 
 def p_data_type(p):
   '''data_type : STRING
@@ -54,13 +64,11 @@ def p_data_type(p):
                | BOOLEAN_DATA_TYPE
                | STRING_DATA_TYPE'''
 
-def p_value(p):
-  '''value : STRING
-         | INTEGER
-         | FLOAT32
-         | FLOAT64
-         | BOOLEAN'''
-
+####Paula Peralta###
+def p_input(p):
+  '''input : INPUT LPAREN RPAREN'''
+  user_input = input("Ingrese un valor:")
+  print(f"Valor ingresado: {user_input}")
 
 
 def p_error(p):

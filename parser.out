@@ -1,1 +1,253 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AMPERSAND
+    AND
+    ARROW_FUNCTION_TYPE
+    ARROW_SEND_RECEIVE
+    AS
+    ASSERT
+    BITWISE_AND_EQ
+    BITWISE_OR_EQ
+    BITWISE_XOR
+    BITWISE_XOR_ASSIGN
+    BITWISE_XOR_EQ
+    BOOLEAN
+    BREAK
+    CLASS
+    COMMENT
+    COMMENT_MULTI
+    CONTINUE
+    DEL
+    DIVIDE
+    DIVIDE_EQ
+    ELIF
+    ELLIPSIS
+    ELSE
+    ENTERE_DIVIDE
+    EQUALEQUAL
+    EXCEPT
+    FALSE
+    FAT_ARROW
+    FINALLY
+    FLOAT32
+    FLOAT64
+    FOR
+    FROM
+    GLOBAL
+    GREATER
+    GREATER_EQUAL
+    GREATER_THAN
+    HEX_NUMBER
+    IF
+    IMPORT
+    IN
+    INTEGER
+    IS
+    LAMBDA
+    LBRACKET
+    LEFT_SHIFT_EQ
+    LESS
+    LESS_EQUAL
+    LESS_THAN
+    LKEY
+    LOGICAL_AND
+    LOGICAL_NOT
+    LOGICAL_OR
+    MINUS
+    MINUS_EQ
+    MODULE
+    MODULO_EQ
+    NONE
+    NONLOCAL
+    NOT
+    NOT_EQUAL
+    NULL
+    OR
+    PASS
+    PIPE
+    PLUS
+    PLUS_EQ
+    RAISE
+    RBRACKET
+    RETURN
+    RIGHT_SHIFT_EQ
+    RKEY
+    SCIENTIFIC_NOTATION
+    SHORT_VAR_DECL
+    TIMES
+    TIMES_EQ
+    TRY
+    WITH
+    YIELD
+
+Grammar
+
+Rule 0     S' -> sentencia
+Rule 1     sentencia -> print
+Rule 2     sentencia -> print_withoutvalue
+Rule 3     sentencia -> assignment
+Rule 4     sentencia -> short_assignment
+Rule 5     sentencia -> while
+Rule 6     sentencia -> def_function
+Rule 7     sentencia -> call_function
+Rule 8     sentencia -> input
+Rule 9     print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+Rule 10    print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+Rule 11    print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+Rule 12    print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+Rule 13    print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+Rule 14    identifiers -> IDENTIFIER
+Rule 15    identifiers -> identifiers COMMA identifiers
+Rule 16    assignment -> VAR IDENTIFIER data_type EQUAL value
+Rule 17    assignment -> CONST IDENTIFIER data_type EQUAL value
+Rule 18    assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER
+Rule 19    assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER
+Rule 20    assignment -> IDENTIFIER COLON EQUAL value
+Rule 21    assignment -> IDENTIFIER COLON EQUAL IDENTIFIER
+Rule 22    while -> WHILE un valor singular TRUE P_DER COLON sentence
+Rule 23    def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentence
+Rule 24    call_function -> IDENTIFIER LPAREN valores RPAREN
+Rule 25    parameters -> parameter
+Rule 26    parameters -> parameters COMMA parameter
+Rule 27    parameter -> IDENTIFIER data_type
+Rule 28    values -> data_type
+Rule 29    values -> values COMMA data_type
+Rule 30    data_type -> STRING
+Rule 31    data_type -> INTEGER_DATA_TYPE
+Rule 32    data_type -> FLOAT32_DATA_TYPE
+Rule 33    data_type -> FLOAT64_DATA_TYPE
+Rule 34    data_type -> BOOLEAN_DATA_TYPE
+Rule 35    data_type -> STRING_DATA_TYPE
+Rule 36    input -> INPUT LPAREN RPAREN
+
+Terminals, with rules where they appear
+
+AMPERSAND            : 
+AND                  : 
+ARROW_FUNCTION_TYPE  : 
+ARROW_SEND_RECEIVE   : 
+AS                   : 
+ASSERT               : 
+BITWISE_AND_EQ       : 
+BITWISE_OR_EQ        : 
+BITWISE_XOR          : 
+BITWISE_XOR_ASSIGN   : 
+BITWISE_XOR_EQ       : 
+BOOLEAN              : 
+BOOLEAN_DATA_TYPE    : 34
+BREAK                : 
+CLASS                : 
+COLON                : 20 21 22 23
+COMMA                : 12 13 15 26 29
+COMMENT              : 
+COMMENT_MULTI        : 
+CONST                : 17 19
+CONTINUE             : 
+DEF                  : 23
+DEL                  : 
+DIVIDE               : 
+DIVIDE_EQ            : 
+DOT                  : 9 10 11 12 13
+ELIF                 : 
+ELLIPSIS             : 
+ELSE                 : 
+ENTERE_DIVIDE        : 
+EQUAL                : 16 17 18 19 20 21
+EQUALEQUAL           : 
+EXCEPT               : 
+FALSE                : 
+FAT_ARROW            : 
+FINALLY              : 
+FLOAT32              : 
+FLOAT32_DATA_TYPE    : 32
+FLOAT64              : 
+FLOAT64_DATA_TYPE    : 33
+FMT_LIBRARY          : 9 10 11 12 13
+FOR                  : 
+FROM                 : 
+GLOBAL               : 
+GREATER              : 
+GREATER_EQUAL        : 
+GREATER_THAN         : 
+HEX_NUMBER           : 
+IDENTIFIER           : 14 16 17 18 18 19 19 20 21 21 23 24 27
+IF                   : 
+IMPORT               : 
+IN                   : 
+INTEGER              : 
+INTEGER_DATA_TYPE    : 31
+IS                   : 
+LAMBDA               : 
+LBRACKET             : 
+LEFT_SHIFT_EQ        : 
+LESS                 : 
+LESS_EQUAL           : 
+LESS_THAN            : 
+LKEY                 : 
+LOGICAL_AND          : 
+LOGICAL_NOT          : 
+LOGICAL_OR           : 
+LPAREN               : 9 10 11 12 13 23 24 36
+MINUS                : 
+MINUS_EQ             : 
+MODULE               : 
+MODULO_EQ            : 
+NONE                 : 
+NONLOCAL             : 
+NOT                  : 
+NOT_EQUAL            : 
+NULL                 : 
+OR                   : 
+PASS                 : 
+PIPE                 : 
+PLUS                 : 
+PLUS_EQ              : 
+PRINTF               : 10 12 13
+PRINTLN              : 9 11
+RAISE                : 
+RBRACKET             : 
+RETURN               : 
+RIGHT_SHIFT_EQ       : 
+RKEY                 : 
+RPAREN               : 9 10 11 12 13 23 24 36
+SCIENTIFIC_NOTATION  : 
+SHORT_VAR_DECL       : 
+STRING               : 30
+STRING_DATA_TYPE     : 35
+TIMES                : 
+TIMES_EQ             : 
+TRUE                 : 22
+TRY                  : 
+VAR                  : 16 18
+WHILE                : 22
+WITH                 : 
+YIELD                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+INPUT                : 36
+P_DER                : 22
+assignment           : 3
+call_function        : 7
+data_type            : 16 17 18 19 27 28 29
+def_function         : 6
+identifiers          : 13 15 15
+input                : 8
+parameter            : 25 26
+parameters           : 23 26
+print                : 1
+print_withoutvalue   : 2
+sentence             : 22 23
+sentencia            : 0
+short_assignment     : 4
+singular             : 22
+un                   : 22
+valor                : 22
+valores              : 24
+value                : 11 12 13 16 17 20
+values               : 29
+while                : 5
+
