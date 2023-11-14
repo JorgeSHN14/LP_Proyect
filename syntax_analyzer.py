@@ -5,10 +5,10 @@ def p_print(p):
   '''print : FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
           | FMT_LIBRARY DOT PRINTF LPAREN value RPAREN'''
 
-def p_sentence(p):
-  '''sentencia : print
-              | assignment
-              | while'''
+def p_sentencia(p):
+  '''sentencia : impresion
+              | asignacion
+              | mientras'''
   
 def p_assignment(p):
   '''assignment : VAR IDENTIFIER data_type EQUAL value
@@ -18,9 +18,9 @@ def p_assignment(p):
 def p_while(p):
   "while : WHILE P_IZQ TRUE P_DER COLON sentence"
 
-def p_values(p):
-  '''values : value
-            | values COMMA value'''
+def p_valores(p):
+  '''valores : valor
+            | valores COMA valor'''
 
 def p_data_type(p):
   '''data_type : STRING
