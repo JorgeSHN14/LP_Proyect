@@ -63,6 +63,7 @@ Unused terminals:
     RKEY
     SCIENTIFIC_NOTATION
     TIMES
+    TRUE
     TRY
     WITH
     YIELD
@@ -91,9 +92,9 @@ Rule 18    assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER
 Rule 19    assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER
 Rule 20    short_assignment -> IDENTIFIER SHORT_VAR_DECL value
 Rule 21    short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER
-Rule 22    while -> WHILE un valor singular TRUE P_DER COLON sentence
-Rule 23    def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentence
-Rule 24    call_function -> IDENTIFIER LPAREN valores RPAREN
+Rule 22    while -> WHILE LPAREN value RPAREN COLON sentencia
+Rule 23    def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+Rule 24    call_function -> IDENTIFIER LPAREN values RPAREN
 Rule 25    parameters -> parameter
 Rule 26    parameters -> parameters COMMA parameter
 Rule 27    parameter -> IDENTIFIER value
@@ -120,6 +121,8 @@ Rule 47    data_type -> FLOAT64_DATA_TYPE
 Rule 48    data_type -> BOOLEAN_DATA_TYPE
 Rule 49    data_type -> STRING_DATA_TYPE
 Rule 50    input -> INPUT LPAREN RPAREN
+Rule 51    input -> INPUT LPAREN value RPAREN
+Rule 52    input -> INPUT LPAREN identifiers RPAREN
 
 Terminals, with rules where they appear
 
@@ -175,7 +178,7 @@ IDENTIFIER           : 14 16 17 18 18 19 19 20 21 21 23 24 27 35 36 37 38 39 40 
 IF                   : 
 IMPORT               : 
 IN                   : 
-INPUT                : 50
+INPUT                : 50 51 52
 INTEGER              : 31
 INTEGER_DATA_TYPE    : 45
 IS                   : 
@@ -189,7 +192,7 @@ LKEY                 :
 LOGICAL_AND          : 
 LOGICAL_NOT          : 
 LOGICAL_OR           : 
-LPAREN               : 9 10 11 12 13 23 24 50
+LPAREN               : 9 10 11 12 13 22 23 24 50 51 52
 MINUS                : 
 MINUS_EQ             : 36
 MODULE               : 
@@ -211,14 +214,14 @@ RBRACKET             :
 RETURN               : 
 RIGHT_SHIFT_EQ       : 44
 RKEY                 : 
-RPAREN               : 9 10 11 12 13 23 24 50
+RPAREN               : 9 10 11 12 13 22 23 24 50 51 52
 SCIENTIFIC_NOTATION  : 
 SHORT_VAR_DECL       : 20 21
 STRING               : 30
 STRING_DATA_TYPE     : 49
 TIMES                : 
 TIMES_EQ             : 37
-TRUE                 : 22
+TRUE                 : 
 TRY                  : 
 VAR                  : 16 18
 WHILE                : 22
@@ -228,26 +231,1156 @@ error                :
 
 Nonterminals, with rules where they appear
 
-P_DER                : 22
 arithmetic_operation : 5
 assignment           : 3
 call_function        : 8
 data_type            : 16 17 18 19
 def_function         : 7
-identifiers          : 13 15 15
+identifiers          : 13 15 15 52
 input                : 
 parameter            : 25 26
 parameters           : 23 26
 print                : 1
 print_withoutvalue   : 2
-sentence             : 22 23
-sentencia            : 0
+sentencia            : 22 23 0
 short_assignment     : 4
-singular             : 22
-un                   : 22
-valor                : 22
-valores              : 24
-value                : 11 12 13 16 17 20 27 28 29 35 36 37 38 39 40 41 42 43 44
-values               : 29
+value                : 11 12 13 16 17 20 22 27 28 29 35 36 37 38 39 40 41 42 43 44 51
+values               : 24 29
 while                : 6
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . sentencia
+    (1) sentencia -> . print
+    (2) sentencia -> . print_withoutvalue
+    (3) sentencia -> . assignment
+    (4) sentencia -> . short_assignment
+    (5) sentencia -> . arithmetic_operation
+    (6) sentencia -> . while
+    (7) sentencia -> . def_function
+    (8) sentencia -> . call_function
+    (11) print -> . FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+    (12) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+    (13) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (9) print_withoutvalue -> . FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+    (10) print_withoutvalue -> . FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+    (16) assignment -> . VAR IDENTIFIER data_type EQUAL value
+    (17) assignment -> . CONST IDENTIFIER data_type EQUAL value
+    (18) assignment -> . VAR IDENTIFIER data_type EQUAL IDENTIFIER
+    (19) assignment -> . CONST IDENTIFIER data_type EQUAL IDENTIFIER
+    (20) short_assignment -> . IDENTIFIER SHORT_VAR_DECL value
+    (21) short_assignment -> . IDENTIFIER SHORT_VAR_DECL IDENTIFIER
+    (35) arithmetic_operation -> . IDENTIFIER PLUS_EQ value
+    (36) arithmetic_operation -> . IDENTIFIER MINUS_EQ value
+    (37) arithmetic_operation -> . IDENTIFIER TIMES_EQ value
+    (38) arithmetic_operation -> . IDENTIFIER DIVIDE_EQ value
+    (39) arithmetic_operation -> . IDENTIFIER MODULO_EQ value
+    (40) arithmetic_operation -> . IDENTIFIER BITWISE_AND_EQ value
+    (41) arithmetic_operation -> . IDENTIFIER BITWISE_OR_EQ value
+    (42) arithmetic_operation -> . IDENTIFIER BITWISE_XOR_EQ value
+    (43) arithmetic_operation -> . IDENTIFIER LEFT_SHIFT_EQ value
+    (44) arithmetic_operation -> . IDENTIFIER RIGHT_SHIFT_EQ value
+    (22) while -> . WHILE LPAREN value RPAREN COLON sentencia
+    (23) def_function -> . DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+    (24) call_function -> . IDENTIFIER LPAREN values RPAREN
+
+    FMT_LIBRARY     shift and go to state 10
+    VAR             shift and go to state 11
+    CONST           shift and go to state 13
+    IDENTIFIER      shift and go to state 12
+    WHILE           shift and go to state 14
+    DEF             shift and go to state 15
+
+    sentencia                      shift and go to state 1
+    print                          shift and go to state 2
+    print_withoutvalue             shift and go to state 3
+    assignment                     shift and go to state 4
+    short_assignment               shift and go to state 5
+    arithmetic_operation           shift and go to state 6
+    while                          shift and go to state 7
+    def_function                   shift and go to state 8
+    call_function                  shift and go to state 9
+
+state 1
+
+    (0) S' -> sentencia .
+
+
+
+state 2
+
+    (1) sentencia -> print .
+
+    $end            reduce using rule 1 (sentencia -> print .)
+
+
+state 3
+
+    (2) sentencia -> print_withoutvalue .
+
+    $end            reduce using rule 2 (sentencia -> print_withoutvalue .)
+
+
+state 4
+
+    (3) sentencia -> assignment .
+
+    $end            reduce using rule 3 (sentencia -> assignment .)
+
+
+state 5
+
+    (4) sentencia -> short_assignment .
+
+    $end            reduce using rule 4 (sentencia -> short_assignment .)
+
+
+state 6
+
+    (5) sentencia -> arithmetic_operation .
+
+    $end            reduce using rule 5 (sentencia -> arithmetic_operation .)
+
+
+state 7
+
+    (6) sentencia -> while .
+
+    $end            reduce using rule 6 (sentencia -> while .)
+
+
+state 8
+
+    (7) sentencia -> def_function .
+
+    $end            reduce using rule 7 (sentencia -> def_function .)
+
+
+state 9
+
+    (8) sentencia -> call_function .
+
+    $end            reduce using rule 8 (sentencia -> call_function .)
+
+
+state 10
+
+    (11) print -> FMT_LIBRARY . DOT PRINTLN LPAREN value RPAREN
+    (12) print -> FMT_LIBRARY . DOT PRINTF LPAREN value COMMA RPAREN
+    (13) print -> FMT_LIBRARY . DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (9) print_withoutvalue -> FMT_LIBRARY . DOT PRINTLN LPAREN RPAREN
+    (10) print_withoutvalue -> FMT_LIBRARY . DOT PRINTF LPAREN RPAREN
+
+    DOT             shift and go to state 16
+
+
+state 11
+
+    (16) assignment -> VAR . IDENTIFIER data_type EQUAL value
+    (18) assignment -> VAR . IDENTIFIER data_type EQUAL IDENTIFIER
+
+    IDENTIFIER      shift and go to state 17
+
+
+state 12
+
+    (20) short_assignment -> IDENTIFIER . SHORT_VAR_DECL value
+    (21) short_assignment -> IDENTIFIER . SHORT_VAR_DECL IDENTIFIER
+    (35) arithmetic_operation -> IDENTIFIER . PLUS_EQ value
+    (36) arithmetic_operation -> IDENTIFIER . MINUS_EQ value
+    (37) arithmetic_operation -> IDENTIFIER . TIMES_EQ value
+    (38) arithmetic_operation -> IDENTIFIER . DIVIDE_EQ value
+    (39) arithmetic_operation -> IDENTIFIER . MODULO_EQ value
+    (40) arithmetic_operation -> IDENTIFIER . BITWISE_AND_EQ value
+    (41) arithmetic_operation -> IDENTIFIER . BITWISE_OR_EQ value
+    (42) arithmetic_operation -> IDENTIFIER . BITWISE_XOR_EQ value
+    (43) arithmetic_operation -> IDENTIFIER . LEFT_SHIFT_EQ value
+    (44) arithmetic_operation -> IDENTIFIER . RIGHT_SHIFT_EQ value
+    (24) call_function -> IDENTIFIER . LPAREN values RPAREN
+
+    SHORT_VAR_DECL  shift and go to state 18
+    PLUS_EQ         shift and go to state 19
+    MINUS_EQ        shift and go to state 20
+    TIMES_EQ        shift and go to state 21
+    DIVIDE_EQ       shift and go to state 22
+    MODULO_EQ       shift and go to state 23
+    BITWISE_AND_EQ  shift and go to state 24
+    BITWISE_OR_EQ   shift and go to state 25
+    BITWISE_XOR_EQ  shift and go to state 26
+    LEFT_SHIFT_EQ   shift and go to state 27
+    RIGHT_SHIFT_EQ  shift and go to state 28
+    LPAREN          shift and go to state 29
+
+
+state 13
+
+    (17) assignment -> CONST . IDENTIFIER data_type EQUAL value
+    (19) assignment -> CONST . IDENTIFIER data_type EQUAL IDENTIFIER
+
+    IDENTIFIER      shift and go to state 30
+
+
+state 14
+
+    (22) while -> WHILE . LPAREN value RPAREN COLON sentencia
+
+    LPAREN          shift and go to state 31
+
+
+state 15
+
+    (23) def_function -> DEF . IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+
+    IDENTIFIER      shift and go to state 32
+
+
+state 16
+
+    (11) print -> FMT_LIBRARY DOT . PRINTLN LPAREN value RPAREN
+    (12) print -> FMT_LIBRARY DOT . PRINTF LPAREN value COMMA RPAREN
+    (13) print -> FMT_LIBRARY DOT . PRINTF LPAREN value COMMA identifiers RPAREN
+    (9) print_withoutvalue -> FMT_LIBRARY DOT . PRINTLN LPAREN RPAREN
+    (10) print_withoutvalue -> FMT_LIBRARY DOT . PRINTF LPAREN RPAREN
+
+    PRINTLN         shift and go to state 33
+    PRINTF          shift and go to state 34
+
+
+state 17
+
+    (16) assignment -> VAR IDENTIFIER . data_type EQUAL value
+    (18) assignment -> VAR IDENTIFIER . data_type EQUAL IDENTIFIER
+    (45) data_type -> . INTEGER_DATA_TYPE
+    (46) data_type -> . FLOAT32_DATA_TYPE
+    (47) data_type -> . FLOAT64_DATA_TYPE
+    (48) data_type -> . BOOLEAN_DATA_TYPE
+    (49) data_type -> . STRING_DATA_TYPE
+
+    INTEGER_DATA_TYPE shift and go to state 36
+    FLOAT32_DATA_TYPE shift and go to state 37
+    FLOAT64_DATA_TYPE shift and go to state 38
+    BOOLEAN_DATA_TYPE shift and go to state 39
+    STRING_DATA_TYPE shift and go to state 40
+
+    data_type                      shift and go to state 35
+
+state 18
+
+    (20) short_assignment -> IDENTIFIER SHORT_VAR_DECL . value
+    (21) short_assignment -> IDENTIFIER SHORT_VAR_DECL . IDENTIFIER
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    IDENTIFIER      shift and go to state 41
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 42
+
+state 19
+
+    (35) arithmetic_operation -> IDENTIFIER PLUS_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 48
+
+state 20
+
+    (36) arithmetic_operation -> IDENTIFIER MINUS_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 49
+
+state 21
+
+    (37) arithmetic_operation -> IDENTIFIER TIMES_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 50
+
+state 22
+
+    (38) arithmetic_operation -> IDENTIFIER DIVIDE_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 51
+
+state 23
+
+    (39) arithmetic_operation -> IDENTIFIER MODULO_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 52
+
+state 24
+
+    (40) arithmetic_operation -> IDENTIFIER BITWISE_AND_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 53
+
+state 25
+
+    (41) arithmetic_operation -> IDENTIFIER BITWISE_OR_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 54
+
+state 26
+
+    (42) arithmetic_operation -> IDENTIFIER BITWISE_XOR_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 55
+
+state 27
+
+    (43) arithmetic_operation -> IDENTIFIER LEFT_SHIFT_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 56
+
+state 28
+
+    (44) arithmetic_operation -> IDENTIFIER RIGHT_SHIFT_EQ . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 57
+
+state 29
+
+    (24) call_function -> IDENTIFIER LPAREN . values RPAREN
+    (28) values -> . value
+    (29) values -> . values COMMA value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    values                         shift and go to state 58
+    value                          shift and go to state 59
+
+state 30
+
+    (17) assignment -> CONST IDENTIFIER . data_type EQUAL value
+    (19) assignment -> CONST IDENTIFIER . data_type EQUAL IDENTIFIER
+    (45) data_type -> . INTEGER_DATA_TYPE
+    (46) data_type -> . FLOAT32_DATA_TYPE
+    (47) data_type -> . FLOAT64_DATA_TYPE
+    (48) data_type -> . BOOLEAN_DATA_TYPE
+    (49) data_type -> . STRING_DATA_TYPE
+
+    INTEGER_DATA_TYPE shift and go to state 36
+    FLOAT32_DATA_TYPE shift and go to state 37
+    FLOAT64_DATA_TYPE shift and go to state 38
+    BOOLEAN_DATA_TYPE shift and go to state 39
+    STRING_DATA_TYPE shift and go to state 40
+
+    data_type                      shift and go to state 60
+
+state 31
+
+    (22) while -> WHILE LPAREN . value RPAREN COLON sentencia
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 61
+
+state 32
+
+    (23) def_function -> DEF IDENTIFIER . LPAREN parameters RPAREN COLON sentencia
+
+    LPAREN          shift and go to state 62
+
+
+state 33
+
+    (11) print -> FMT_LIBRARY DOT PRINTLN . LPAREN value RPAREN
+    (9) print_withoutvalue -> FMT_LIBRARY DOT PRINTLN . LPAREN RPAREN
+
+    LPAREN          shift and go to state 63
+
+
+state 34
+
+    (12) print -> FMT_LIBRARY DOT PRINTF . LPAREN value COMMA RPAREN
+    (13) print -> FMT_LIBRARY DOT PRINTF . LPAREN value COMMA identifiers RPAREN
+    (10) print_withoutvalue -> FMT_LIBRARY DOT PRINTF . LPAREN RPAREN
+
+    LPAREN          shift and go to state 64
+
+
+state 35
+
+    (16) assignment -> VAR IDENTIFIER data_type . EQUAL value
+    (18) assignment -> VAR IDENTIFIER data_type . EQUAL IDENTIFIER
+
+    EQUAL           shift and go to state 65
+
+
+state 36
+
+    (45) data_type -> INTEGER_DATA_TYPE .
+
+    EQUAL           reduce using rule 45 (data_type -> INTEGER_DATA_TYPE .)
+
+
+state 37
+
+    (46) data_type -> FLOAT32_DATA_TYPE .
+
+    EQUAL           reduce using rule 46 (data_type -> FLOAT32_DATA_TYPE .)
+
+
+state 38
+
+    (47) data_type -> FLOAT64_DATA_TYPE .
+
+    EQUAL           reduce using rule 47 (data_type -> FLOAT64_DATA_TYPE .)
+
+
+state 39
+
+    (48) data_type -> BOOLEAN_DATA_TYPE .
+
+    EQUAL           reduce using rule 48 (data_type -> BOOLEAN_DATA_TYPE .)
+
+
+state 40
+
+    (49) data_type -> STRING_DATA_TYPE .
+
+    EQUAL           reduce using rule 49 (data_type -> STRING_DATA_TYPE .)
+
+
+state 41
+
+    (21) short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER .
+
+    $end            reduce using rule 21 (short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER .)
+
+
+state 42
+
+    (20) short_assignment -> IDENTIFIER SHORT_VAR_DECL value .
+
+    $end            reduce using rule 20 (short_assignment -> IDENTIFIER SHORT_VAR_DECL value .)
+
+
+state 43
+
+    (30) value -> STRING .
+
+    $end            reduce using rule 30 (value -> STRING .)
+    RPAREN          reduce using rule 30 (value -> STRING .)
+    COMMA           reduce using rule 30 (value -> STRING .)
+
+
+state 44
+
+    (31) value -> INTEGER .
+
+    $end            reduce using rule 31 (value -> INTEGER .)
+    RPAREN          reduce using rule 31 (value -> INTEGER .)
+    COMMA           reduce using rule 31 (value -> INTEGER .)
+
+
+state 45
+
+    (32) value -> FLOAT32 .
+
+    $end            reduce using rule 32 (value -> FLOAT32 .)
+    RPAREN          reduce using rule 32 (value -> FLOAT32 .)
+    COMMA           reduce using rule 32 (value -> FLOAT32 .)
+
+
+state 46
+
+    (33) value -> FLOAT64 .
+
+    $end            reduce using rule 33 (value -> FLOAT64 .)
+    RPAREN          reduce using rule 33 (value -> FLOAT64 .)
+    COMMA           reduce using rule 33 (value -> FLOAT64 .)
+
+
+state 47
+
+    (34) value -> BOOLEAN .
+
+    $end            reduce using rule 34 (value -> BOOLEAN .)
+    RPAREN          reduce using rule 34 (value -> BOOLEAN .)
+    COMMA           reduce using rule 34 (value -> BOOLEAN .)
+
+
+state 48
+
+    (35) arithmetic_operation -> IDENTIFIER PLUS_EQ value .
+
+    $end            reduce using rule 35 (arithmetic_operation -> IDENTIFIER PLUS_EQ value .)
+
+
+state 49
+
+    (36) arithmetic_operation -> IDENTIFIER MINUS_EQ value .
+
+    $end            reduce using rule 36 (arithmetic_operation -> IDENTIFIER MINUS_EQ value .)
+
+
+state 50
+
+    (37) arithmetic_operation -> IDENTIFIER TIMES_EQ value .
+
+    $end            reduce using rule 37 (arithmetic_operation -> IDENTIFIER TIMES_EQ value .)
+
+
+state 51
+
+    (38) arithmetic_operation -> IDENTIFIER DIVIDE_EQ value .
+
+    $end            reduce using rule 38 (arithmetic_operation -> IDENTIFIER DIVIDE_EQ value .)
+
+
+state 52
+
+    (39) arithmetic_operation -> IDENTIFIER MODULO_EQ value .
+
+    $end            reduce using rule 39 (arithmetic_operation -> IDENTIFIER MODULO_EQ value .)
+
+
+state 53
+
+    (40) arithmetic_operation -> IDENTIFIER BITWISE_AND_EQ value .
+
+    $end            reduce using rule 40 (arithmetic_operation -> IDENTIFIER BITWISE_AND_EQ value .)
+
+
+state 54
+
+    (41) arithmetic_operation -> IDENTIFIER BITWISE_OR_EQ value .
+
+    $end            reduce using rule 41 (arithmetic_operation -> IDENTIFIER BITWISE_OR_EQ value .)
+
+
+state 55
+
+    (42) arithmetic_operation -> IDENTIFIER BITWISE_XOR_EQ value .
+
+    $end            reduce using rule 42 (arithmetic_operation -> IDENTIFIER BITWISE_XOR_EQ value .)
+
+
+state 56
+
+    (43) arithmetic_operation -> IDENTIFIER LEFT_SHIFT_EQ value .
+
+    $end            reduce using rule 43 (arithmetic_operation -> IDENTIFIER LEFT_SHIFT_EQ value .)
+
+
+state 57
+
+    (44) arithmetic_operation -> IDENTIFIER RIGHT_SHIFT_EQ value .
+
+    $end            reduce using rule 44 (arithmetic_operation -> IDENTIFIER RIGHT_SHIFT_EQ value .)
+
+
+state 58
+
+    (24) call_function -> IDENTIFIER LPAREN values . RPAREN
+    (29) values -> values . COMMA value
+
+    RPAREN          shift and go to state 66
+    COMMA           shift and go to state 67
+
+
+state 59
+
+    (28) values -> value .
+
+    RPAREN          reduce using rule 28 (values -> value .)
+    COMMA           reduce using rule 28 (values -> value .)
+
+
+state 60
+
+    (17) assignment -> CONST IDENTIFIER data_type . EQUAL value
+    (19) assignment -> CONST IDENTIFIER data_type . EQUAL IDENTIFIER
+
+    EQUAL           shift and go to state 68
+
+
+state 61
+
+    (22) while -> WHILE LPAREN value . RPAREN COLON sentencia
+
+    RPAREN          shift and go to state 69
+
+
+state 62
+
+    (23) def_function -> DEF IDENTIFIER LPAREN . parameters RPAREN COLON sentencia
+    (25) parameters -> . parameter
+    (26) parameters -> . parameters COMMA parameter
+    (27) parameter -> . IDENTIFIER value
+
+    IDENTIFIER      shift and go to state 70
+
+    parameters                     shift and go to state 71
+    parameter                      shift and go to state 72
+
+state 63
+
+    (11) print -> FMT_LIBRARY DOT PRINTLN LPAREN . value RPAREN
+    (9) print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN . RPAREN
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    RPAREN          shift and go to state 74
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 73
+
+state 64
+
+    (12) print -> FMT_LIBRARY DOT PRINTF LPAREN . value COMMA RPAREN
+    (13) print -> FMT_LIBRARY DOT PRINTF LPAREN . value COMMA identifiers RPAREN
+    (10) print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN . RPAREN
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    RPAREN          shift and go to state 76
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 75
+
+state 65
+
+    (16) assignment -> VAR IDENTIFIER data_type EQUAL . value
+    (18) assignment -> VAR IDENTIFIER data_type EQUAL . IDENTIFIER
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    IDENTIFIER      shift and go to state 77
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 78
+
+state 66
+
+    (24) call_function -> IDENTIFIER LPAREN values RPAREN .
+
+    $end            reduce using rule 24 (call_function -> IDENTIFIER LPAREN values RPAREN .)
+
+
+state 67
+
+    (29) values -> values COMMA . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 79
+
+state 68
+
+    (17) assignment -> CONST IDENTIFIER data_type EQUAL . value
+    (19) assignment -> CONST IDENTIFIER data_type EQUAL . IDENTIFIER
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    IDENTIFIER      shift and go to state 80
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 81
+
+state 69
+
+    (22) while -> WHILE LPAREN value RPAREN . COLON sentencia
+
+    COLON           shift and go to state 82
+
+
+state 70
+
+    (27) parameter -> IDENTIFIER . value
+    (30) value -> . STRING
+    (31) value -> . INTEGER
+    (32) value -> . FLOAT32
+    (33) value -> . FLOAT64
+    (34) value -> . BOOLEAN
+
+    STRING          shift and go to state 43
+    INTEGER         shift and go to state 44
+    FLOAT32         shift and go to state 45
+    FLOAT64         shift and go to state 46
+    BOOLEAN         shift and go to state 47
+
+    value                          shift and go to state 83
+
+state 71
+
+    (23) def_function -> DEF IDENTIFIER LPAREN parameters . RPAREN COLON sentencia
+    (26) parameters -> parameters . COMMA parameter
+
+    RPAREN          shift and go to state 84
+    COMMA           shift and go to state 85
+
+
+state 72
+
+    (25) parameters -> parameter .
+
+    RPAREN          reduce using rule 25 (parameters -> parameter .)
+    COMMA           reduce using rule 25 (parameters -> parameter .)
+
+
+state 73
+
+    (11) print -> FMT_LIBRARY DOT PRINTLN LPAREN value . RPAREN
+
+    RPAREN          shift and go to state 86
+
+
+state 74
+
+    (9) print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN .
+
+    $end            reduce using rule 9 (print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN .)
+
+
+state 75
+
+    (12) print -> FMT_LIBRARY DOT PRINTF LPAREN value . COMMA RPAREN
+    (13) print -> FMT_LIBRARY DOT PRINTF LPAREN value . COMMA identifiers RPAREN
+
+    COMMA           shift and go to state 87
+
+
+state 76
+
+    (10) print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN .
+
+    $end            reduce using rule 10 (print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN .)
+
+
+state 77
+
+    (18) assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER .
+
+    $end            reduce using rule 18 (assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER .)
+
+
+state 78
+
+    (16) assignment -> VAR IDENTIFIER data_type EQUAL value .
+
+    $end            reduce using rule 16 (assignment -> VAR IDENTIFIER data_type EQUAL value .)
+
+
+state 79
+
+    (29) values -> values COMMA value .
+
+    RPAREN          reduce using rule 29 (values -> values COMMA value .)
+    COMMA           reduce using rule 29 (values -> values COMMA value .)
+
+
+state 80
+
+    (19) assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER .
+
+    $end            reduce using rule 19 (assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER .)
+
+
+state 81
+
+    (17) assignment -> CONST IDENTIFIER data_type EQUAL value .
+
+    $end            reduce using rule 17 (assignment -> CONST IDENTIFIER data_type EQUAL value .)
+
+
+state 82
+
+    (22) while -> WHILE LPAREN value RPAREN COLON . sentencia
+    (1) sentencia -> . print
+    (2) sentencia -> . print_withoutvalue
+    (3) sentencia -> . assignment
+    (4) sentencia -> . short_assignment
+    (5) sentencia -> . arithmetic_operation
+    (6) sentencia -> . while
+    (7) sentencia -> . def_function
+    (8) sentencia -> . call_function
+    (11) print -> . FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+    (12) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+    (13) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (9) print_withoutvalue -> . FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+    (10) print_withoutvalue -> . FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+    (16) assignment -> . VAR IDENTIFIER data_type EQUAL value
+    (17) assignment -> . CONST IDENTIFIER data_type EQUAL value
+    (18) assignment -> . VAR IDENTIFIER data_type EQUAL IDENTIFIER
+    (19) assignment -> . CONST IDENTIFIER data_type EQUAL IDENTIFIER
+    (20) short_assignment -> . IDENTIFIER SHORT_VAR_DECL value
+    (21) short_assignment -> . IDENTIFIER SHORT_VAR_DECL IDENTIFIER
+    (35) arithmetic_operation -> . IDENTIFIER PLUS_EQ value
+    (36) arithmetic_operation -> . IDENTIFIER MINUS_EQ value
+    (37) arithmetic_operation -> . IDENTIFIER TIMES_EQ value
+    (38) arithmetic_operation -> . IDENTIFIER DIVIDE_EQ value
+    (39) arithmetic_operation -> . IDENTIFIER MODULO_EQ value
+    (40) arithmetic_operation -> . IDENTIFIER BITWISE_AND_EQ value
+    (41) arithmetic_operation -> . IDENTIFIER BITWISE_OR_EQ value
+    (42) arithmetic_operation -> . IDENTIFIER BITWISE_XOR_EQ value
+    (43) arithmetic_operation -> . IDENTIFIER LEFT_SHIFT_EQ value
+    (44) arithmetic_operation -> . IDENTIFIER RIGHT_SHIFT_EQ value
+    (22) while -> . WHILE LPAREN value RPAREN COLON sentencia
+    (23) def_function -> . DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+    (24) call_function -> . IDENTIFIER LPAREN values RPAREN
+
+    FMT_LIBRARY     shift and go to state 10
+    VAR             shift and go to state 11
+    CONST           shift and go to state 13
+    IDENTIFIER      shift and go to state 12
+    WHILE           shift and go to state 14
+    DEF             shift and go to state 15
+
+    sentencia                      shift and go to state 88
+    print                          shift and go to state 2
+    print_withoutvalue             shift and go to state 3
+    assignment                     shift and go to state 4
+    short_assignment               shift and go to state 5
+    arithmetic_operation           shift and go to state 6
+    while                          shift and go to state 7
+    def_function                   shift and go to state 8
+    call_function                  shift and go to state 9
+
+state 83
+
+    (27) parameter -> IDENTIFIER value .
+
+    RPAREN          reduce using rule 27 (parameter -> IDENTIFIER value .)
+    COMMA           reduce using rule 27 (parameter -> IDENTIFIER value .)
+
+
+state 84
+
+    (23) def_function -> DEF IDENTIFIER LPAREN parameters RPAREN . COLON sentencia
+
+    COLON           shift and go to state 89
+
+
+state 85
+
+    (26) parameters -> parameters COMMA . parameter
+    (27) parameter -> . IDENTIFIER value
+
+    IDENTIFIER      shift and go to state 70
+
+    parameter                      shift and go to state 90
+
+state 86
+
+    (11) print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN .
+
+    $end            reduce using rule 11 (print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN .)
+
+
+state 87
+
+    (12) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA . RPAREN
+    (13) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA . identifiers RPAREN
+    (14) identifiers -> . IDENTIFIER
+    (15) identifiers -> . identifiers COMMA identifiers
+
+    RPAREN          shift and go to state 91
+    IDENTIFIER      shift and go to state 93
+
+    identifiers                    shift and go to state 92
+
+state 88
+
+    (22) while -> WHILE LPAREN value RPAREN COLON sentencia .
+
+    $end            reduce using rule 22 (while -> WHILE LPAREN value RPAREN COLON sentencia .)
+
+
+state 89
+
+    (23) def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON . sentencia
+    (1) sentencia -> . print
+    (2) sentencia -> . print_withoutvalue
+    (3) sentencia -> . assignment
+    (4) sentencia -> . short_assignment
+    (5) sentencia -> . arithmetic_operation
+    (6) sentencia -> . while
+    (7) sentencia -> . def_function
+    (8) sentencia -> . call_function
+    (11) print -> . FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN
+    (12) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
+    (13) print -> . FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN
+    (9) print_withoutvalue -> . FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
+    (10) print_withoutvalue -> . FMT_LIBRARY DOT PRINTF LPAREN RPAREN
+    (16) assignment -> . VAR IDENTIFIER data_type EQUAL value
+    (17) assignment -> . CONST IDENTIFIER data_type EQUAL value
+    (18) assignment -> . VAR IDENTIFIER data_type EQUAL IDENTIFIER
+    (19) assignment -> . CONST IDENTIFIER data_type EQUAL IDENTIFIER
+    (20) short_assignment -> . IDENTIFIER SHORT_VAR_DECL value
+    (21) short_assignment -> . IDENTIFIER SHORT_VAR_DECL IDENTIFIER
+    (35) arithmetic_operation -> . IDENTIFIER PLUS_EQ value
+    (36) arithmetic_operation -> . IDENTIFIER MINUS_EQ value
+    (37) arithmetic_operation -> . IDENTIFIER TIMES_EQ value
+    (38) arithmetic_operation -> . IDENTIFIER DIVIDE_EQ value
+    (39) arithmetic_operation -> . IDENTIFIER MODULO_EQ value
+    (40) arithmetic_operation -> . IDENTIFIER BITWISE_AND_EQ value
+    (41) arithmetic_operation -> . IDENTIFIER BITWISE_OR_EQ value
+    (42) arithmetic_operation -> . IDENTIFIER BITWISE_XOR_EQ value
+    (43) arithmetic_operation -> . IDENTIFIER LEFT_SHIFT_EQ value
+    (44) arithmetic_operation -> . IDENTIFIER RIGHT_SHIFT_EQ value
+    (22) while -> . WHILE LPAREN value RPAREN COLON sentencia
+    (23) def_function -> . DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia
+    (24) call_function -> . IDENTIFIER LPAREN values RPAREN
+
+    FMT_LIBRARY     shift and go to state 10
+    VAR             shift and go to state 11
+    CONST           shift and go to state 13
+    IDENTIFIER      shift and go to state 12
+    WHILE           shift and go to state 14
+    DEF             shift and go to state 15
+
+    sentencia                      shift and go to state 94
+    print                          shift and go to state 2
+    print_withoutvalue             shift and go to state 3
+    assignment                     shift and go to state 4
+    short_assignment               shift and go to state 5
+    arithmetic_operation           shift and go to state 6
+    while                          shift and go to state 7
+    def_function                   shift and go to state 8
+    call_function                  shift and go to state 9
+
+state 90
+
+    (26) parameters -> parameters COMMA parameter .
+
+    RPAREN          reduce using rule 26 (parameters -> parameters COMMA parameter .)
+    COMMA           reduce using rule 26 (parameters -> parameters COMMA parameter .)
+
+
+state 91
+
+    (12) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN .
+
+    $end            reduce using rule 12 (print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN .)
+
+
+state 92
+
+    (13) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers . RPAREN
+    (15) identifiers -> identifiers . COMMA identifiers
+
+    RPAREN          shift and go to state 96
+    COMMA           shift and go to state 95
+
+
+state 93
+
+    (14) identifiers -> IDENTIFIER .
+
+    RPAREN          reduce using rule 14 (identifiers -> IDENTIFIER .)
+    COMMA           reduce using rule 14 (identifiers -> IDENTIFIER .)
+
+
+state 94
+
+    (23) def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia .
+
+    $end            reduce using rule 23 (def_function -> DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia .)
+
+
+state 95
+
+    (15) identifiers -> identifiers COMMA . identifiers
+    (14) identifiers -> . IDENTIFIER
+    (15) identifiers -> . identifiers COMMA identifiers
+
+    IDENTIFIER      shift and go to state 93
+
+    identifiers                    shift and go to state 97
+
+state 96
+
+    (13) print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN .
+
+    $end            reduce using rule 13 (print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN .)
+
+
+state 97
+
+    (15) identifiers -> identifiers COMMA identifiers .
+    (15) identifiers -> identifiers . COMMA identifiers
+
+  ! shift/reduce conflict for COMMA resolved as shift
+    RPAREN          reduce using rule 15 (identifiers -> identifiers COMMA identifiers .)
+    COMMA           shift and go to state 95
+
+  ! COMMA           [ reduce using rule 15 (identifiers -> identifiers COMMA identifiers .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for COMMA in state 97 resolved as shift

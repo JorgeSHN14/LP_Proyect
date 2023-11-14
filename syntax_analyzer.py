@@ -40,7 +40,7 @@ def p_short_assignment(p):
   
 
 def p_while(p):
-  "while : WHILE un valor singular  TRUE P_DER COLON sentence"
+  '''while : WHILE LPAREN value RPAREN COLON sentencia'''
 
 def p_def_function(p):
   '''def_function : DEF IDENTIFIER LPAREN parameters RPAREN COLON sentencia'''
