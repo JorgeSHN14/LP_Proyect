@@ -148,6 +148,19 @@ a := 3
 fmt.Printf("Number: \%\d", id)
 fmt.Println("Este es un print simple")'''
 codeJuan = """
+var x int = 10
+sumar := func(a, b int) int {
+    return a + b }
+resultado := sumar(5, 3)
+fmt.Println("Resultado de la suma:", resultado)
+   
+for {
+   fmt.Println("Este es un bucle infinito")
+   break 
+ }
+fmt.Printf("El resultado es: %d\n", 42)
+const pi float64 = 3.14159
+fmt.Println("Valor de pi:", pi)
 
 """
 
