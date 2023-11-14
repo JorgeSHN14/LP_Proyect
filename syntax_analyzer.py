@@ -33,8 +33,8 @@ def p_assignment(p):
                 | CONST IDENTIFIER data_type EQUAL IDENTIFIER'''
   
 def p_short_assignment(p):
-  '''assignment : IDENTIFIER COLON EQUAL value
-                | IDENTIFIER COLON EQUAL IDENTIFIER'''
+  '''short_assignment : IDENTIFIER SHORT_VAR_DECL value
+                | IDENTIFIER SHORT_VAR_DECL IDENTIFIER'''
   
 
 def p_while(p):
@@ -51,14 +51,21 @@ def p_parameters(p):
                 | parameters COMMA parameter'''
 
 def p_parameter(p):
-  ''' parameter : IDENTIFIER data_type'''
+  ''' parameter : IDENTIFIER value'''
+
 def p_values(p):
-  '''values : data_type
-            | values COMMA data_type'''
+  '''values : value
+            | values COMMA value'''
+
+def p_value(p):
+  '''value : STRING
+          | INTEGER
+          | FLOAT32
+          | FLOAT64
+          | BOOLEAN'''
 
 def p_data_type(p):
-  '''data_type : STRING
-               | INTEGER_DATA_TYPE
+  '''data_type : INTEGER_DATA_TYPE
                | FLOAT32_DATA_TYPE
                | FLOAT64_DATA_TYPE
                | BOOLEAN_DATA_TYPE
