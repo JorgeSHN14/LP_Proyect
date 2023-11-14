@@ -64,6 +64,20 @@ def p_value(p):
           | FLOAT64
           | BOOLEAN'''
 
+def p_arithmetic_operation(p):
+    '''
+    arithmetic_operation : IDENTIFIER PLUS_EQ value
+                        | IDENTIFIER MINUS_EQ value
+                        | IDENTIFIER TIMES_EQ value
+                        | IDENTIFIER DIVIDE_EQ value
+                        | IDENTIFIER MODULO_EQ value
+                        | IDENTIFIER BITWISE_AND_EQ value
+                        | IDENTIFIER BITWISE_OR_EQ value
+                        | IDENTIFIER BITWISE_XOR_EQ value
+                        | IDENTIFIER LEFT_SHIFT_EQ value
+                        | IDENTIFIER RIGHT_SHIFT_EQ value
+    '''
+
 def p_data_type(p):
   '''data_type : INTEGER_DATA_TYPE
                | FLOAT32_DATA_TYPE
@@ -71,17 +85,21 @@ def p_data_type(p):
                | BOOLEAN_DATA_TYPE
                | STRING_DATA_TYPE'''
 
-####Paula Peralta###
 def p_input(p):
   '''input : INPUT LPAREN RPAREN'''
-  user_input = input("Ingrese un valor:")
-  print(f"Valor ingresado: {user_input}")
 
 
 def p_error(p):
     print("Error sintáctico en '%s'" % p.value)
 
 parser = sint.yacc()
+
+prueba = """
+input()
+var x int = 10
+const pi float64 = 3.14159
+"""
+
 while True:
   try:
     s = input('Ingrese su código: ')
@@ -90,3 +108,4 @@ while True:
   if not s: continue
   result = parser.parse(s)
   print(result)
+
