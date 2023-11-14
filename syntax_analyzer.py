@@ -6,10 +6,12 @@ def p_sentencia(p):
               | print_withoutvalue
               | assignment
               | short_assignment
+              | arithmetic_operation
               | while
               | def_function
-              | call_function
-              | input'''
+              | call_function'''
+  
+              
 
   
 def p_print_withoutvalue(p):

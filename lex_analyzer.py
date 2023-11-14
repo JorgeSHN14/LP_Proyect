@@ -9,6 +9,7 @@ reserved = {
     'for': 'FOR',
     'in': 'IN',
     'return': 'RETURN',
+    'input': 'INPUT',
     'and': 'AND',
     'or': 'OR',
     'not': 'NOT',

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AMPERSAND AND ARROW_FUNCTION_TYPE ARROW_SEND_RECEIVE AS ASSERT BITWISE_AND_EQ BITWISE_OR_EQ BITWISE_XOR BITWISE_XOR_ASSIGN BITWISE_XOR_EQ BOOLEAN BOOLEAN_DATA_TYPE BREAK CLASS COLON COMMA COMMENT COMMENT_MULTI CONST CONTINUE DEF DEL DIVIDE DIVIDE_EQ DOT ELIF ELLIPSIS ELSE ENTERE_DIVIDE EQUAL EQUALEQUAL EXCEPT FALSE FAT_ARROW FINALLY FLOAT32 FLOAT32_DATA_TYPE FLOAT64 FLOAT64_DATA_TYPE FMT_LIBRARY FOR FROM GLOBAL GREATER GREATER_EQUAL GREATER_THAN HEX_NUMBER IDENTIFIER IF IMPORT IN INTEGER INTEGER_DATA_TYPE IS LAMBDA LBRACKET LEFT_SHIFT_EQ LESS LESS_EQUAL LESS_THAN LKEY LOGICAL_AND LOGICAL_NOT LOGICAL_OR LPAREN MINUS MINUS_EQ MODULE MODULO_EQ NONE NONLOCAL NOT NOT_EQUAL NULL OR PASS PIPE PLUS PLUS_EQ PRINTF PRINTLN RAISE RBRACKET RETURN RIGHT_SHIFT_EQ RKEY RPAREN SCIENTIFIC_NOTATION SHORT_VAR_DECL STRING STRING_DATA_TYPE TIMES TIMES_EQ TRUE TRY VAR WHILE WITH YIELDsentencia : print\n              | print_withoutvalue\n              | assignment\n              | short_assignmentprint_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN\n            | FMT_LIBRARY DOT PRINTF LPAREN RPARENprint : FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN\n           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN\n           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPARENidentifiers : IDENTIFIER\n                 | identifiers COMMA identifiersassignment : VAR IDENTIFIER data_type EQUAL value\n                | CONST IDENTIFIER data_type EQUAL value\n                | VAR IDENTIFIER data_type EQUAL IDENTIFIER\n                | CONST IDENTIFIER data_type EQUAL IDENTIFIERshort_assignment : IDENTIFIER SHORT_VAR_DECL value\n                | IDENTIFIER SHORT_VAR_DECL IDENTIFIERvalue : STRING\n          | INTEGER\n          | FLOAT32\n          | FLOAT64\n          | BOOLEANdata_type : INTEGER_DATA_TYPE\n               | FLOAT32_DATA_TYPE\n               | FLOAT64_DATA_TYPE\n               | BOOLEAN_DATA_TYPE\n               | STRING_DATA_TYPE'
+_lr_signature = 'AMPERSAND AND ARROW_FUNCTION_TYPE ARROW_SEND_RECEIVE AS ASSERT BITWISE_AND_EQ BITWISE_OR_EQ BITWISE_XOR BITWISE_XOR_ASSIGN BITWISE_XOR_EQ BOOLEAN BOOLEAN_DATA_TYPE BREAK CLASS COLON COMMA COMMENT COMMENT_MULTI CONST CONTINUE DEF DEL DIVIDE DIVIDE_EQ DOT ELIF ELLIPSIS ELSE ENTERE_DIVIDE EQUAL EQUALEQUAL EXCEPT FALSE FAT_ARROW FINALLY FLOAT32 FLOAT32_DATA_TYPE FLOAT64 FLOAT64_DATA_TYPE FMT_LIBRARY FOR FROM GLOBAL GREATER GREATER_EQUAL GREATER_THAN HEX_NUMBER IDENTIFIER IF IMPORT IN INTEGER INTEGER_DATA_TYPE IS LAMBDA LBRACKET LEFT_SHIFT_EQ LESS LESS_EQUAL LESS_THAN LKEY LOGICAL_AND LOGICAL_NOT LOGICAL_OR LPAREN MINUS MINUS_EQ MODULE MODULO_EQ NONE NONLOCAL NOT NOT_EQUAL NULL OR PASS PIPE PLUS PLUS_EQ PRINTF PRINTLN RAISE RBRACKET RETURN RIGHT_SHIFT_EQ RKEY RPAREN SCIENTIFIC_NOTATION SHORT_VAR_DECL STRING STRING_DATA_TYPE TIMES TIMES_EQ TRUE TRY VAR WHILE WITH YIELDsentencia : print\n              | print_withoutvalue\n              | assignment\n              | short_assignment\n              | arithmetic_operationprint_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN\n            | FMT_LIBRARY DOT PRINTF LPAREN RPARENprint : FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN\n           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN\n           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPARENidentifiers : IDENTIFIER\n                 | identifiers COMMA identifiersassignment : VAR IDENTIFIER data_type EQUAL value\n                | CONST IDENTIFIER data_type EQUAL value\n                | VAR IDENTIFIER data_type EQUAL IDENTIFIER\n                | CONST IDENTIFIER data_type EQUAL IDENTIFIERshort_assignment : IDENTIFIER SHORT_VAR_DECL value\n                | IDENTIFIER SHORT_VAR_DECL IDENTIFIERvalue : STRING\n          | INTEGER\n          | FLOAT32\n          | FLOAT64\n          | BOOLEAN\n    arithmetic_operation : IDENTIFIER PLUS_EQ value\n                        | IDENTIFIER MINUS_EQ value\n                        | IDENTIFIER TIMES_EQ value\n                        | IDENTIFIER DIVIDE_EQ value\n                        | IDENTIFIER MODULO_EQ value\n                        | IDENTIFIER BITWISE_AND_EQ value\n                        | IDENTIFIER BITWISE_OR_EQ value\n                        | IDENTIFIER BITWISE_XOR_EQ value\n                        | IDENTIFIER LEFT_SHIFT_EQ value\n                        | IDENTIFIER RIGHT_SHIFT_EQ value\n    data_type : INTEGER_DATA_TYPE\n               | FLOAT32_DATA_TYPE\n               | FLOAT64_DATA_TYPE\n               | BOOLEAN_DATA_TYPE\n               | STRING_DATA_TYPE'
     
-_lr_action_items = {'FMT_LIBRARY':([0,],[6,]),'VAR':([0,],[7,]),'CONST':([0,],[9,]),'IDENTIFIER':([0,7,9,12,32,33,43,47,],[8,11,13,22,38,40,46,46,]),'$end':([1,2,3,4,5,22,23,24,25,26,27,28,35,37,38,39,40,41,42,44,48,],[0,-1,-2,-3,-4,-17,-16,-18,-19,-20,-21,-22,-5,-6,-14,-12,-15,-13,-7,-8,-9,]),'DOT':([6,],[10,]),'SHORT_VAR_DECL':([8,],[12,]),'PRINTLN':([10,],[14,]),'PRINTF':([10,],[15,]),'INTEGER_DATA_TYPE':([11,13,],[17,17,]),'FLOAT32_DATA_TYPE':([11,13,],[18,18,]),'FLOAT64_DATA_TYPE':([11,13,],[19,19,]),'BOOLEAN_DATA_TYPE':([11,13,],[20,20,]),'STRING_DATA_TYPE':([11,13,],[21,21,]),'STRING':([12,30,31,32,33,],[24,24,24,24,24,]),'INTEGER':([12,30,31,32,33,],[25,25,25,25,25,]),'FLOAT32':([12,30,31,32,33,],[26,26,26,26,26,]),'FLOAT64':([12,30,31,32,33,],[27,27,27,27,27,]),'BOOLEAN':([12,30,31,32,33,],[28,28,28,28,28,]),'LPAREN':([14,15,],[30,31,]),'EQUAL':([16,17,18,19,20,21,29,],[32,-23,-24,-25,-26,-27,33,]),'RPAREN':([24,25,26,27,28,30,31,34,43,45,46,49,],[-18,-19,-20,-21,-22,35,37,42,44,48,-10,-11,]),'COMMA':([24,25,26,27,28,36,45,46,49,],[-18,-19,-20,-21,-22,43,47,-10,47,]),}
+_lr_action_items = {'FMT_LIBRARY':([0,],[7,]),'VAR':([0,],[8,]),'CONST':([0,],[10,]),'IDENTIFIER':([0,8,10,13,53,54,64,68,],[9,12,24,33,59,61,67,67,]),'$end':([1,2,3,4,5,6,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,56,58,59,60,61,62,63,65,69,],[0,-1,-2,-3,-4,-5,-18,-17,-19,-20,-21,-22,-23,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-6,-7,-15,-13,-16,-14,-8,-9,-10,]),'DOT':([7,],[11,]),'SHORT_VAR_DECL':([9,],[13,]),'PLUS_EQ':([9,],[14,]),'MINUS_EQ':([9,],[15,]),'TIMES_EQ':([9,],[16,]),'DIVIDE_EQ':([9,],[17,]),'MODULO_EQ':([9,],[18,]),'BITWISE_AND_EQ':([9,],[19,]),'BITWISE_OR_EQ':([9,],[20,]),'BITWISE_XOR_EQ':([9,],[21,]),'LEFT_SHIFT_EQ':([9,],[22,]),'RIGHT_SHIFT_EQ':([9,],[23,]),'PRINTLN':([11,],[25,]),'PRINTF':([11,],[26,]),'INTEGER_DATA_TYPE':([12,24,],[28,28,]),'FLOAT32_DATA_TYPE':([12,24,],[29,29,]),'FLOAT64_DATA_TYPE':([12,24,],[30,30,]),'BOOLEAN_DATA_TYPE':([12,24,],[31,31,]),'STRING_DATA_TYPE':([12,24,],[32,32,]),'STRING':([13,14,15,16,17,18,19,20,21,22,23,51,52,53,54,],[35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,]),'INTEGER':([13,14,15,16,17,18,19,20,21,22,23,51,52,53,54,],[36,36,36,36,36,36,36,36,36,36,36,36,36,36,36,]),'FLOAT32':([13,14,15,16,17,18,19,20,21,22,23,51,52,53,54,],[37,37,37,37,37,37,37,37,37,37,37,37,37,37,37,]),'FLOAT64':([13,14,15,16,17,18,19,20,21,22,23,51,52,53,54,],[38,38,38,38,38,38,38,38,38,38,38,38,38,38,38,]),'BOOLEAN':([13,14,15,16,17,18,19,20,21,22,23,51,52,53,54,],[39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,]),'LPAREN':([25,26,],[51,52,]),'EQUAL':([27,28,29,30,31,32,50,],[53,-34,-35,-36,-37,-38,54,]),'RPAREN':([35,36,37,38,39,51,52,55,64,66,67,70,],[-19,-20,-21,-22,-23,56,58,63,65,69,-11,-12,]),'COMMA':([35,36,37,38,39,57,66,67,70,],[-19,-20,-21,-22,-23,64,68,-11,68,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'sentencia':([0,],[1,]),'print':([0,],[2,]),'print_withoutvalue':([0,],[3,]),'assignment':([0,],[4,]),'short_assignment':([0,],[5,]),'data_type':([11,13,],[16,29,]),'value':([12,30,31,32,33,],[23,34,36,39,41,]),'identifiers':([43,47,],[45,49,]),}
+_lr_goto_items = {'sentencia':([0,],[1,]),'print':([0,],[2,]),'print_withoutvalue':([0,],[3,]),'assignment':([0,],[4,]),'short_assignment':([0,],[5,]),'arithmetic_operation':([0,],[6,]),'data_type':([12,24,],[27,50,]),'value':([13,14,15,16,17,18,19,20,21,22,23,51,52,53,54,],[34,40,41,42,43,44,45,46,47,48,49,55,57,60,62,]),'identifiers':([64,68,],[66,70,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -31,27 +31,38 @@ _lr_productions = [
   ('sentencia -> print_withoutvalue','sentencia',1,'p_sentencia','syntax_analyzer.py',6),
   ('sentencia -> assignment','sentencia',1,'p_sentencia','syntax_analyzer.py',7),
   ('sentencia -> short_assignment','sentencia',1,'p_sentencia','syntax_analyzer.py',8),
-  ('print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN','print_withoutvalue',5,'p_print_withoutvalue','syntax_analyzer.py',12),
-  ('print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN','print_withoutvalue',5,'p_print_withoutvalue','syntax_analyzer.py',13),
-  ('print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN','print',6,'p_print','syntax_analyzer.py',16),
-  ('print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN','print',7,'p_print','syntax_analyzer.py',17),
-  ('print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN','print',8,'p_print','syntax_analyzer.py',18),
-  ('identifiers -> IDENTIFIER','identifiers',1,'p_identifiers','syntax_analyzer.py',22),
-  ('identifiers -> identifiers COMMA identifiers','identifiers',3,'p_identifiers','syntax_analyzer.py',23),
-  ('assignment -> VAR IDENTIFIER data_type EQUAL value','assignment',5,'p_assignment','syntax_analyzer.py',26),
-  ('assignment -> CONST IDENTIFIER data_type EQUAL value','assignment',5,'p_assignment','syntax_analyzer.py',27),
-  ('assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER','assignment',5,'p_assignment','syntax_analyzer.py',28),
-  ('assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER','assignment',5,'p_assignment','syntax_analyzer.py',29),
-  ('short_assignment -> IDENTIFIER SHORT_VAR_DECL value','short_assignment',3,'p_short_assignment','syntax_analyzer.py',32),
-  ('short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER','short_assignment',3,'p_short_assignment','syntax_analyzer.py',33),
-  ('value -> STRING','value',1,'p_value','syntax_analyzer.py',37),
-  ('value -> INTEGER','value',1,'p_value','syntax_analyzer.py',38),
-  ('value -> FLOAT32','value',1,'p_value','syntax_analyzer.py',39),
-  ('value -> FLOAT64','value',1,'p_value','syntax_analyzer.py',40),
-  ('value -> BOOLEAN','value',1,'p_value','syntax_analyzer.py',41),
-  ('data_type -> INTEGER_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',44),
-  ('data_type -> FLOAT32_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',45),
-  ('data_type -> FLOAT64_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',46),
-  ('data_type -> BOOLEAN_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',47),
-  ('data_type -> STRING_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',48),
+  ('sentencia -> arithmetic_operation','sentencia',1,'p_sentencia','syntax_analyzer.py',9),
+  ('print_withoutvalue -> FMT_LIBRARY DOT PRINTLN LPAREN RPAREN','print_withoutvalue',5,'p_print_withoutvalue','syntax_analyzer.py',18),
+  ('print_withoutvalue -> FMT_LIBRARY DOT PRINTF LPAREN RPAREN','print_withoutvalue',5,'p_print_withoutvalue','syntax_analyzer.py',19),
+  ('print -> FMT_LIBRARY DOT PRINTLN LPAREN value RPAREN','print',6,'p_print','syntax_analyzer.py',22),
+  ('print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN','print',7,'p_print','syntax_analyzer.py',23),
+  ('print -> FMT_LIBRARY DOT PRINTF LPAREN value COMMA identifiers RPAREN','print',8,'p_print','syntax_analyzer.py',24),
+  ('identifiers -> IDENTIFIER','identifiers',1,'p_identifiers','syntax_analyzer.py',28),
+  ('identifiers -> identifiers COMMA identifiers','identifiers',3,'p_identifiers','syntax_analyzer.py',29),
+  ('assignment -> VAR IDENTIFIER data_type EQUAL value','assignment',5,'p_assignment','syntax_analyzer.py',32),
+  ('assignment -> CONST IDENTIFIER data_type EQUAL value','assignment',5,'p_assignment','syntax_analyzer.py',33),
+  ('assignment -> VAR IDENTIFIER data_type EQUAL IDENTIFIER','assignment',5,'p_assignment','syntax_analyzer.py',34),
+  ('assignment -> CONST IDENTIFIER data_type EQUAL IDENTIFIER','assignment',5,'p_assignment','syntax_analyzer.py',35),
+  ('short_assignment -> IDENTIFIER SHORT_VAR_DECL value','short_assignment',3,'p_short_assignment','syntax_analyzer.py',38),
+  ('short_assignment -> IDENTIFIER SHORT_VAR_DECL IDENTIFIER','short_assignment',3,'p_short_assignment','syntax_analyzer.py',39),
+  ('value -> STRING','value',1,'p_value','syntax_analyzer.py',63),
+  ('value -> INTEGER','value',1,'p_value','syntax_analyzer.py',64),
+  ('value -> FLOAT32','value',1,'p_value','syntax_analyzer.py',65),
+  ('value -> FLOAT64','value',1,'p_value','syntax_analyzer.py',66),
+  ('value -> BOOLEAN','value',1,'p_value','syntax_analyzer.py',67),
+  ('arithmetic_operation -> IDENTIFIER PLUS_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',71),
+  ('arithmetic_operation -> IDENTIFIER MINUS_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',72),
+  ('arithmetic_operation -> IDENTIFIER TIMES_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',73),
+  ('arithmetic_operation -> IDENTIFIER DIVIDE_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',74),
+  ('arithmetic_operation -> IDENTIFIER MODULO_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',75),
+  ('arithmetic_operation -> IDENTIFIER BITWISE_AND_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',76),
+  ('arithmetic_operation -> IDENTIFIER BITWISE_OR_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',77),
+  ('arithmetic_operation -> IDENTIFIER BITWISE_XOR_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',78),
+  ('arithmetic_operation -> IDENTIFIER LEFT_SHIFT_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',79),
+  ('arithmetic_operation -> IDENTIFIER RIGHT_SHIFT_EQ value','arithmetic_operation',3,'p_arithmetic_operation','syntax_analyzer.py',80),
+  ('data_type -> INTEGER_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',84),
+  ('data_type -> FLOAT32_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',85),
+  ('data_type -> FLOAT64_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',86),
+  ('data_type -> BOOLEAN_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',87),
+  ('data_type -> STRING_DATA_TYPE','data_type',1,'p_data_type','syntax_analyzer.py',88),
 ]
