@@ -88,7 +88,10 @@ def p_data_type(p):
                | STRING_DATA_TYPE'''
 
 def p_input(p):
-  '''input : INPUT LPAREN RPAREN'''
+    '''input : INPUT LPAREN RPAREN
+             | INPUT LPAREN value RPAREN
+             | INPUT LPAREN identifiers RPAREN
+    '''
 
 
 def p_error(p):
