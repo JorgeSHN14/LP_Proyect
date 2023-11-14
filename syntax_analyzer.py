@@ -134,7 +134,13 @@ def p_error(p):
 parser = sint.yacc()
 
 codePaula = '''
-
+input()
+input(x, y, z)
+input(x)
+for x > 0 {
+    println(x)
+    x--
+}
 '''
 codeJorge = '''
 
