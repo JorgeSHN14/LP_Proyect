@@ -8,7 +8,9 @@ def p_print(p):
 def p_sentencia(p):
   '''sentencia : impresion
               | asignacion
-              | mientras'''
+              | mientras
+              | definicion_funcion
+              | llamada_funcion'''
   
 def p_asignacion(p):
   '''asignacion : VAR IDENTIFIER data_type EQUAL value
@@ -22,6 +24,19 @@ def p_impresion_sinvalor(p):
 
 def p_mientras(p):
   "mientras : MIENTRAS P_IZQ VERDADERO P_DER DOSP sentencia"
+
+def p_definicion_funcion(p):
+  '''definicion_funcion : DEF IDENTIFIER LPAREN parametros RPAREN DOSP sentencias'''
+
+def p_llamada_funcion(p):
+  '''llamada_funcion : IDENTIFIER LPAREN valores RPAREN'''
+
+def p_parametros(p):
+  '''parametros : parametro
+                | parametros COMA parametro'''
+
+def p_parametro(p):
+  ''' parametro : IDENTIFIER data_type'''
 
 def p_valores(p):
   '''valores : valor
