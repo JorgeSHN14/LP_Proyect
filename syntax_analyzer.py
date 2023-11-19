@@ -155,6 +155,15 @@ def p_input(p):
              | INPUT LPAREN identifiers RPAREN
     '''
 
+def p_condition(p):
+    '''
+    condition : value comparation_operation value
+              | condition LOGICAL_AND condition
+              | condition LOGICAL_OR condition
+              | LOGICAL_NOT condition
+    '''
+
+
 def p_error(p):
     print("Error sintáctico en '%s'" % p)
 
