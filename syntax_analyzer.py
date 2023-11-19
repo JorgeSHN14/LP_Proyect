@@ -30,7 +30,8 @@ def p_sentencia(p):
                | arithmetic_operation
                | direct_arithmetic_operation
                | if_statement
-               | function_call '''
+               | function_call
+               | switch_statement'''
                
 
 ##########            PAULA PERALTA            ############
@@ -46,6 +47,64 @@ def p_if_statement(p):
                     | IF rule_comparation LKEY program RKEY ELSE LKEY program RKEY
                     | IF value LKEY program RKEY
                     | IF value LKEY program RKEY ELSE LKEY program RKEY
+    '''
+
+def p_switch_statement(p):
+    '''
+    switch_statement : SWITCH expression LKEY case_clauses RKEY
+                     | SWITCH expression LKEY case_clauses DEFAULT COLON statements RKEY
+    '''
+
+def p_case_clauses(p):
+    '''
+    case_clauses : case_clause case_clauses
+                 |
+    '''
+
+def p_case_clause(p):
+    '''
+    case_clause : CASE value COLON statements
+    '''
+
+def p_statements(p):
+    '''
+    statements : statement statements
+              |
+    '''
+
+def p_statement(p):
+    '''statement : print
+                 | print_withoutvalue
+                 | def_function
+                 | call_function
+                 | input
+                 | assignment
+                 | short_assignment
+                 | arithmetic_operation
+                 | direct_arithmetic_operation
+                 | if_statement
+                 | function_call
+                 | switch_statement
+                 | statement
+    '''
+
+def p_expression(p):
+    '''
+    expression : value
+               | expression PLUS expression
+               | expression MINUS expression
+               | expression TIMES expression
+               | expression DIVIDE expression
+               | expression ENTERE_DIVIDE expression
+               | expression MODULE expression
+               | expression EQUALEQUAL expression
+               | expression NOT_EQUAL expression
+               | expression LESS_EQUAL expression
+               | expression GREATER_EQUAL expression
+               | expression LESS expression
+               | expression GREATER expression
+               | expression LOGICAL_AND expression
+               | expression LOGICAL_OR expression
     '''
 
 
@@ -158,6 +217,8 @@ def p_parameters(p):
   '''parameters : parameter
                 | parameters COMMA parameter'''
 
+
+
 def p_parameter(p):
   ''' parameter : IDENTIFIER data_type'''
 
@@ -171,7 +232,8 @@ def p_value(p):
           | INTEGER
           | FLOAT32
           | FLOAT64
-          | BOOLEAN'''
+          | BOOLEAN
+          | IDENTIFIER'''
 
 def p_data_type(p):
   '''data_type : INTEGER_DATA_TYPE
@@ -227,7 +289,31 @@ fmt.Printf("Number: \%\d", id)
 fmt.Println("Este es un print simple")
 '''
 
-codeJuan = """var x int = 10
+codeJuan = """
+switch x + y {
+    case 1:
+        fmt.Println("Uno")
+    case 2, 3:
+        fmt.Println("Dos o Tres")
+    case 4:
+        fmt.Println("Cuatro")
+    default:
+        if x > 10 {
+            fmt.Println("Mayor que 10")
+        } else {
+            fmt.Println("Otro")
+        }
+}
+switch x {
+    case 1:
+        fmt.Println("Uno")
+    case 2:
+        fmt.Println("Dos")
+    default:
+        fmt.Println("Otro")
+}
+
+var x int = 10
 func sumar(a int, b int) {
 a := a + b
 fmt.Println(a)

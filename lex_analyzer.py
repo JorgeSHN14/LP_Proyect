@@ -45,7 +45,10 @@ reserved = {
     'float32': 'FLOAT32_DATA_TYPE',
     'float64': 'FLOAT64_DATA_TYPE',
     'string': 'STRING_DATA_TYPE',
-    'bool': 'BOOLEAN_DATA_TYPE'
+    'bool': 'BOOLEAN_DATA_TYPE',
+    'switch': 'SWITCH',
+    'case': 'CASE',
+    'default': 'DEFAULT',
 }
 
 #####Jorge Herrera#####
@@ -107,7 +110,11 @@ tokens = (
     'LESS_THAN',
     'COLON',
     'DOT',
-    'RULE_COMPARATION'
+    'RULE_COMPARATION',
+    'SWITCH',
+    'CASE',
+    'DEFAULT',
+
 ) + tuple(reserved.values())
 
 #####              Juan Demera              #####
