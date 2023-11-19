@@ -72,28 +72,28 @@ def p_usable_value(p):
 
 ##########            PAULA PERALTA            ############
 def p_direct_arithmetic_operation(p):
-    '''
-    direct_arithmetic_operation : IDENTIFIER PLUS_EQ value
-                        | IDENTIFIER MINUS_EQ value
-                        | IDENTIFIER TIMES_EQ value
-                        | IDENTIFIER DIVIDE_EQ value
-                        | IDENTIFIER MODULO_EQ value
-                        | IDENTIFIER BITWISE_AND_EQ value
-                        | IDENTIFIER BITWISE_OR_EQ value
-                        | IDENTIFIER BITWISE_XOR_EQ value
-                        | IDENTIFIER LEFT_SHIFT_EQ value
-                        | IDENTIFIER RIGHT_SHIFT_EQ value
-    '''
+  '''
+  direct_arithmetic_operation : IDENTIFIER PLUS_EQ value
+                      | IDENTIFIER MINUS_EQ value
+                      | IDENTIFIER TIMES_EQ value
+                      | IDENTIFIER DIVIDE_EQ value
+                      | IDENTIFIER MODULO_EQ value
+                      | IDENTIFIER BITWISE_AND_EQ value
+                      | IDENTIFIER BITWISE_OR_EQ value
+                      | IDENTIFIER BITWISE_XOR_EQ value
+                      | IDENTIFIER LEFT_SHIFT_EQ value
+                      | IDENTIFIER RIGHT_SHIFT_EQ value
+  '''
   
 def p_arithmetic_operation(p):
-    '''
-    arithmetic_operation : usable_value PLUS usable_value
-                        | usable_value MINUS usable_value
-                        | usable_value DIVIDE usable_value
-                        | usable_value TIMES usable_value
-                        | usable_value ENTERE_DIVIDE usable_value
-                        | usable_value MODULE usable_value
-    '''
+  '''
+  arithmetic_operation : usable_value PLUS usable_value
+                      | usable_value MINUS usable_value
+                      | usable_value DIVIDE usable_value
+                      | usable_value TIMES usable_value
+                      | usable_value ENTERE_DIVIDE usable_value
+                      | usable_value MODULE usable_value
+  '''
 
 ##########            JORGE HERRERA            ############
 
@@ -156,32 +156,41 @@ def p_input(p):
     '''
 
 def p_error(p):
-    print("Error sintáctico en '%s'" % p)
+    errors.append("Error sintáctico en '%s'" % p)
 
-parser = sint.yacc()
+# parser = sint.yacc()
 
-codePaula = '''input()
-var id int = 4
-input(y, z)
-input(3)
-'''
-codeJorge = '''var id int = 4
-a := 3
-fmt.Printf("Number: \%\d", id)
-fmt.Println("Este es un print simple")'''
-codeJuan = """var x int = 10
-func sumar(a int, b int) {
-a := a + b
-fmt.Println(a)
-}
-resultado := sumar(5, 3)
-fmt.Println("Resultado de la suma:", resultado)
-for {
-fmt.Println("Este es un bucle infinito")
-break}
-const pi float64 = 3.14159f32
-fmt.Println("Valor de pi:", pi)"""
+# codePaula = '''input()
+# var id int = 4
+# input(y, z)
+# input(3)
+# '''
+# codeJorge = '''var id int = 4
+# a := 3
+# fmt.Printf("Number: \%\d", id)
+# fmt.Println("Este es un print simple")'''
+# codeJuan = """var x int = 10
+# func sumar(a int, b int) {
+# a := a + b
+# fmt.Println(a)
+# }
+# resultado := sumar(5, 3)
+# fmt.Println("Resultado de la suma:", resultado)
+# for {
+# fmt.Println("Este es un bucle infinito")
+# break}
+# const pi float64 = 3.14159f32
+# fmt.Println("Valor de pi:", pi)"""
 
-code = codePaula + codeJorge + codeJuan
-result = parser.parse(code)
-print(result)
+# code = codePaula + codeJorge + codeJuan
+# result = parser.parse(code)
+# print(result)
+
+
+errors = []
+def analizeSyntax(code):
+  parser = sint.yacc()
+  result = parser.parse(code)
+  returnErrors = errors
+  errors = []
+  return returnErrors
