@@ -4,7 +4,7 @@ import ply.lex as lex
 reserved = {
     'if': 'IF',
     'else': 'ELSE',
-    'def': 'DEF',
+    'func': 'FUNC',
     'for': 'FOR',
     'in': 'IN',
     'return': 'RETURN',
