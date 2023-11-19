@@ -107,6 +107,7 @@ tokens = (
     'LESS_THAN',
     'COLON',
     'DOT',
+    'RULE_COMPARATION'
 ) + tuple(reserved.values())
 
 #####              Juan Demera              #####
@@ -188,6 +189,11 @@ def t_COMMENT_MULTI(t):
   r'\/\*((\n)?[^(\*\/)]*(\n)?)*\*\/'
   #r'\/\*[^(\*\/)]*\*\/'
   return t
+
+#Expresion regular para definir RULE_COMPARATION
+def t_RULE_COMPARATION(t):
+    r'==|!=|<=|>=|<|>|&&|\|\|'
+    return t
 
 
 #####              Jorge Herrera              #####

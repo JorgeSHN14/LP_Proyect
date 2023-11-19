@@ -28,13 +28,26 @@ def p_sentencia(p):
                | assignment
                | short_assignment
                | arithmetic_operation
-               | direct_arithmetic_operation'''
+               | direct_arithmetic_operation
+               | if_statement
+               | function_call '''
                
 
 ##########            PAULA PERALTA            ############
 def p_for(p):
   '''for : FOR LKEY loop_program RKEY
          | FOR comparation_operation LKEY loop_program RKEY'''
+
+def p_function_call(p):
+    '''function_call : IDENTIFIER LPAREN values RPAREN'''
+  
+def p_if_statement(p):
+    '''if_statement : IF rule_comparation LKEY program RKEY
+                    | IF rule_comparation LKEY program RKEY ELSE LKEY program RKEY
+                    | IF value LKEY program RKEY
+                    | IF value LKEY program RKEY ELSE LKEY program RKEY
+    '''
+
 
 ##########            JORGE HERRERA            ############
 
@@ -113,7 +126,26 @@ def p_comparation_operation(p):
 def p_identifiers(p):
   '''identifiers : IDENTIFIER
                  | identifiers COMMA identifiers'''
+  
+##########            PAULA PERALTA            ############
+def p_rule_comparation(p):
+    '''rule_comparation : IDENTIFIER EQUALEQUAL value
+                        | IDENTIFIER NOT_EQUAL value
+                        | IDENTIFIER LESS_EQUAL value
+                        | IDENTIFIER GREATER_EQUAL value
+                        | IDENTIFIER LESS value
+                        | IDENTIFIER GREATER value
+                        | IDENTIFIER LOGICAL_AND value
+                        | IDENTIFIER LOGICAL_OR value'''
 
+def p_condition(p):
+    '''
+    condition : value comparation_operation value
+              | condition LOGICAL_AND condition
+              | condition LOGICAL_OR condition
+              | LOGICAL_NOT condition
+    '''
+    
 ##########            JUAN DEMERA            ############
 
 def p_def_function(p):
@@ -153,14 +185,6 @@ def p_input(p):
     '''input : INPUT LPAREN RPAREN
              | INPUT LPAREN value RPAREN
              | INPUT LPAREN identifiers RPAREN
-    '''
-
-def p_condition(p):
-    '''
-    condition : value comparation_operation value
-              | condition LOGICAL_AND condition
-              | condition LOGICAL_OR condition
-              | LOGICAL_NOT condition
     '''
 
 
