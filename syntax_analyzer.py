@@ -255,11 +255,32 @@ def p_error(p):
 
 # parser = sint.yacc()
 
-codePaula = '''input()
+codePaula = '''
+input()
 var id int = 4
 input(y, z)
 input(3)
+var x float64 = 3.14
+const pi float64 = 3.14159
+input(a, b)
+c := a + b
+fmt.Println("Resultado:", c)
+if x > 0 {
+    fmt.Println("x es positivo")
+} else {
+    fmt.Println("x es cero o negativo")
+}
+for i := 0; i < 5; i++ {
+    fmt.Println(i)
+}
+func suma(a int, b int) int {
+    return a + b
+}
+resultado := suma(2, 3)
+fmt.Println("Suma:", resultado)
+
 '''
+
 codeJorge = '''var id int = 4
 a := 3
 fmt.Printf("Number: \%\d", id)
