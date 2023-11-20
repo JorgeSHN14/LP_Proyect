@@ -3,9 +3,9 @@ from lex_analyzer import tokens,lexer
 
 def p_loop_program(p):
   ''' loop_program : program
-                  | BREAK
+                  | loop_reserved
                   | loop_program program
-                  | loop_program BREAK
+                  | loop_program loop_reserved
   '''
 
 def p_program(p):
@@ -13,6 +13,11 @@ def p_program(p):
              | loop
              | program sentencia
              | program loop
+  '''
+def p_loop_reserved(p):
+   ''' loop_reserved : BREAK
+                  | CONTINUE
+                  | PASS
   '''
 
 def p_loop(p):
