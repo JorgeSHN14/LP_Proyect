@@ -1,6 +1,8 @@
+errors = []
 import ply.lex as lex
 
 #####Paula Peralta#####
+
 reserved = {
     'if': 'IF',
     'else': 'ELSE',
@@ -107,6 +109,7 @@ tokens = (
     'LESS_THAN',
     'COLON',
     'DOT',
+    'RULE_COMPARATION'
 ) + tuple(reserved.values())
 
 #####              Juan Demera              #####
@@ -189,6 +192,11 @@ def t_COMMENT_MULTI(t):
   #r'\/\*[^(\*\/)]*\*\/'
   return t
 
+#Expresion regular para definir RULE_COMPARATION
+def t_RULE_COMPARATION(t):
+    r'==|!=|<=|>=|<|>|&&|\|\|'
+    return t
+
 
 #####              Jorge Herrera              #####
 
@@ -247,12 +255,11 @@ def t_newline(t):
 # Ignorar espacios, tabulaciones
 t_ignore = ' \t'
 
-
 # Manejo de errores
 def t_error(t):
-  print(
-      f"{t.type.upper()}: No se reconoce el caracter {t.value[0]} en la línea {t.lineno}"
-  )
+
+  errors.append(f"{t.type.upper()} LÉXICO: No se reconoce el caracter {t.value[0]} en la línea {t.lineno}")
+  # print(errors)
   t.lexer.skip(1)
 
 
@@ -308,13 +315,25 @@ codeJuan = """
   l <= 30
   m >= 60
   n && true
-  o || false
+  o || falso`
   """
 
 code = codePaula + codeJorge + codeJuan
 
-lexer.input(code)
-# Tokenizar
-# print(list(lexer))
-for token in list(lexer):
-  print(token)
+# lexer.input(code)
+# # Tokenizar
+# # print(list(lexer))
+# for token in list(lexer):
+#   print(token)
+def analizeLex(code):
+  errors.clear()
+  lexer.lineno = 1
+  lexer.input(code)
+  returnLex = list(lexer)
+  returnErrors = errors.copy()
+  lexer.lineno = 1
+  print(returnErrors)
+  return returnErrors, returnLex
+
+
+# print(analizeLex(code))

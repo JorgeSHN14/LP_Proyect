@@ -1,5 +1,5 @@
 import ply.yacc as sint
-from lex_analyzer import tokens
+from lex_analyzer import tokens,lexer
 
 def p_loop_program(p):
   ''' loop_program : program
@@ -28,13 +28,26 @@ def p_sentencia(p):
                | assignment
                | short_assignment
                | arithmetic_operation
-               | direct_arithmetic_operation'''
+               | direct_arithmetic_operation
+               | if_statement
+               | function_call '''
                
 
 ##########            PAULA PERALTA            ############
 def p_for(p):
   '''for : FOR LKEY loop_program RKEY
          | FOR comparation_operation LKEY loop_program RKEY'''
+
+def p_function_call(p):
+    '''function_call : IDENTIFIER LPAREN values RPAREN'''
+  
+def p_if_statement(p):
+    '''if_statement : IF rule_comparation LKEY program RKEY
+                    | IF rule_comparation LKEY program RKEY ELSE LKEY program RKEY
+                    | IF value LKEY program RKEY
+                    | IF value LKEY program RKEY ELSE LKEY program RKEY
+    '''
+
 
 ##########            JORGE HERRERA            ############
 
@@ -113,7 +126,26 @@ def p_comparation_operation(p):
 def p_identifiers(p):
   '''identifiers : IDENTIFIER
                  | identifiers COMMA identifiers'''
+  
+##########            PAULA PERALTA            ############
+def p_rule_comparation(p):
+    '''rule_comparation : IDENTIFIER EQUALEQUAL value
+                        | IDENTIFIER NOT_EQUAL value
+                        | IDENTIFIER LESS_EQUAL value
+                        | IDENTIFIER GREATER_EQUAL value
+                        | IDENTIFIER LESS value
+                        | IDENTIFIER GREATER value
+                        | IDENTIFIER LOGICAL_AND value
+                        | IDENTIFIER LOGICAL_OR value'''
 
+def p_condition(p):
+    '''
+    condition : value comparation_operation value
+              | condition LOGICAL_AND condition
+              | condition LOGICAL_OR condition
+              | LOGICAL_NOT condition
+    '''
+    
 ##########            JUAN DEMERA            ############
 
 def p_def_function(p):
@@ -155,42 +187,48 @@ def p_input(p):
              | INPUT LPAREN identifiers RPAREN
     '''
 
+
 def p_error(p):
     errors.append("Error sintáctico en '%s'" % p)
 
 # parser = sint.yacc()
 
-# codePaula = '''input()
-# var id int = 4
-# input(y, z)
-# input(3)
-# '''
-# codeJorge = '''var id int = 4
-# a := 3
-# fmt.Printf("Number: \%\d", id)
-# fmt.Println("Este es un print simple")'''
-# codeJuan = """var x int = 10
-# func sumar(a int, b int) {
-# a := a + b
-# fmt.Println(a)
-# }
-# resultado := sumar(5, 3)
-# fmt.Println("Resultado de la suma:", resultado)
-# for {
-# fmt.Println("Este es un bucle infinito")
-# break}
-# const pi float64 = 3.14159f32
-# fmt.Println("Valor de pi:", pi)"""
+codePaula = '''input()
+var id int = 4
+input(y, z)
+input(3)
+'''
+codeJorge = '''var id int = 4
+a := 3
+fmt.Printf("Number: \%\d", id)
+fmt.Println("Este es un print simple")'''
+codeJuan = """var x int = 10
+func sumar(a int, b int) {
+  a := a + b
+fmt.Println(a)
+}
+resultado := sumar(5, 3)
+fmt.Println("Resultado de la suma:", resultado)
+for {
+fmt.Println("Este es un bucle infinito")
+break}
+const pi float64 = 3.14159f32
+fmt.Println("Valor de pi:", pi)"""
 
-# code = codePaula + codeJorge + codeJuan
+code = codePaula + codeJorge + codeJuan
 # result = parser.parse(code)
 # print(result)
 
+def get_parser():
+    return sint.yacc()
 
 errors = []
 def analizeSyntax(code):
-  parser = sint.yacc()
-  result = parser.parse(code)
-  returnErrors = errors
-  errors = []
+  parser = get_parser()
+  parser.parse(code)
+  returnErrors = errors.copy()
+  errors.clear()
+  list(lexer)
   return returnErrors
+
+print(analizeSyntax(code))
