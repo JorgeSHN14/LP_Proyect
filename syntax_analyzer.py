@@ -7,6 +7,14 @@ def p_loop_program(p):
                   | loop_program program
                   | loop_program loop_reserved
   '''
+def p_func_program(p):
+  ''' func_program : program
+                  | RETURN
+                  | RETURN usable_value
+                  | func_program program
+                  | func_program RETURN
+                  | func_program RETURN usable_value
+  '''
 
 def p_program(p):
   '''program : sentencia
@@ -14,6 +22,7 @@ def p_program(p):
              | program sentencia
              | program loop
   '''
+  
 def p_loop_reserved(p):
    ''' loop_reserved : BREAK
                   | CONTINUE
@@ -39,21 +48,37 @@ def p_sentencia(p):
                | switch_statement'''
                
 
-##########            PAULA PERALTA            ############
+##########            JORGE HERRERA            ############
 def p_for(p):
   '''for : FOR LKEY loop_program RKEY
-         | FOR comparation_operation LKEY loop_program RKEY'''
+         | FOR comparation_operation LKEY loop_program RKEY
+         | FOR short_assignment SEMICOLON comparation_operation SEMICOLON IDENTIFIER operator_for LKEY loop_program RKEY'''
+
+def p_operator_for(p):
+   '''operator_for : INCREASE
+                   | DECREASE'''
 
 def p_function_call(p):
     '''function_call : IDENTIFIER LPAREN values RPAREN'''
-  
+
+##########            PAULA PERALTA           ############
+
 def p_if_statement(p):
-    '''if_statement : IF rule_comparation LKEY program RKEY
-                    | IF rule_comparation LKEY program RKEY ELSE LKEY program RKEY
-                    | IF value LKEY program RKEY
-                    | IF value LKEY program RKEY ELSE LKEY program RKEY
+    '''if_statement : IF comparation_operation LKEY program RKEY
+                    | IF comparation_operation LKEY program RKEY conditions_elseif
+                    | IF comparation_operation LKEY program RKEY ELSE LKEY program RKEY
+                    | IF comparation_operation LKEY program RKEY conditions_elseif ELSE LKEY program RKEY
     '''
 
+
+def p_conditions_elseif(p):
+   '''conditions_elseif : else_if
+                        | conditions_elseif else_if
+   '''
+
+def p_else_if(p):
+   '''else_if : ELSE IF comparation_operation LKEY program RKEY
+   '''
 def p_switch_statement(p):
     '''
     switch_statement : SWITCH expression LKEY case_clauses RKEY
@@ -213,7 +238,8 @@ def p_condition(p):
 ##########            JUAN DEMERA            ############
 
 def p_def_function(p):
-  '''def_function : FUNC IDENTIFIER LPAREN parameters RPAREN LKEY program RKEY'''
+  '''def_function : FUNC IDENTIFIER LPAREN parameters RPAREN LKEY func_program RKEY
+                  | FUNC IDENTIFIER LPAREN parameters RPAREN data_type LKEY func_program RKEY'''
 
 def p_call_funcion(p):
   '''call_function : IDENTIFIER LPAREN values RPAREN'''
@@ -235,15 +261,13 @@ def p_values(p):
 def p_value(p):
   '''value : STRING
           | INTEGER
-          | FLOAT32
-          | FLOAT64
+          | FLOAT
           | BOOLEAN
           | IDENTIFIER'''
 
 def p_data_type(p):
   '''data_type : INTEGER_DATA_TYPE
-               | FLOAT32_DATA_TYPE
-               | FLOAT64_DATA_TYPE
+               | FLOAT_DATA_TYPE
                | BOOLEAN_DATA_TYPE
                | STRING_DATA_TYPE'''
 
@@ -265,13 +289,16 @@ input()
 var id int = 4
 input(y, z)
 input(3)
-var x float64 = 3.14
-const pi float64 = 3.14159
+var x float = 3.14
+const pi float = 3.14159
 input(a, b)
 c := a + b
 fmt.Println("Resultado:", c)
 if x > 0 {
     fmt.Println("x es positivo")
+    a := 3
+} else if x > 0 {
+    fmt.Println("x es cero o negativo")
 } else {
     fmt.Println("x es cero o negativo")
 }
@@ -293,6 +320,11 @@ fmt.Println("Este es un print simple")
 '''
 
 codeJuan = """
+var x int = 10
+func sumar(a int, b int) {
+  a := a + b
+  fmt.Println(a)
+}
 switch x + y {
     case 1:
         fmt.Println("Uno")
@@ -316,17 +348,12 @@ switch x {
         fmt.Println("Otro")
 }
 
-var x int = 10
-func sumar(a int, b int) {
-  a := a + b
-fmt.Println(a)
-}
 resultado := sumar(5, 3)
 fmt.Println("Resultado de la suma:", resultado)
 for {
 fmt.Println("Este es un bucle infinito")
 break}
-const pi float64 = 3.14159f32
+const pi float = 3.14159
 fmt.Println("Valor de pi:", pi)"""
 
 code = codePaula + codeJorge + codeJuan

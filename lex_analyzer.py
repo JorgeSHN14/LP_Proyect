@@ -44,8 +44,7 @@ reserved = {
     'var': 'VAR',
     'const': 'CONST',
     'int': 'INTEGER_DATA_TYPE',
-    'float32': 'FLOAT32_DATA_TYPE',
-    'float64': 'FLOAT64_DATA_TYPE',
+    'float': 'FLOAT_DATA_TYPE',
     'string': 'STRING_DATA_TYPE',
     'bool': 'BOOLEAN_DATA_TYPE',
     'switch': 'SWITCH',
@@ -60,8 +59,7 @@ tokens = (
     'IDENTIFIER',
     'BOOLEAN',
     'INTEGER',
-    'FLOAT32',
-    'FLOAT64',
+    'FLOAT',
     'SCIENTIFIC_NOTATION',
     'COMMENT',
     'COMMENT_MULTI',
@@ -94,6 +92,8 @@ tokens = (
     'GREATER_EQUAL',
     'LOGICAL_AND',
     'LOGICAL_OR',
+    'INCREASE',
+    'DECREASE',
     'PLUS',
     'MINUS',
     'TIMES',
@@ -112,7 +112,8 @@ tokens = (
     'LESS_THAN',
     'COLON',
     'DOT',
-    'RULE_COMPARATION',
+    'SEMICOLON',
+    # 'RULE_COMPARATION',
 
 ) + tuple(reserved.values())
 
@@ -126,6 +127,8 @@ t_SHORT_VAR_DECL = r':='
 t_FAT_ARROW = r'=>'
 t_ARROW_FUNCTION_TYPE = r'->'
 t_BITWISE_XOR_ASSIGN = r'\^='
+t_INCREASE = r'\+\+'
+t_DECREASE = r'--'
 t_PLUS_EQ = r'\+='
 t_MINUS_EQ = r'-='
 t_TIMES_EQ = r'\*='
@@ -160,6 +163,7 @@ t_EQUAL = r'\='
 t_GREATER_THAN = r'>'
 t_LESS_THAN = r'<'
 t_COLON = r':'
+t_SEMICOLON = r';'
 t_COMMA = r','
 t_RBRACKET = '\['
 t_LBRACKET = '\]'
@@ -196,10 +200,10 @@ def t_COMMENT_MULTI(t):
   #r'\/\*[^(\*\/)]*\*\/'
   return t
 
-#Expresion regular para definir RULE_COMPARATION
-def t_RULE_COMPARATION(t):
-    r'==|!=|<=|>=|<|>|&&|\|\|'
-    return t
+# #Expresion regular para definir RULE_COMPARATION
+# def t_RULE_COMPARATION(t):
+#     r'==|!=|<=|>=|<|>|&&|\|\|'
+#     return t
 
 
 #####              Jorge Herrera              #####
@@ -231,16 +235,11 @@ def t_IDENTIFIER(t):
 
 
 # Expresión regular para números flotantes
-def t_FLOAT32(t):
-  r'\d+\.\d+f32'
-  t.value = float(t.value[:-3])  # Elimina el sufijo "f32" y convierte a float
+def t_FLOAT(t):
+  r'\d+\.\d+'
+  t.value = float(t.value) 
   return t
 
-
-def t_FLOAT64(t):
-  r'\d+\.\d+f64'
-  t.value = float(t.value[:-3])  # Elimina el sufijo "f64" y convierte a float
-  return t
 
 
 # Expresión regular para números enteros, incluye cast
@@ -298,8 +297,7 @@ codeJorge = '''
 var myString string = "05ee4SS"
 var myInt int = 5562
 const myBool bool = true
-const myFloat32 float32 = 5.65f32
-const myFloat64 float64 = 5.65f64
+const myFloat float = 5.65f
 '''
 codeJuan = """
   data = x += 10
