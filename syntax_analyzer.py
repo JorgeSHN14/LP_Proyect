@@ -85,12 +85,15 @@ def p_switch_statement(p):
     switch_statement : SWITCH value LKEY switch_cases RKEY
                      | SWITCH LKEY switch_cases RKEY
                      | SWITCH switch_expression LKEY switch_cases RKEY
+                     | SWITCH value LKEY switch_cases DEFAULT COLON statements RKEY
+                     | SWITCH LKEY switch_cases DEFAULT COLON statements RKEY
+                     | SWITCH switch_expression LKEY switch_cases DEFAULT COLON statements RKEY
     '''
 
 def p_switch_expression(p):
     '''
     switch_expression : value
-                     |
+                      |
     '''
 
 def p_switch_cases(p):
@@ -101,8 +104,10 @@ def p_switch_cases(p):
 
 def p_switch_case(p):
     '''
-    switch_case : CASE value COLON statements
+    switch_case : CASE usable_value COLON statements
                | CASE COLON statements
+               | IDENTIFIER COLON statements
+               | switch_expression COLON statements
     '''
 
 def p_statements(p):
@@ -115,7 +120,6 @@ def p_statement(p):
     '''
     statement : print
                | print_withoutvalue
-               | def_function
                | call_function
                | input
                | assignment
@@ -124,7 +128,15 @@ def p_statement(p):
                | direct_arithmetic_operation
                | if_statement
                | function_call
-               | switch_statement'''
+               | switch_statement
+               '''
+
+
+
+
+
+
+
 
 
 
@@ -147,6 +159,17 @@ def p_print_withoutvalue(p):
   '''print_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
             | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
 
+
+## JUAN
+def p_assignment_semantic(p):
+  '''assignment_semantic : VAR IDENTIFIER INTEGER_DATA_TYPE EQUAL INTEGER
+                | CONST IDENTIFIER INTEGER_DATA_TYPE EQUAL INTEGER
+                | VAR IDENTIFIER FLOAT_DATA_TYPE EQUAL FLOAT
+                | CONST IDENTIFIER FLOAT_DATA_TYPE EQUAL FLOAT
+                | VAR IDENTIFIER STRING_DATA_TYPE EQUAL STRING
+                | CONST IDENTIFIER STRING_DATA_TYPE EQUAL STRING
+                | VAR IDENTIFIER BOOLEAN_DATA_TYPE EQUAL BOOLEAN
+                | CONST IDENTIFIER BOOLEAN_DATA_TYPE EQUAL BOOLEAN'''
 def p_assignment(p):
   '''assignment : VAR IDENTIFIER data_type EQUAL usable_value
                 | CONST IDENTIFIER data_type EQUAL usable_value'''
