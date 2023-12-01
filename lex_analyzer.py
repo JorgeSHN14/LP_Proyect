@@ -114,7 +114,10 @@ tokens = (
     'DOT',
     'SEMICOLON',
     'DOUBLE_QUOTE',
-    'PERCENT_D'
+    'PERCENT_D',
+    'FMT_LIBRARY',
+    'FMT_FORMAT_STRING'
+
 
     # 'RULE_COMPARATION',
 
@@ -256,6 +259,15 @@ def t_INTEGER(t):
   t.value = int(t.value)
   return t
 
+# Definición del token FMT_LIBRARY
+'''def t_FMT_LIBRARY(t):
+    r'fmt\.'
+    return t'''
+
+# Definición del token FMT_FORMAT_STRING
+def t_FMT_FORMAT_STRING(t):
+    r'\"%[ds]\"'
+    return t
 
 # Expresión regular para reconocer saltos de línea
 def t_newline(t):
