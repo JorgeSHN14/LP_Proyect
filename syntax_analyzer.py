@@ -159,6 +159,17 @@ def p_print_withoutvalue(p):
   '''print_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
             | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
 
+
+## JUAN
+def p_assignment_semantic(p):
+  '''assignment_semantic : VAR IDENTIFIER INTEGER_DATA_TYPE EQUAL INTEGER
+                | CONST IDENTIFIER INTEGER_DATA_TYPE EQUAL INTEGER
+                | VAR IDENTIFIER FLOAT_DATA_TYPE EQUAL FLOAT
+                | CONST IDENTIFIER FLOAT_DATA_TYPE EQUAL FLOAT
+                | VAR IDENTIFIER STRING_DATA_TYPE EQUAL STRING
+                | CONST IDENTIFIER STRING_DATA_TYPE EQUAL STRING
+                | VAR IDENTIFIER BOOLEAN_DATA_TYPE EQUAL BOOLEAN
+                | CONST IDENTIFIER BOOLEAN_DATA_TYPE EQUAL BOOLEAN'''
 def p_assignment(p):
   '''assignment : VAR IDENTIFIER data_type EQUAL usable_value
                 | CONST IDENTIFIER data_type EQUAL usable_value'''
