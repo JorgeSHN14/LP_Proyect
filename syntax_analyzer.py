@@ -199,6 +199,7 @@ def p_arithmetic_operation(p):
                       | usable_value MODULE usable_value
   '''
 
+
 ##########            JORGE HERRERA            ############
 
 def p_comparation_operation(p):
@@ -236,12 +237,30 @@ def p_condition(p):
               | condition LOGICAL_OR condition
               | LOGICAL_NOT condition
     '''
-    
+
+  
 ##########            JUAN DEMERA            ############
 
 def p_def_function(p):
   '''def_function : FUNC IDENTIFIER LPAREN parameters RPAREN LKEY func_program RKEY
-                  | FUNC IDENTIFIER LPAREN parameters RPAREN data_type LKEY func_program RKEY'''
+                  | FUNC IDENTIFIER LPAREN parameters RPAREN data_type LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA data RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA data COMMA RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA IDENTIFIER COMMA RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA FLOAT RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA FLOAT COMMA RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA INTEGER RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA INTEGER COMMA RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA BOOLEAN RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA BOOLEAN COMMA RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA IDENTIFIER COMMA FLOAT RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA IDENTIFIER COMMA FLOAT COMMA RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA IDENTIFIER COMMA INTEGER RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA IDENTIFIER COMMA INTEGER COMMA RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA IDENTIFIER COMMA BOOLEAN RPAREN LKEY func_program RKEY
+                  | FUNC FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA IDENTIFIER COMMA BOOLEAN COMMA RPAREN LKEY func_program RKEY'''
+
 
 def p_call_funcion(p):
   '''call_function : IDENTIFIER LPAREN values RPAREN'''

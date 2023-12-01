@@ -113,6 +113,8 @@ tokens = (
     'COLON',
     'DOT',
     'SEMICOLON',
+    'DOUBLE_QUOTE',
+    'PERCENT_D'
 
     # 'RULE_COMPARATION',
 
@@ -172,6 +174,8 @@ t_LKEY = '{'
 t_RKEY = '}'
 t_DOT = '\.'
 t_DEFAULT = r'default'
+t_DOUBLE_QUOTE = r'\"'
+t_PERCENT_D = r'%d'
 
 #####              Paula Peralta              #####
 
@@ -223,6 +227,8 @@ def t_BOOLEAN(t):
 
 def t_STRING(t):
   r'(\"[^\"]*\"|\`[^\`]*\`)'
+  #Para eliminar las comillas y convertir a cadena
+  t.value = str(t.value[1:-1])
   print(t)
   return t
 
