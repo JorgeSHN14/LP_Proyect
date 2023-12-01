@@ -115,7 +115,6 @@ tokens = (
     'SEMICOLON',
     'DOUBLE_QUOTE',
     'PERCENT_D',
-    'FMT_LIBRARY',
     'FMT_FORMAT_STRING'
 
 
