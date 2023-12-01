@@ -39,12 +39,12 @@ def p_sentencia(p):
                | def_function
                | call_function
                | input
-               | assignment
                | short_assignment
                | arithmetic_operation
                | direct_arithmetic_operation
                | if_statement
                | function_call
+               | assignment_semantic
                | switch_statement'''
                
 
@@ -108,13 +108,13 @@ def p_statement(p):
                  | def_function
                  | call_function
                  | input
-                 | assignment
                  | short_assignment
                  | arithmetic_operation
                  | direct_arithmetic_operation
                  | if_statement
                  | function_call
                  | switch_statement
+                 | assignment_semantic
                  | statement
     '''
 
@@ -140,12 +140,14 @@ def p_expression(p):
 
 ##########            JORGE HERRERA            ############
 
-  
+#################             REGLAS SEMANTICAS PARA PRONT FORMAT DEFINIDAS POR PAULA PERALTA
 def p_print(p):
-  '''print : FMT_LIBRARY DOT PRINTLN LPAREN data RPAREN
-           | FMT_LIBRARY DOT PRINTF LPAREN value RPAREN
-           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA RPAREN
-           | FMT_LIBRARY DOT PRINTF LPAREN value COMMA data RPAREN'''
+    '''print : FMT_LIBRARY DOT PRINTLN LPAREN data RPAREN
+             | FMT_LIBRARY DOT PRINTF LPAREN STRING RPAREN
+             | FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA RPAREN
+             | FMT_LIBRARY DOT PRINTF LPAREN STRING COMMA data RPAREN
+    '''
+
   
 def p_data(p):
   '''data : value
@@ -251,7 +253,9 @@ def p_condition(p):
 
 def p_def_function(p):
   '''def_function : FUNC IDENTIFIER LPAREN parameters RPAREN LKEY func_program RKEY
-                  | FUNC IDENTIFIER LPAREN parameters RPAREN data_type LKEY func_program RKEY'''
+                  | FUNC IDENTIFIER LPAREN parameters RPAREN data_type LKEY func_program RKEY
+                 '''
+
 
 def p_call_funcion(p):
   '''call_function : IDENTIFIER LPAREN values RPAREN'''
