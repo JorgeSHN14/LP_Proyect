@@ -79,63 +79,53 @@ def p_conditions_elseif(p):
 def p_else_if(p):
    '''else_if : ELSE IF comparation_operation LKEY program RKEY
    '''
+
 def p_switch_statement(p):
     '''
-    switch_statement : SWITCH expression LKEY case_clauses RKEY
-                     | SWITCH expression LKEY case_clauses DEFAULT COLON statements RKEY
+    switch_statement : SWITCH value LKEY switch_cases RKEY
+                     | SWITCH LKEY switch_cases RKEY
+                     | SWITCH switch_expression LKEY switch_cases RKEY
     '''
 
-def p_case_clauses(p):
+def p_switch_expression(p):
     '''
-    case_clauses : case_clause case_clauses
+    switch_expression : value
+                     |
+    '''
+
+def p_switch_cases(p):
+    '''
+    switch_cases : switch_case switch_cases
                  |
     '''
 
-def p_case_clause(p):
+def p_switch_case(p):
     '''
-    case_clause : CASE value COLON statements
+    switch_case : CASE value COLON statements
+               | CASE COLON statements
     '''
 
 def p_statements(p):
     '''
     statements : statement statements
-              |
+               |
     '''
 
 def p_statement(p):
-    '''statement : print
-                 | print_withoutvalue
-                 | def_function
-                 | call_function
-                 | input
-                 | assignment
-                 | short_assignment
-                 | arithmetic_operation
-                 | direct_arithmetic_operation
-                 | if_statement
-                 | function_call
-                 | switch_statement
-                 | statement
     '''
+    statement : print
+               | print_withoutvalue
+               | def_function
+               | call_function
+               | input
+               | assignment
+               | short_assignment
+               | arithmetic_operation
+               | direct_arithmetic_operation
+               | if_statement
+               | function_call
+               | switch_statement'''
 
-def p_expression(p):
-    '''
-    expression : value
-               | expression PLUS expression
-               | expression MINUS expression
-               | expression TIMES expression
-               | expression DIVIDE expression
-               | expression ENTERE_DIVIDE expression
-               | expression MODULE expression
-               | expression EQUALEQUAL expression
-               | expression NOT_EQUAL expression
-               | expression LESS_EQUAL expression
-               | expression GREATER_EQUAL expression
-               | expression LESS expression
-               | expression GREATER expression
-               | expression LOGICAL_AND expression
-               | expression LOGICAL_OR expression
-    '''
 
 
 ##########            JORGE HERRERA            ############

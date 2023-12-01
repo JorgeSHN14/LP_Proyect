@@ -113,6 +113,7 @@ tokens = (
     'COLON',
     'DOT',
     'SEMICOLON',
+
     # 'RULE_COMPARATION',
 
 ) + tuple(reserved.values())
@@ -170,6 +171,7 @@ t_LBRACKET = '\]'
 t_LKEY = '{'
 t_RKEY = '}'
 t_DOT = '\.'
+t_DEFAULT = r'default'
 
 #####              Paula Peralta              #####
 
