@@ -157,10 +157,20 @@ def p_print_withoutvalue(p):
   '''print_withoutvalue : FMT_LIBRARY DOT PRINTLN LPAREN RPAREN
             | FMT_LIBRARY DOT PRINTF LPAREN RPAREN'''
 
-def p_assignment(p):
-  '''assignment : VAR IDENTIFIER data_type EQUAL usable_value
-                | CONST IDENTIFIER data_type EQUAL usable_value'''
-  errors.append("Error semántico en '%s'" % p)
+
+##########            JUAN DEMERA            ############
+
+##########     REGAL SEMANTICA PARA LA DECLARACION DE VARIABLES
+def p_assignment_semantic(p):
+  '''assignment_semantic : VAR IDENTIFIER INTEGER_DATA_TYPE EQUAL INTEGER
+                | CONST IDENTIFIER INTEGER_DATA_TYPE EQUAL INTEGER
+                | VAR IDENTIFIER FLOAT_DATA_TYPE EQUAL FLOAT
+                | CONST IDENTIFIER FLOAT_DATA_TYPE EQUAL FLOAT
+                | VAR IDENTIFIER STRING_DATA_TYPE EQUAL STRING
+                | CONST IDENTIFIER STRING_DATA_TYPE EQUAL STRING
+                | VAR IDENTIFIER BOOLEAN_DATA_TYPE EQUAL BOOLEAN
+                | CONST IDENTIFIER BOOLEAN_DATA_TYPE EQUAL BOOLEAN'''
+
   
 def p_short_assignment(p):
   '''short_assignment : IDENTIFIER SHORT_VAR_DECL usable_value'''
@@ -235,7 +245,8 @@ def p_condition(p):
               | condition LOGICAL_OR condition
               | LOGICAL_NOT condition
     '''
-    
+
+
 ##########            JUAN DEMERA            ############
 
 def p_def_function(p):
@@ -326,10 +337,10 @@ func sumar(a int, b int) {
   a := a + b
   fmt.Println(a)
 }
-switch x + y {
+switch x {
     case 1:
         fmt.Println("Uno")
-    case 2, 3:
+    case 2:
         fmt.Println("Dos o Tres")
     case 4:
         fmt.Println("Cuatro")
